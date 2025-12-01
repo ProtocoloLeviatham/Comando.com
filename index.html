@@ -118,6 +118,25 @@
             50% { transform: scale(1.15); filter: drop-shadow(0 0 40px rgba(0, 255, 0, 0.8)); }
             100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3)); }
         }
+        
+        /* Animación de Cifrado en Movimiento */
+        .cipher-scroll {
+            background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0, 255, 0, 0.1) 50%, rgba(0,0,0,0));
+            overflow: hidden;
+            position: relative;
+        }
+        .cipher-text {
+            animation: scrollText 10s linear infinite;
+            white-space: pre-wrap;
+            word-break: break-all;
+            opacity: 0.5;
+            font-size: 10px;
+            line-height: 12px;
+        }
+        @keyframes scrollText {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
 
         /* Modo Sofia/Amor */
         .love-mode { --primary: #ff0055; --secondary: #330011; --bg-color: #1a000a; }
@@ -169,14 +188,13 @@
             
             <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold">
                 <span id="boot-system-text">System Integrity: CHECKING...</span>
-                <span>Leviatham OS v9.0.7</span>
+                <span>Leviatham OS v9.0.9</span>
             </div>
         </div>
     </div>
 
-    <!-- LEGAL MODAL (CORREGIDO BOTÓN VISIBLE) -->
+    <!-- LEGAL MODAL -->
     <div id="legal-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-2 backdrop-blur-md">
-        <!-- Se ajustó max-h para asegurar que quepa en pantalla y flex para distribuir espacio -->
         <div class="border-2 border-red-600 bg-black w-full h-full md:w-11/12 md:h-[90vh] md:max-w-7xl shadow-[0_0_50px_rgba(255,0,0,0.3)] relative flex flex-col overflow-hidden">
             
             <!-- Header del Modal -->
@@ -195,16 +213,13 @@
 
             <!-- Contenido Scrollable -->
             <div class="flex-1 overflow-y-auto p-6 md:p-12 text-sm md:text-lg text-gray-300 font-sans space-y-6 custom-scrollbar bg-gradient-to-b from-black to-red-950/20">
-                
                 <div class="border-l-4 border-red-600 pl-6 py-2">
                     <p class="text-white font-bold text-xl md:text-2xl uppercase mb-2">ADVERTENCIA DE SEGURIDAD</p>
                     <p class="leading-relaxed">
                         Usted está intentando establecer un enlace cifrado con la interfaz central de <strong>INDUSTRIAS LEVIATHAM</strong>. El acceso a esta herramienta está restringido exclusivamente a miembros de la Legión y personal con credenciales de nivel 4 o superior.
                     </p>
                 </div>
-
                 <hr class="border-red-900 opacity-30">
-
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-book"></i> REGLAMENTO Y NORMATIVAS</h3>
@@ -214,7 +229,6 @@
                             <p><strong class="text-white">CONFIDENCIALIDAD:</strong><br> La divulgación de las herramientas aquí presentes resultará en la expulsión inmediata y acciones legales bajo la Ley de Secretos Comerciales.</p>
                         </div>
                     </div>
-                    
                     <div>
                         <h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-server"></i> POLÍTICA DE AUDITORÍA</h3>
                         <ul class="list-disc list-inside text-xs md:text-sm space-y-2 text-gray-400">
@@ -224,7 +238,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="bg-red-900 bg-opacity-10 border border-red-800 p-6 text-center mt-6">
                     <p class="text-justify text-xs md:text-sm text-gray-400">
                         Al proceder, usted certifica que comprende los riesgos operativos y que utilizará estas herramientas de manera ética y responsable, alineado con los objetivos de la organización. El mal uso será sancionado.
@@ -232,7 +245,7 @@
                 </div>
             </div>
 
-            <!-- Footer con Botón (SIEMPRE VISIBLE) -->
+            <!-- Footer con Botón -->
             <div class="p-4 md:p-6 border-t border-red-800 bg-black flex flex-col md:flex-row justify-between items-center gap-4 z-20 flex-shrink-0">
                 <div class="flex items-center gap-3 w-full md:w-auto">
                     <div class="relative flex-shrink-0">
@@ -289,7 +302,7 @@
 
             <!-- Header -->
             <header class="h-20 border-b border-green-900 flex items-center justify-between px-6 bg-black bg-opacity-60 backdrop-blur-sm z-20">
-                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V9.0.7</div>
+                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V9.0.9</div>
                 <div class="flex items-center gap-6 ml-auto">
                     <div class="text-right">
                         <div id="ip-display" class="text-lg font-bold text-white typing-cursor">ESTABLECIENDO ENLACE...</div>
@@ -354,7 +367,7 @@
                     </div>
                 </section>
 
-                <!-- 3. AGENT DATABASE -->
+                <!-- 3. AGENT DATABASE (RENOVADO) -->
                 <section class="max-w-6xl mx-auto mb-32">
                     <h3 class="text-4xl font-bold mb-10 flex items-center gap-4 border-b-2 border-green-800 pb-4">
                         <span class="bg-green-700 text-black px-3 py-1 text-2xl rounded">DB</span>
@@ -510,7 +523,7 @@
         `;
 
         const bootMsgs = [
-            "INITIALIZING KERNEL 9.0.7...",
+            "INITIALIZING KERNEL 9.0.9...",
             "LOADING NEURAL NETWORKS...",
             "OPTIMIZING GPU THREADS...",
             `DETECTED HOST: ${platform.toUpperCase()}...`,
@@ -596,7 +609,7 @@
             }
         }
 
-        // --- 4. PUZZLE MULTI-NIVEL (CORREGIDO) ---
+        // --- 4. PUZZLE MULTI-NIVEL ---
         let puzzleLevel = 1;
 
         function checkPuzzle() {
@@ -613,8 +626,7 @@
 
             // NIVEL 1: ROT13
             if (puzzleLevel === 1) {
-                // Validación robusta: "sipudistedecifrar" debe estar presente
-                // El usuario escribe con espacios, el .replace los quita
+                // Validación robusta
                 if (input.includes("sipudiste") && input.includes("aficionado")) {
                     puzzleLevel = 2;
                     secLevel.innerText = "2 (MÁXIMO)";
@@ -659,15 +671,87 @@
             }
         }
 
-        // --- 5. AGENTS ---
+        // --- 5. AGENTS (RENOVADO PROFESIONAL) ---
         const agents = [
-            { id: "01", alias: "EL FUNDADOR", role: "Arquitecto del Sistema", status: "ACTIVO - UBICACIÓN DESCONOCIDA", danger: 5, skills: ["Ciber-Forense", "Zero-Day Exploits", "Liderazgo"], bio: "Entidad fantasma. Creador del protocolo. Se rumorea que opera desde un búnker de la guerra fría." },
-            { id: "32", alias: "NETMASTER", role: "Infraestructura Botnet", status: "ACTIVO - NODO SUR", danger: 4, skills: ["DDoS Layer 7", "Hardware Hacking", "Redes Neuronales"], bio: "Prodigio capaz de tumbar redes nacionales en minutos." },
-            { id: "33", alias: "VALKYRIE", role: "Operaciones Especiales", status: "EN MISIÓN", danger: 3, skills: ["Carding", "Políglota", "Infiltración"], bio: "Activo de alto valor. Esposo de Sofia. Versatilidad extrema." },
-            { id: "77", alias: "PHANTOM", role: "Sigilo & Extracción", status: "DORMIDO", danger: 4, skills: ["Ingeniería Social", "Criptografía", "Fuga de Datos"], bio: "Sin registros faciales. Un fantasma digital." },
-            { id: "2", alias: "EL ESTRATEGA", role: "Comandante 2do", status: "ACTIVO - HQ", danger: 5, skills: ["Inteligencia Militar", "Tácticas de Guerrilla", "Coordinación"], bio: "Mente maestra detrás de las operaciones de campo." },
-            { id: "sofia", special: true, alias: "SOFIA", role: "Musa Inspiradora", status: "ETERNAL", danger: 0, skills: ["Amor Incondicional", "Soporte Vital", "Luz en la Oscuridad"], bio: "La razón detrás de la cordura del Agente 33." }
+            { 
+                id: "01", 
+                alias: "EL FUNDADOR (THE ARCHITECT)", 
+                role: "SysAdmin // Zero-Day Broker", 
+                status: "ACTIVE - LAYER 7", 
+                danger: 5, 
+                clearance: "LVL-5 (OMNI)",
+                skills: ["Advanced Persistent Threats (APT)", "Kernel Exploitation", "Network Infrastructure Architecture", "Quantum Cryptography"], 
+                bio: "IDENTIDAD CLASIFICADA. El arquitecto original del Protocolo Leviatham. Se especializa en la manipulación de infraestructuras críticas a nivel estatal. No deja huella digital (Log-less operations). Se presume que opera desde un servidor aislado 'Air-Gapped' en ubicación desconocida.",
+                encryptedData: "0x4F 0x9A 0x11 ... SYSTEM_CORE_DUMP_INIT"
+            },
+            { 
+                id: "32", 
+                alias: "NETMASTER", 
+                role: "Botnet Commander", 
+                status: "ACTIVE - MONITORING", 
+                danger: 4, 
+                clearance: "LVL-4",
+                skills: ["DDoS Amplification", "IoT Hijacking", "Traffic Analysis", "ISP Backbone Infiltration"], 
+                bio: "Controla 'THE SWARM', una de las botnets más grandes del hemisferio, compuesta por más de 500,000 dispositivos IoT comprometidos. Capaz de saturar enlaces transatlánticos. Especialista en enrutamiento BGP y secuestro de prefijos.",
+                encryptedData: "PACKET_LOSS: 0% ... TARGET_ACQUIRED ... FLOOD_GATE_OPEN"
+            },
+            { 
+                id: "33", 
+                alias: "VALKYRIE", 
+                role: "Black Ops Specialist", 
+                status: "DEPLOYED - FIELD OPS", 
+                danger: 3, 
+                clearance: "LVL-4",
+                skills: ["Polyglot Coding (Py/Go/Rust/C++)", "Financial Systems Penetration", "Social Engineering", "Steganography"], 
+                bio: "Operativo de campo altamente versátil. Especialista en la infiltración de sistemas bancarios (SWIFT) y corporativos. Su código es limpio, indetectable y letal. Vínculo neural confirmado con Agente Sofia.",
+                encryptedData: "SWIFT_CODE_OVERRIDE ... TRANSACTION_ID: NULL ... ROUTING_CONFIRMED"
+            },
+            { 
+                id: "77", 
+                alias: "PHANTOM", 
+                role: "Ghost Operative", 
+                status: "SLEEPER AGENT", 
+                danger: 4, 
+                clearance: "LVL-4",
+                skills: ["Deep Cover Ops", "Physical Access Breaches", "Data Exfiltration", "Forensic Countermeasures"], 
+                bio: "Especialista en 'Close Access Operations'. Infiltra servidores físicamente. Experto en evasión de biometría y vigilancia. No existen registros fotográficos en ninguna base de datos gubernamental. Si lo ves, ya es tarde.",
+                encryptedData: "FACE_ID: NO_MATCH ... RETINAL_SCAN: BYPASSED ... GHOST_PROTOCOL: ACTIVE"
+            },
+            { 
+                id: "2", 
+                alias: "EL ESTRATEGA", 
+                role: "Tactical Coordinator", 
+                status: "ACTIVE - HQ COMMAND", 
+                danger: 5, 
+                clearance: "LVL-5",
+                skills: ["Asymmetrical Warfare", "PsyOps (Psychological Operations)", "Strategic Intelligence", "Counter-Intel"], 
+                bio: "Ex-oficial de inteligencia de alto nivel. Coordina vectores de ataque simultáneos. Mente maestra detrás de las campañas de desinformación y guerra híbrida de la Legión. Segundo al mando absoluto.",
+                encryptedData: "WARGAME_SCENARIO_RUNNING ... PROBABILITY_SUCCESS: 99.9% ... CHECKMATE"
+            },
+            { 
+                id: "sofia", 
+                special: true, 
+                alias: "SOFIA (THE MUSE)", 
+                role: "Neural Link Stabilizer", 
+                status: "ETERNAL CONNECTION", 
+                danger: 0, 
+                clearance: "LVL-∞",
+                skills: ["Emotional Firewalling", "Moral Compass Alignment", "Infinite Support Loop", "Heartbeat Sync"], 
+                bio: "El ancla humana en un mundo digital. Provee estabilidad crítica al Agente 33. Su firma biométrica está hardcodeada en el núcleo del sistema como una excepción permanente de seguridad.",
+                encryptedData: "ENCRYPTION_KEY: LOVE ... STATUS: UNBREAKABLE ... ENDLESS_LOOP"
+            }
         ];
+
+        // Función Helper para generar texto aleatorio matrix
+        function generateRandomHex(length) {
+            let result = '';
+            const characters = '0123456789ABCDEF';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+                if(i % 2 === 1) result += ' ';
+            }
+            return result;
+        }
 
         function searchAgent() {
             const query = document.getElementById('agent-search').value.toLowerCase().trim();
@@ -682,35 +766,151 @@
             const agent = agents.find(a => a.id === query || (query.length===2 && query.endsWith(a.id)) || (a.special && (query==='sofia'||query==='333')));
 
             if(agent) {
+                // Generar ruido de fondo cifrado
+                const bgNoise = generateRandomHex(200);
+
                 if(agent.special) {
                     body.classList.add('love-mode');
-                    container.innerHTML = `<div class="bg-pink-900 bg-opacity-20 border-2 border-pink-500 p-8 text-center animate-pulse shadow-[0_0_50px_#ff0055]"><i class="fas fa-heart text-6xl text-pink-500 mb-4"></i><h2 class="text-4xl font-bold text-white mb-2">${agent.alias}</h2><p class="text-pink-300 text-xl italic mb-6">"${agent.bio}"</p><div class="grid grid-cols-1 md:grid-cols-3 gap-4">${agent.skills.map(s => `<div class="bg-pink-800 bg-opacity-50 p-2 text-white rounded">${s}</div>`).join('')}</div></div>`;
+                    container.innerHTML = `
+                        <div class="relative bg-pink-950 bg-opacity-30 border border-pink-500 p-8 flex flex-col items-center text-center overflow-hidden group">
+                            <div class="absolute inset-0 opacity-10 pointer-events-none cipher-scroll text-pink-500 font-mono text-xs p-2 break-all">${bgNoise}</div>
+                            <div class="z-10 w-full">
+                                <i class="fas fa-heart text-6xl text-pink-500 mb-4 animate-pulse drop-shadow-[0_0_15px_rgba(255,0,85,0.8)]"></i>
+                                <h2 class="text-5xl font-bold text-white mb-1 tracking-tighter">${agent.alias}</h2>
+                                <div class="text-pink-400 text-sm tracking-[0.5em] mb-6 uppercase border-b border-pink-800 pb-2 inline-block">Role: ${agent.role}</div>
+                                
+                                <p class="text-pink-200 text-lg italic mb-8 font-serif leading-relaxed">"${agent.bio}"</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left w-full max-w-2xl mx-auto mb-6">
+                                    ${agent.skills.map(s => `<div class="bg-pink-900 bg-opacity-40 p-3 text-pink-300 border-l-2 border-pink-500 text-sm"><i class="fas fa-star mr-2"></i> ${s}</div>`).join('')}
+                                </div>
+
+                                <!-- SECCION CIFRADA -->
+                                <div class="w-full bg-black bg-opacity-60 border border-pink-900 p-4 mt-4 relative overflow-hidden">
+                                    <div class="text-xs text-pink-600 font-bold mb-1 flex justify-between">
+                                        <span>>> ENCRYPTED_HEARTBEAT_DATA</span>
+                                        <span class="animate-pulse">● REC</span>
+                                    </div>
+                                    <div class="font-mono text-xs text-pink-500 opacity-70 whitespace-nowrap overflow-hidden cipher-text">
+                                        ${agent.encryptedData} ${generateRandomHex(50)} <br> ${generateRandomHex(80)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 } else {
-                    container.innerHTML = `<div class="bg-gray-900 border border-green-600 flex flex-col md:flex-row relative overflow-hidden group"><div class="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-5 transition duration-500 pointer-events-none"></div><div class="w-full md:w-1/3 bg-black border-r border-green-800 p-6 flex flex-col items-center text-center"><div class="w-32 h-32 border-2 border-green-500 mb-4 flex items-center justify-center bg-green-900 bg-opacity-10 relative"><i class="fas fa-user-secret text-6xl text-green-700"></i><div class="absolute bottom-0 right-0 bg-green-600 text-black text-xs font-bold px-1">VERIFIED</div></div><h2 class="text-5xl font-bold text-white mb-1">${agent.id}</h2><div class="text-green-500 text-xs tracking-[0.3em] mb-6">OPERATIVO</div><div class="w-full border-t border-green-900 pt-4"><div class="text-xs text-gray-500 mb-1">DEFCON LEVEL</div><div class="flex justify-center gap-1">${Array(5).fill(0).map((_,i) => `<div class="w-2 h-6 ${i < agent.danger ? 'bg-red-600' : 'bg-gray-800'}"></div>`).join('')}</div></div></div><div class="w-full md:w-2/3 p-6 md:p-8"><div class="flex justify-between items-start border-b border-green-800 pb-4 mb-4"><div><div class="text-xs text-gray-500">ALIAS PRINCIPAL</div><h3 class="text-3xl text-white font-bold">${agent.alias}</h3></div><div class="text-right"><div class="text-xs text-gray-500">ESTADO ACTUAL</div><div class="text-green-400 font-mono font-bold animate-pulse">${agent.status}</div></div></div><div class="mb-6"><div class="text-xs text-gray-500 mb-2">ESPECIALIDADES TÁCTICAS</div><div class="flex flex-wrap gap-2">${agent.skills.map(s => `<span class="bg-green-900 bg-opacity-40 text-green-300 px-3 py-1 text-sm border border-green-800">${s}</span>`).join('')}</div></div><div class="bg-black p-4 border-l-2 border-green-600 text-gray-400 text-sm italic"><span class="text-green-600 font-bold not-italic">>> BIO_LOG:</span> ${agent.bio}</div></div></div>`;
+                    // DISEÑO PROFESIONAL MILITAR/CYBER
+                    const riskColor = agent.danger >= 5 ? 'text-red-500' : (agent.danger >= 4 ? 'text-orange-500' : 'text-yellow-500');
+                    const riskBorder = agent.danger >= 5 ? 'border-red-500' : (agent.danger >= 4 ? 'border-orange-500' : 'border-yellow-500');
+                    
+                    container.innerHTML = `
+                        <div class="bg-gray-900 border border-green-800 flex flex-col md:flex-row relative overflow-hidden group shadow-[0_0_30px_rgba(0,50,0,0.5)]">
+                            <!-- Overlay scanlines -->
+                            <div class="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-5 transition duration-500 pointer-events-none" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent); background-size: 30px 30px;"></div>
+                            
+                            <!-- Columna Izquierda: Identificación -->
+                            <div class="w-full md:w-1/3 bg-black border-r border-green-800 p-8 flex flex-col items-center text-center relative z-10">
+                                <div class="w-40 h-40 border-2 ${riskBorder} mb-6 flex items-center justify-center bg-gray-900 relative group-hover:shadow-[0_0_20px_rgba(0,255,0,0.2)] transition-all">
+                                    <i class="fas fa-user-secret text-7xl text-gray-500"></i>
+                                    <div class="absolute top-1 right-1 w-2 h-2 ${riskColor} rounded-full animate-ping"></div>
+                                    <div class="absolute bottom-0 w-full bg-green-900 bg-opacity-50 text-xs text-white font-mono py-1">IMG_NOT_FOUND</div>
+                                </div>
+                                
+                                <h2 class="text-6xl font-bold text-white mb-0 tracking-tighter font-[Rajdhani]">${agent.id}</h2>
+                                <div class="text-green-600 text-xs tracking-[0.4em] mb-6 font-bold uppercase">Classification: ${agent.clearance}</div>
+                                
+                                <div class="w-full border-t border-green-900 pt-4 text-left">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-xs text-gray-500">THREAT LEVEL</span>
+                                        <span class="text-xs ${riskColor} font-bold font-mono">CLASS ${agent.danger}</span>
+                                    </div>
+                                    <div class="flex gap-1 h-2 bg-gray-800">
+                                        ${Array(5).fill(0).map((_,i) => `<div class="flex-1 ${i < agent.danger ? (agent.danger==5?'bg-red-600':'bg-orange-500') : 'bg-gray-700'}"></div>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha: Intel -->
+                            <div class="w-full md:w-2/3 p-8 relative z-10 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex flex-col md:flex-row justify-between items-start border-b border-green-800 pb-4 mb-6">
+                                        <div>
+                                            <div class="text-xs text-green-700 font-bold mb-1">CODENAME // ALIAS</div>
+                                            <h3 class="text-3xl text-white font-bold tracking-wide">${agent.alias}</h3>
+                                            <div class="text-sm text-green-500 font-mono mt-1">> ${agent.role}</div>
+                                        </div>
+                                        <div class="text-right mt-4 md:mt-0">
+                                            <div class="text-xs text-gray-500">OPERATIONAL STATUS</div>
+                                            <div class="text-green-400 font-mono font-bold animate-pulse bg-green-900 bg-opacity-20 px-2 py-1 border border-green-700 inline-block mt-1">${agent.status}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-6">
+                                        <div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><i class="fas fa-crosshairs"></i> TACTICAL CAPABILITIES</div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                            ${agent.skills.map(s => `<div class="bg-green-900 bg-opacity-10 text-green-300 px-3 py-2 text-xs border-l-2 border-green-600 font-mono hover:bg-green-900 hover:bg-opacity-30 transition-colors cursor-default">${s}</div>`).join('')}
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-black p-4 border border-green-800 text-gray-400 text-sm leading-relaxed font-mono relative">
+                                        <div class="absolute -top-3 left-2 bg-gray-900 px-2 text-xs text-green-600 font-bold">BIO_SUMMARY</div>
+                                        ${agent.bio}
+                                    </div>
+                                </div>
+
+                                <!-- SECCION CIFRADA MEJORADA -->
+                                <div class="mt-6 border-t border-green-800 pt-4">
+                                    <div class="flex items-center justify-between text-xs text-green-800 font-bold mb-2">
+                                        <span><i class="fas fa-lock"></i> CL-5 ENCRYPTED SEGMENT</span>
+                                        <span>KEY_ID: MISSING</span>
+                                    </div>
+                                    <div class="h-16 bg-black border border-green-900 overflow-hidden relative opacity-70">
+                                        <!-- Texto Cifrado en Cascada -->
+                                        <div class="absolute inset-0 p-2 font-mono text-[10px] leading-tight text-green-700 cipher-text">
+                                            ${agent.encryptedData}<br>
+                                            ${generateRandomHex(60)}<br>
+                                            ${generateRandomHex(60)}<br>
+                                            ${generateRandomHex(60)}<br>
+                                            ${generateRandomHex(60)}
+                                        </div>
+                                        <!-- Overlay de "ruido" -->
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 }
             } else {
-                container.innerHTML = `<div class="bg-red-950 bg-opacity-40 border border-red-600 p-8 text-center"><i class="fas fa-ban text-5xl text-red-500 mb-4"></i><h3 class="text-2xl text-red-500 font-bold">REGISTRO NO ENCONTRADO</h3></div>`;
+                container.innerHTML = `
+                    <div class="bg-red-950 bg-opacity-40 border border-red-600 p-12 text-center shadow-[0_0_30px_rgba(255,0,0,0.2)]">
+                        <i class="fas fa-file-excel text-6xl text-red-500 mb-6 animate-bounce"></i>
+                        <h3 class="text-3xl text-red-500 font-bold mb-2">REGISTRO NO ENCONTRADO</h3>
+                        <p class="text-gray-400 font-mono">El ID solicitado no figura en la base de datos activa.</p>
+                        <p class="text-xs text-red-700 mt-4">POSIBLEMENTE ELIMINADO POR PROTOCOLO DE LIMPIEZA (WIPE)</p>
+                    </div>
+                `;
             }
         }
 
         // --- 6. MENU (RENOVADO) ---
         const menuLinks = [
-            { name: "IP STRIKER", icon: "fa-bolt" },
-            { name: "INJECTION FW", icon: "fa-syringe" },
-            { name: "BRUTEFORCE", icon: "fa-hammer" },
-            { name: "S.E.T", icon: "fa-toolbox" },
-            { name: "PAYLOAD GEN", icon: "fa-bomb" },
-            { name: "O.S.I.N.T", icon: "fa-eye" },
-            { name: "GHOST ID", icon: "fa-ghost" },
-            { name: "SNIFFER", icon: "fa-broadcast-tower" },
-            { name: "ZERO-DAY", icon: "fa-bug" },
-            { name: "WIPE", icon: "fa-eraser" }
+            { name: "IP STRIKER", icon: "fa-bolt", url: "https://google.com" },
+            { name: "INJECTION FW", icon: "fa-syringe", url: "https://google.com" },
+            { name: "BRUTEFORCE", icon: "fa-hammer", url: "https://google.com" },
+            { name: "S.E.T", icon: "fa-toolbox", url: "https://google.com" },
+            { name: "PAYLOAD GEN", icon: "fa-bomb", url: "https://google.com" },
+            { name: "O.S.I.N.T", icon: "fa-eye", url: "https://google.com" },
+            { name: "GHOST ID", icon: "fa-ghost", url: "https://google.com" },
+            { name: "SNIFFER", icon: "fa-broadcast-tower", url: "https://google.com" },
+            { name: "ZERO-DAY", icon: "fa-bug", url: "https://google.com" },
+            { name: "WIPE", icon: "fa-eraser", url: "https://google.com" }
         ];
         
         const menuContainer = document.getElementById('menu-container');
         menuLinks.forEach(item => {
             const a = document.createElement('a');
-            a.href = "https://google.com"; // EDITABLE
+            a.href = item.url; // EDITABLE INDIVIDUALMENTE
             a.className = "flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-white menu-item cursor-pointer";
             a.innerHTML = `<i class="fas ${item.icon} w-6 text-center text-green-800 group-hover:text-green-400 transition-colors"></i><span class="text-sm font-bold tracking-widest font-[Rajdhani]">${item.name}</span>`;
             menuContainer.appendChild(a);

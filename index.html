@@ -904,5 +904,45 @@
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
         window.onload = function() { runBoot(); initNeuralNetwork(); animateNeural(); initTargets(); initServerFarm(); };
     </script>
+    <style>
+    .leviatham-floor {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #050505; /* Fondo casi negro */
+        border-top: 1px solid #3d0e0e; /* Una línea muy fina roja oscura arriba */
+        padding: 10px 0;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+        z-index: 9999;
+        user-select: none; /* No permite seleccionar el texto */
+    }
+
+    .warning-text {
+        color: #7a1b1b; /* Rojo sangre apagado */
+        font-size: 10px; /* Letra pequeña */
+        letter-spacing: 2px; /* Espaciado para que se vea cinematográfico */
+        text-transform: uppercase;
+        font-weight: 600;
+        text-shadow: 0px 0px 2px rgba(122, 27, 27, 0.5); /* Un brillo muy leve */
+        margin: 0;
+    }
+
+    .id-tag {
+        color: #444; /* Gris oscuro para el ID */
+        font-size: 9px;
+        margin-top: 4px;
+        display: block; /* Pone el ID debajo del texto principal */
+    }
+</style>
+
+<footer class="leviatham-floor">
+    <p class="warning-text">
+        ⚠ PROPERTY OF LEVIATHAM INTELLIGENCE. UNAUTHORIZED ACCESS IS A FEDERAL OFFENSE PUNISHABLE BY PERMANENT DATA ERASURE. SECTOR 7 JURISDICTION.
+    </p>
+    <span class="id-tag">SYSTEM ID: LVT-99 // MONITORING ACTIVE</span>
+</footer>
 </body>
 </html>
+

@@ -14,6 +14,7 @@
             --primary: #00ff00;
             --secondary: #003300;
             --alert: #ff0000;
+            --warning: #ffcc00;
             --bg-color: #020202;
             --glass: rgba(0, 20, 0, 0.85);
             --neon-blue: #00f3ff;
@@ -46,6 +47,10 @@
             border-color: #ff0000;
             color: #ff0000;
         }
+        
+        body.root-active .shell-prompt {
+            color: #ff0000;
+        }
 
         @keyframes red-alert-pulse {
             0% { box-shadow: inset 0 0 0px #300; }
@@ -60,7 +65,7 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; border-left: 1px solid #111; }
         ::-webkit-scrollbar-thumb { background: var(--secondary); border: 1px solid var(--primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
@@ -104,39 +109,55 @@
         }
         .cyber-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); background: rgba(0, 20, 0, 1); }
 
+        /* SHELL TERMINAL STYLES */
+        .shell-container {
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid var(--primary);
+            font-family: 'VT323', monospace;
+            box-shadow: 0 0 20px rgba(0, 20, 0, 0.5);
+        }
+        .shell-header {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 5px 10px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+        }
+        .shell-body {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 16px;
+        }
+        .shell-output p { margin: 2px 0; word-wrap: break-word;}
+        .shell-input-area { display: flex; align-items: center; margin-top: 10px; }
+        .shell-prompt { color: var(--neon-blue); margin-right: 8px; font-weight: bold; text-shadow: 0 0 5px var(--neon-blue); }
+        .shell-cmd-input {
+            background: transparent; border: none; color: var(--primary); width: 100%; outline: none; font-family: 'VT323', monospace; font-size: 16px;
+        }
+        .caret { display: inline-block; width: 10px; height: 18px; background: var(--primary); animation: blink-caret 1s step-end infinite; vertical-align: bottom; margin-left: 2px; }
+        @keyframes blink-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
         /* Efectos Texto Especiales */
         .text-glow-green { text-shadow: 0 0 10px #00ff00; }
         .text-glow-blue { text-shadow: 0 0 15px #00f3ff; color: #00f3ff; font-weight: bold; }
 
         /* Animación Leviatham Boot */
-        .leviatham-breath {
-            animation: breath 2s infinite ease-in-out;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.5));
-        }
-        @keyframes breath {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 40px rgba(0, 255, 0, 0.8)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3)); }
-        }
+        .leviatham-breath { animation: breath 2s infinite ease-in-out; filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.5)); }
+        @keyframes breath { 0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3)); } 50% { transform: scale(1.15); filter: drop-shadow(0 0 40px rgba(0, 255, 0, 0.8)); } 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3)); } }
         
         /* Animación de Cifrado en Movimiento */
-        .cipher-scroll {
-            background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0, 255, 0, 0.1) 50%, rgba(0,0,0,0));
-            overflow: hidden;
-            position: relative;
-        }
-        .cipher-text {
-            animation: scrollText 10s linear infinite;
-            white-space: pre-wrap;
-            word-break: break-all;
-            opacity: 0.5;
-            font-size: 10px;
-            line-height: 12px;
-        }
-        @keyframes scrollText {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
+        .cipher-scroll { background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0, 255, 0, 0.1) 50%, rgba(0,0,0,0)); overflow: hidden; position: relative; }
+        .cipher-text { animation: scrollText 10s linear infinite; white-space: pre-wrap; word-break: break-all; opacity: 0.5; font-size: 10px; line-height: 12px; }
+        @keyframes scrollText { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
+        /* Server Grid Styles */
+        .server-node { transition: all 0.3s; position: relative; overflow: hidden; }
+        .server-node::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%); transform: translateX(-100%); transition: 0.5s; }
+        .server-node:hover::after { transform: translateX(100%); }
+        .status-led { box-shadow: 0 0 5px currentColor; }
 
         /* Modo Sofia/Amor */
         .love-mode { --primary: #ff0055; --secondary: #330011; --bg-color: #1a000a; }
@@ -155,112 +176,41 @@
     <div class="crt-overlay"></div>
     <canvas id="neural-canvas"></canvas>
 
-    <!-- BOOT SCREEN MEJORADO + TELEMETRÍA -->
+    <!-- BOOT SCREEN MEJORADO -->
     <div id="boot-screen" class="fixed inset-0 bg-black z-50 flex flex-col justify-between p-6 md:p-12 font-mono text-sm md:text-base leading-tight text-green-500 overflow-hidden">
-        
-        <!-- Animación Leviatham Central -->
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full">
             <i class="fas fa-dragon text-9xl leviatham-breath text-green-500 mb-6 block"></i>
             <div class="text-xs uppercase tracking-[0.5em] animate-pulse opacity-70 mt-4 text-glow-green">INITIALIZING NEURAL HANDSHAKE...</div>
         </div>
-
-        <!-- Header Boot & Telemetría -->
         <div class="z-10 grid grid-cols-2 gap-4 border-b border-green-900 pb-2 bg-black bg-opacity-60 p-2">
-            <div>
-                <span class="block text-xs text-gray-500 font-bold">DEVICE_TELEMETRY:</span>
-                <div id="telemetry-data" class="text-xs text-green-400 font-mono mt-1 leading-relaxed">
-                    DETECTING HARDWARE...
-                </div>
-            </div>
-            <div class="text-right">
-                <i class="fas fa-satellite-dish animate-pulse text-green-500 text-xl"></i>
-                <div class="text-xs text-red-500 mt-1 font-bold">SECURE CHANNEL: <span class="animate-ping">●</span></div>
-            </div>
+            <div><span class="block text-xs text-gray-500 font-bold">DEVICE_TELEMETRY:</span><div id="telemetry-data" class="text-xs text-green-400 font-mono mt-1 leading-relaxed">DETECTING HARDWARE...</div></div>
+            <div class="text-right"><i class="fas fa-satellite-dish animate-pulse text-green-500 text-xl"></i><div class="text-xs text-red-500 mt-1 font-bold">SECURE CHANNEL: <span class="animate-ping">●</span></div></div>
         </div>
-
-        <!-- Log Container -->
         <div class="z-10 w-full max-w-2xl mx-auto mt-auto">
             <div id="boot-log" class="mb-4 text-xs md:text-sm font-bold tracking-wider opacity-90 h-40 overflow-hidden flex flex-col justify-end text-shadow bg-black bg-opacity-70 p-4 border-l-4 border-green-800 backdrop-blur-sm"></div>
-            
-            <div class="w-full bg-gray-900 h-2 mt-4 border border-green-900 relative overflow-hidden">
-                <div id="boot-progress" class="bg-green-500 h-full w-0 shadow-[0_0_15px_#00ff00] transition-all duration-300"></div>
-            </div>
-            
-            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold">
-                <span id="boot-system-text">System Integrity: CHECKING...</span>
-                <span>Leviatham OS v9.0.9</span>
-            </div>
+            <div class="w-full bg-gray-900 h-2 mt-4 border border-green-900 relative overflow-hidden"><div id="boot-progress" class="bg-green-500 h-full w-0 shadow-[0_0_15px_#00ff00] transition-all duration-300"></div></div>
+            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold"><span id="boot-system-text">System Integrity: CHECKING...</span><span>Leviatham OS v9.3.0</span></div>
         </div>
     </div>
 
     <!-- LEGAL MODAL -->
     <div id="legal-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-2 backdrop-blur-md">
         <div class="border-2 border-red-600 bg-black w-full h-full md:w-11/12 md:h-[90vh] md:max-w-7xl shadow-[0_0_50px_rgba(255,0,0,0.3)] relative flex flex-col overflow-hidden">
-            
-            <!-- Header del Modal -->
             <div class="bg-red-950 bg-opacity-40 p-6 border-b-2 border-red-800 flex items-center justify-between flex-shrink-0">
-                <div>
-                    <h2 class="text-2xl md:text-5xl font-bold text-red-500 tracking-tighter flex items-center gap-4" style="font-family: 'Rajdhani'">
-                        <i class="fas fa-shield-virus animate-pulse"></i> ACUERDO DE OPERADOR
-                    </h2>
-                    <p class="text-red-400 text-xs md:text-sm tracking-widest mt-1">CLASIFICACIÓN: SOLO PERSONAL AUTORIZADO</p>
-                </div>
-                <div class="text-xs text-red-500 font-mono text-right hidden md:block border border-red-900 p-2">
-                    AUDIT LOG: ENABLED<br>
-                    SESSION ID: <span id="session-id-modal">GENERATING...</span>
-                </div>
+                <div><h2 class="text-2xl md:text-5xl font-bold text-red-500 tracking-tighter flex items-center gap-4" style="font-family: 'Rajdhani'"><i class="fas fa-shield-virus animate-pulse"></i> ACUERDO DE OPERADOR</h2><p class="text-red-400 text-xs md:text-sm tracking-widest mt-1">CLASIFICACIÓN: SOLO PERSONAL AUTORIZADO</p></div>
+                <div class="text-xs text-red-500 font-mono text-right hidden md:block border border-red-900 p-2">AUDIT LOG: ENABLED<br>SESSION ID: <span id="session-id-modal">GENERATING...</span></div>
             </div>
-
-            <!-- Contenido Scrollable -->
             <div class="flex-1 overflow-y-auto p-6 md:p-12 text-sm md:text-lg text-gray-300 font-sans space-y-6 custom-scrollbar bg-gradient-to-b from-black to-red-950/20">
-                <div class="border-l-4 border-red-600 pl-6 py-2">
-                    <p class="text-white font-bold text-xl md:text-2xl uppercase mb-2">ADVERTENCIA DE SEGURIDAD</p>
-                    <p class="leading-relaxed">
-                        Usted está intentando establecer un enlace cifrado con la interfaz central de <strong>INDUSTRIAS LEVIATHAM</strong>. El acceso a esta herramienta está restringido exclusivamente a miembros de la Legión y personal con credenciales de nivel 4 o superior.
-                    </p>
-                </div>
+                <div class="border-l-4 border-red-600 pl-6 py-2"><p class="text-white font-bold text-xl md:text-2xl uppercase mb-2">ADVERTENCIA DE SEGURIDAD</p><p class="leading-relaxed">Usted está intentando establecer un enlace cifrado con la interfaz central de <strong>INDUSTRIAS LEVIATHAM</strong>.</p></div>
                 <hr class="border-red-900 opacity-30">
                 <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-book"></i> REGLAMENTO Y NORMATIVAS</h3>
-                        <div class="text-xs md:text-sm space-y-3 font-mono text-gray-400">
-                            <p><strong class="text-white">PROPIEDAD INTELECTUAL:</strong><br> Todo el código, exploits y datos obtenidos a través de esta interfaz son propiedad exclusiva de la organización.</p>
-                            <p><strong class="text-white">LEY 26.388 (Argentina):</strong><br> Se recuerda al operador que el acceso no autorizado a sistemas de terceros sin orden judicial constituye un delito federal.</p>
-                            <p><strong class="text-white">CONFIDENCIALIDAD:</strong><br> La divulgación de las herramientas aquí presentes resultará en la expulsión inmediata y acciones legales bajo la Ley de Secretos Comerciales.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-server"></i> POLÍTICA DE AUDITORÍA</h3>
-                        <ul class="list-disc list-inside text-xs md:text-sm space-y-2 text-gray-400">
-                            <li>Para garantizar la integridad del servidor <strong>SYSTEM404</strong>, todas las acciones realizadas dentro de la plataforma son registradas en un log de auditoría interna.</li>
-                            <li>Este registro se utiliza exclusivamente para fines de depuración, seguridad interna y prevención de abusos.</li>
-                            <li>El sistema verifica automáticamente la integridad de su conexión para prevenir ataques "Man-in-the-Middle".</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="bg-red-900 bg-opacity-10 border border-red-800 p-6 text-center mt-6">
-                    <p class="text-justify text-xs md:text-sm text-gray-400">
-                        Al proceder, usted certifica que comprende los riesgos operativos y que utilizará estas herramientas de manera ética y responsable, alineado con los objetivos de la organización. El mal uso será sancionado.
-                    </p>
+                    <div><h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-book"></i> REGLAMENTO Y NORMATIVAS</h3><div class="text-xs md:text-sm space-y-3 font-mono text-gray-400"><p><strong class="text-white">LEY 26.388 (Argentina):</strong><br> Se recuerda al operador que el acceso no autorizado constituye un delito federal.</p></div></div>
+                    <div><h3 class="text-red-500 font-bold mb-4 text-lg md:text-xl flex items-center gap-2"><i class="fas fa-server"></i> POLÍTICA DE AUDITORÍA</h3><ul class="list-disc list-inside text-xs md:text-sm space-y-2 text-gray-400"><li>Todas las acciones son registradas en un log de auditoría interna.</li></ul></div>
                 </div>
             </div>
-
-            <!-- Footer con Botón -->
             <div class="p-4 md:p-6 border-t border-red-800 bg-black flex flex-col md:flex-row justify-between items-center gap-4 z-20 flex-shrink-0">
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <div class="relative flex-shrink-0">
-                        <input type="checkbox" id="accept-check" class="w-8 h-8 accent-red-600 cursor-pointer opacity-0 absolute inset-0 z-10">
-                        <div class="w-8 h-8 border-2 border-red-600 flex items-center justify-center pointer-events-none bg-red-900 bg-opacity-20" id="custom-check">
-                            <i class="fas fa-check text-white opacity-0 transition-opacity"></i>
-                        </div>
-                    </div>
-                    <label for="accept-check" class="text-xs md:text-sm text-gray-400 cursor-pointer select-none hover:text-white transition-colors font-bold flex-1">
-                        LEÍ Y ACEPTO LAS REGLAS DE OPERACIÓN
-                    </label>
-                </div>
-                <button onclick="acceptTerms()" id="btn-accept" class="cyber-btn px-6 py-3 md:px-10 md:py-4 font-bold text-lg md:text-xl opacity-50 pointer-events-none hover:bg-red-900 border-red-500 text-red-500 w-full md:w-auto shadow-[0_0_20px_rgba(255,0,0,0.1)] transition-all">
-                    [ CONECTAR AL NÚCLEO ]
-                </button>
+                <div class="flex items-center gap-3 w-full md:w-auto"><div class="relative flex-shrink-0"><input type="checkbox" id="accept-check" class="w-8 h-8 accent-red-600 cursor-pointer opacity-0 absolute inset-0 z-10"><div class="w-8 h-8 border-2 border-red-600 flex items-center justify-center pointer-events-none bg-red-900 bg-opacity-20" id="custom-check"><i class="fas fa-check text-white opacity-0 transition-opacity"></i></div></div><label for="accept-check" class="text-xs md:text-sm text-gray-400 cursor-pointer select-none hover:text-white transition-colors font-bold flex-1">LEÍ Y ACEPTO LAS REGLAS DE OPERACIÓN</label></div>
+                <button onclick="acceptTerms()" id="btn-accept" class="cyber-btn px-6 py-3 md:px-10 md:py-4 font-bold text-lg md:text-xl opacity-50 pointer-events-none hover:bg-red-900 border-red-500 text-red-500 w-full md:w-auto shadow-[0_0_20px_rgba(255,0,0,0.1)] transition-all">[ CONECTAR AL NÚCLEO ]</button>
             </div>
         </div>
     </div>
@@ -271,28 +221,12 @@
         <!-- SIDEBAR -->
         <aside id="sidebar" class="w-72 bg-black bg-opacity-90 border-r border-green-900 flex-shrink-0 hidden md:flex flex-col transition-all duration-300 absolute md:relative z-30 h-full backdrop-blur-md">
             <div class="p-6 border-b border-green-900 flex items-center gap-4 bg-gradient-to-r from-green-900/20 to-transparent">
-                <div class="w-12 h-12 border-2 border-green-500 rounded-full flex items-center justify-center animate-pulse shadow-[0_0_10px_#00ff00]">
-                    <i class="fas fa-dragon text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-widest text-white" style="font-family: 'Rajdhani'">LEVIATHAM</h1>
-                    <div class="flex items-center gap-2 text-xs text-green-600 font-mono">
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
-                        SYSTEM: ONLINE
-                    </div>
-                </div>
+                <div class="w-12 h-12 border-2 border-green-500 rounded-full flex items-center justify-center animate-pulse shadow-[0_0_10px_#00ff00]"><i class="fas fa-dragon text-2xl"></i></div>
+                <div><h1 class="text-2xl font-bold tracking-widest text-white" style="font-family: 'Rajdhani'">LEVIATHAM</h1><div class="flex items-center gap-2 text-xs text-green-600 font-mono"><div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>SYSTEM: ONLINE</div></div>
             </div>
-            <nav class="flex-1 overflow-y-auto py-6 px-0 space-y-1" id="menu-container">
-                <!-- Menu Items Generated via JS -->
-            </nav>
+            <nav class="flex-1 overflow-y-auto py-6 px-0 space-y-1" id="menu-container"></nav>
             <div class="p-4 border-t border-green-900 bg-green-900 bg-opacity-5">
-                <div class="flex justify-between items-end font-mono text-xs text-gray-500">
-                    <div>
-                        LATENCY: <span class="text-green-400 animate-pulse">14ms</span><br>
-                        UPLINK: <span class="text-green-400">SECURE</span>
-                    </div>
-                    <i class="fas fa-signal text-2xl text-green-800"></i>
-                </div>
+                <div class="flex justify-between items-end font-mono text-xs text-gray-500"><div>LATENCY: <span class="text-green-400 animate-pulse">14ms</span><br>UPLINK: <span class="text-green-400">SECURE</span></div><i class="fas fa-signal text-2xl text-green-800"></i></div>
             </div>
         </aside>
 
@@ -302,32 +236,33 @@
 
             <!-- Header -->
             <header class="h-20 border-b border-green-900 flex items-center justify-between px-6 bg-black bg-opacity-60 backdrop-blur-sm z-20">
-                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V9.0.9</div>
+                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V9.3.0</div>
                 <div class="flex items-center gap-6 ml-auto">
-                    <div class="text-right">
-                        <div id="ip-display" class="text-lg font-bold text-white typing-cursor">ESTABLECIENDO ENLACE...</div>
-                        <div id="connection-status" class="text-xs font-mono text-green-600">CIFRANDO PAQUETES...</div>
-                    </div>
-                    <div class="w-10 h-10 border border-green-500 flex items-center justify-center bg-green-900 bg-opacity-20 shadow-[0_0_10px_rgba(0,255,0,0.2)]">
-                        <i class="fas fa-shield-alt text-xl"></i>
-                    </div>
+                    <div class="text-right"><div id="ip-display" class="text-lg font-bold text-white typing-cursor">ESTABLECIENDO ENLACE...</div><div id="connection-status" class="text-xs font-mono text-green-600">CIFRANDO PAQUETES...</div></div>
+                    <div class="w-10 h-10 border border-green-500 flex items-center justify-center bg-green-900 bg-opacity-20 shadow-[0_0_10px_rgba(0,255,0,0.2)]"><i class="fas fa-shield-alt text-xl"></i></div>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto p-4 md:p-12 scroll-smooth relative z-10 custom-scrollbar">
                 
                 <!-- 1. INTRO -->
-                <section class="max-w-7xl mx-auto mb-20 mt-4 animate-slide-in">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-8 leading-tight text-white font-[Rajdhani]">
-                        HAS INGRESADO AL CENTRO DE MANDO DE CIBERINTELIGENCIA DE <br>
-                        <span class="glitch text-glow-green text-5xl md:text-7xl block mt-2" data-text="INDUSTRIAS LEVIATHAM">INDUSTRIAS LEVIATHAM</span>
-                    </h1>
-                    
-                    <div class="border-l-4 border-green-500 pl-6 py-4 bg-gradient-to-r from-green-900/10 to-transparent">
-                        <p class="text-xl md:text-3xl text-gray-300 font-light leading-relaxed">
-                            Pocos son los elegidos por el líder, por los moderadores o por su lealtad a la legión que tienen el privilegio de poder usar esta interfaz avanzada conectada al servidor 
-                            <span class="font-bold text-glow-blue tracking-widest text-2xl md:text-4xl px-2">SYSTEM404</span>.
-                        </p>
+                <section class="max-w-7xl mx-auto mb-10 mt-4 animate-slide-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-8 leading-tight text-white font-[Rajdhani]">HAS INGRESADO AL CENTRO DE MANDO DE CIBERINTELIGENCIA DE <br><span class="glitch text-glow-green text-5xl md:text-7xl block mt-2" data-text="INDUSTRIAS LEVIATHAM">INDUSTRIAS LEVIATHAM</span></h1>
+                    <div class="border-l-4 border-green-500 pl-6 py-4 bg-gradient-to-r from-green-900/10 to-transparent"><p class="text-xl md:text-3xl text-gray-300 font-light leading-relaxed">Pocos son los elegidos por el líder, por los moderadores o por su lealtad a la legión que tienen el privilegio de poder usar esta interfaz avanzada conectada al servidor <span class="font-bold text-glow-blue tracking-widest text-2xl md:text-4xl px-2">SYSTEM404</span>.</p></div>
+                </section>
+
+                <!-- 1.5. ASISTENTE LEVIATHAM SHELL (30+ COMANDOS) -->
+                <section class="max-w-5xl mx-auto mb-20">
+                    <div class="shell-container rounded-lg overflow-hidden animate-slide-in">
+                        <div class="shell-header"><span class="font-bold"><i class="fas fa-robot"></i> LEVIATHAM_AI_ASSISTANT</span><span class="text-xs opacity-70">NEURAL LINK: ACTIVE</span></div>
+                        <div class="shell-body" id="shell-output" onclick="document.getElementById('cmd-input').focus()">
+                            <p class="text-green-500">System initialization complete.</p>
+                            <p class="text-green-500">I am Leviatham AI. How can I assist you today, Operator?</p>
+                            <p class="text-gray-500 mb-4">Type <span class="text-white">'HELP'</span> for a list of directives.</p>
+                        </div>
+                        <div class="p-3 border-t border-green-900 bg-black bg-opacity-90">
+                            <div class="shell-input-area"><span class="shell-prompt">root@leviatham:~#</span><input type="text" id="cmd-input" class="shell-cmd-input" autocomplete="off" spellcheck="false" autofocus><span class="caret"></span></div>
+                        </div>
                     </div>
                 </section>
 
@@ -336,91 +271,82 @@
                     <div class="absolute -inset-1 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
                     <div class="relative border border-green-700 bg-black bg-opacity-80 p-8 md:p-12">
                         <div class="absolute top-0 left-0 bg-green-600 text-black font-bold px-4 py-1 text-sm">NIVEL DE SEGURIDAD: <span id="security-level-disp">1</span></div>
-                        
-                        <h3 class="text-3xl font-bold mb-6 text-white border-b border-gray-800 pb-4 mt-4 flex justify-between">
-                            <span><i class="fas fa-key text-green-500 mr-2"></i> DESAFÍO DE INICIACIÓN</span>
-                            <span class="text-sm font-mono text-gray-500 font-normal self-end" id="enc-type">ROT13</span>
-                        </h3>
-                        
-                        <!-- Contenedor del Puzzle -->
+                        <h3 class="text-3xl font-bold mb-6 text-white border-b border-gray-800 pb-4 mt-4 flex justify-between"><span><i class="fas fa-key text-green-500 mr-2"></i> DESAFÍO DE INICIACIÓN</span><span class="text-sm font-mono text-gray-500 font-normal self-end" id="enc-type">ROT13</span></h3>
                         <div class="grid md:grid-cols-2 gap-8 mb-8">
-                            <div>
-                                <p class="text-gray-400 mb-2 font-mono text-sm">>> MENSAJE INTERCEPTADO:</p>
-                                <!-- Caja de Texto Dinámica -->
-                                <div id="puzzle-text-box" class="bg-gray-900 p-6 font-mono text-green-300 text-lg leading-relaxed border-l-2 border-green-500 shadow-inner break-words">
-                                    "Fv chqvfgr qrpvsend rfgb fvtavsvpn dhr rerf ha nsvpvbanqb pba pbabpvvzvragbf bnfvpbf, Ry ireqnqreb ergb cnen ire qr dhr rfgnf rpub rzcrmnen npn l fv qrzhrfgenf gh inyvn cbqenf fre cnegr qr nytb znf tenaqr dhr gh"
-                                </div>
-                            </div>
-                            <div class="flex flex-col justify-center space-y-4">
-                                <label class="text-sm text-green-500 font-bold tracking-widest" id="puzzle-label">CLAVE DE DESCIFRADO:</label>
-                                <input type="text" id="puzzle-input" placeholder="INGRESE TEXTO PLANO..." class="cyber-input p-4 text-xl w-full bg-black">
-                                <button onclick="checkPuzzle()" class="cyber-btn py-4 font-bold text-xl flex items-center justify-center gap-2">
-                                    <i class="fas fa-unlock"></i> EJECUTAR
-                                </button>
-                            </div>
+                            <div><p class="text-gray-400 mb-2 font-mono text-sm">>> MENSAJE INTERCEPTADO:</p><div id="puzzle-text-box" class="bg-gray-900 p-6 font-mono text-green-300 text-lg leading-relaxed border-l-2 border-green-500 shadow-inner break-words">"Fv chqvfgr qrpvsend rfgb fvtavsvpn dhr rerf ha nsvpvbanqb pba pbabpvvzvragbf bnfvpbf, Ry ireqnqreb ergb cnen ire qr dhr rfgnf rpub rzcrmnen npn l fv qrzhrfgenf gh inyvn cbqenf fre cnegr qr nytb znf tenaqr dhr gh"</div></div>
+                            <div class="flex flex-col justify-center space-y-4"><label class="text-sm text-green-500 font-bold tracking-widest" id="puzzle-label">CLAVE DE DESCIFRADO:</label><input type="text" id="puzzle-input" placeholder="INGRESE TEXTO PLANO..." class="cyber-input p-4 text-xl w-full bg-black"><button onclick="checkPuzzle()" class="cyber-btn py-4 font-bold text-xl flex items-center justify-center gap-2"><i class="fas fa-unlock"></i> EJECUTAR</button></div>
                         </div>
-
-                        <!-- Resultado -->
-                        <div id="puzzle-result" class="hidden animate-slide-in border-t border-green-800 pt-6">
-                            <!-- Inyectado JS -->
-                        </div>
+                        <div id="puzzle-result" class="hidden animate-slide-in border-t border-green-800 pt-6"></div>
                     </div>
                 </section>
 
-                <!-- 3. AGENT DATABASE (RENOVADO) -->
-                <section class="max-w-6xl mx-auto mb-32">
-                    <h3 class="text-4xl font-bold mb-10 flex items-center gap-4 border-b-2 border-green-800 pb-4">
-                        <span class="bg-green-700 text-black px-3 py-1 text-2xl rounded">DB</span>
-                        BASE DE DATOS DE AGENTES
-                    </h3>
+                <!-- 3. AGENT DATABASE -->
+                <section class="max-w-6xl mx-auto mb-20">
+                    <h3 class="text-4xl font-bold mb-10 flex items-center gap-4 border-b-2 border-green-800 pb-4"><span class="bg-green-700 text-black px-3 py-1 text-2xl rounded">DB</span> BASE DE DATOS DE AGENTES</h3>
                     <div class="flex flex-col md:flex-row gap-0 md:gap-4 mb-12 shadow-[0_0_20px_rgba(0,255,0,0.1)]">
-                        <div class="bg-green-900 bg-opacity-20 flex items-center justify-center px-6 py-4 border border-green-700 border-r-0">
-                            <i class="fas fa-search text-2xl text-green-500"></i>
-                        </div>
-                        <input type="text" id="agent-search" placeholder="ID DE OPERATIVO (EJ: 01, 33, 77)..." 
-                               class="flex-1 bg-black border border-green-700 p-6 text-2xl text-green-400 focus:text-white outline-none font-mono tracking-widest placeholder-green-900">
+                        <div class="bg-green-900 bg-opacity-20 flex items-center justify-center px-6 py-4 border border-green-700 border-r-0"><i class="fas fa-search text-2xl text-green-500"></i></div>
+                        <input type="text" id="agent-search" placeholder="ID DE OPERATIVO (EJ: 01, 33, 77)..." class="flex-1 bg-black border border-green-700 p-6 text-2xl text-green-400 focus:text-white outline-none font-mono tracking-widest placeholder-green-900">
                         <button onclick="searchAgent()" class="bg-green-800 hover:bg-green-700 text-white font-bold px-10 py-4 transition-colors text-xl tracking-widest border border-green-600">ACCEDER</button>
                     </div>
-                    <div id="agent-display" class="hidden animate-fade-in relative min-h-[400px]">
-                        <div id="agent-content"></div>
+                    <div id="agent-display" class="hidden animate-fade-in relative min-h-[400px]"><div id="agent-content"></div></div>
+                </section>
+
+                <!-- 4. NUEVA SECCION: OBJETIVOS DE LA LEGION (EDITABLE) -->
+                <section class="max-w-7xl mx-auto mb-20 relative">
+                    <h3 class="text-3xl font-bold mb-6 text-red-500 flex items-center gap-2 font-[Rajdhani] border-b border-red-900 pb-2">
+                        <i class="fas fa-crosshairs animate-pulse"></i> OBJETIVOS DE LA LEGIÓN
+                    </h3>
+                    
+                    <!-- Horizontal Scroll Container - DATA IS GENERATED FROM JS 'targetList' ARRAY -->
+                    <div class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory scroll-smooth custom-scrollbar" id="targets-container">
+                        <!-- JS LOOPS HERE -->
                     </div>
                 </section>
 
-                <!-- 4. SECCIÓN MODO ROOT -->
-                <section class="max-w-4xl mx-auto mb-32 border-2 border-red-900 bg-black p-8 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-900 text-white text-xs px-2 py-1 font-bold">ADMIN ONLY</div>
-                    
-                    <h3 class="text-3xl font-bold mb-6 text-red-600 flex items-center gap-3">
-                        <i class="fas fa-skull-crossbones"></i> MODO ROOT
+                <!-- 5. NUEVA SECCION: SERVIDORES SYSTEM404G (SIMULACION REALISTA) -->
+                <section class="max-w-6xl mx-auto mb-32">
+                    <h3 class="text-3xl font-bold mb-6 text-green-500 flex items-center gap-2 font-[Rajdhani] border-b border-green-900 pb-2">
+                        <i class="fas fa-server"></i> SERVIDORES SYSTEM404G
                     </h3>
                     
-                    <p class="text-gray-400 mb-6 font-mono text-sm">
-                        Acceso restringido a herramientas de Nivel 0. Ingrese la clave maestra obtenida en el Desafío de Iniciación para desbloquear.
-                    </p>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- GRID VISUAL -->
+                        <div class="grid grid-cols-4 gap-3 md:w-2/3" id="server-grid">
+                            <!-- JS Generará los servidores aquí -->
+                        </div>
 
-                    <div class="flex gap-4 mb-6">
-                        <input type="password" id="root-pass" placeholder="PASSWORD_REQUIRED" 
-                               class="cyber-input bg-red-950 bg-opacity-10 border-red-800 text-red-500 w-full p-4 text-lg focus:shadow-[0_0_15px_#ff0000]">
-                        <button onclick="checkRoot()" class="cyber-btn border-red-600 text-red-600 hover:bg-red-900 hover:text-white px-8 font-bold">
-                            <i class="fas fa-terminal"></i> EXECUTE
-                        </button>
+                        <!-- MONITOR PANEL -->
+                        <div class="md:w-1/3 bg-black border border-green-800 p-4 font-mono text-xs relative h-64 overflow-hidden shadow-[0_0_15px_rgba(0,255,0,0.1)]">
+                            <div class="absolute top-0 right-0 bg-green-900 text-white px-2 py-1">LIVE MONITOR</div>
+                            <div id="server-details" class="mt-6 space-y-4">
+                                <p class="text-gray-500 text-center mt-10">HOVER OVER A NODE TO VIEW TELEMETRY</p>
+                            </div>
+                            <div class="absolute bottom-2 left-2 text-green-700 w-full">
+                                GLOBAL LOAD: <span class="animate-pulse">42%</span>
+                                <div class="h-1 bg-gray-900 w-11/12 mt-1"><div class="h-full bg-green-600 w-[42%] animate-pulse"></div></div>
+                            </div>
+                        </div>
                     </div>
+                </section>
 
+                <!-- 6. SECCIÓN MODO ROOT -->
+                <section class="max-w-4xl mx-auto mb-32 border-2 border-red-900 bg-black p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-red-900 text-white text-xs px-2 py-1 font-bold">ADMIN ONLY</div>
+                    <h3 class="text-3xl font-bold mb-6 text-red-600 flex items-center gap-3"><i class="fas fa-skull-crossbones"></i> MODO ROOT</h3>
+                    <p class="text-gray-400 mb-6 font-mono text-sm">Acceso restringido a herramientas de Nivel 0. Ingrese la clave maestra obtenida en el Desafío de Iniciación para desbloquear.</p>
+                    <div class="flex gap-4 mb-6">
+                        <input type="password" id="root-pass" placeholder="PASSWORD_REQUIRED" class="cyber-input bg-red-950 bg-opacity-10 border-red-800 text-red-500 w-full p-4 text-lg focus:shadow-[0_0_15px_#ff0000]">
+                        <button onclick="checkRoot()" class="cyber-btn border-red-600 text-red-600 hover:bg-red-900 hover:text-white px-8 font-bold"><i class="fas fa-terminal"></i> EXECUTE</button>
+                    </div>
                     <!-- SUBMENU OCULTO ROOT -->
                     <div id="root-menu" class="hidden mt-8 border-t border-red-800 pt-6 animate-slide-in">
-                        <div class="bg-red-900 bg-opacity-20 p-4 border border-red-600 mb-4 text-center text-red-400 font-bold animate-pulse">
-                            ¡ACCESO DE SUPERUSUARIO CONCEDIDO! PRECAUCIÓN EXTREMA.
-                        </div>
-                        
+                        <div class="bg-red-900 bg-opacity-20 p-4 border border-red-600 mb-4 text-center text-red-400 font-bold animate-pulse">¡ACCESO DE SUPERUSUARIO CONCEDIDO! PRECAUCIÓN EXTREMA.</div>
                         <div class="grid md:grid-cols-2 gap-4">
-                            <!-- ENLACE ROOT 1 (BOTNET) -->
                             <a href="https://google.com" target="_self" class="group block bg-black border border-red-800 p-6 hover:bg-red-900 hover:bg-opacity-40 transition-all text-center">
                                 <i class="fas fa-project-diagram text-4xl text-red-600 mb-3 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="text-xl font-bold text-white mb-1">BOTNET S4G</h4>
                                 <p class="text-xs text-red-400">Control de Enjambre</p>
                             </a>
-
-                            <!-- ENLACE ROOT 2 (BLACKOUT) -->
                             <a href="https://google.com" target="_self" class="group block bg-black border border-red-800 p-6 hover:bg-red-900 hover:bg-opacity-40 transition-all text-center">
                                 <i class="fas fa-power-off text-4xl text-red-600 mb-3 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="text-xl font-bold text-white mb-1">BLACKOUT</h4>
@@ -444,456 +370,210 @@
         const canvas = document.getElementById('neural-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 1.5; this.vy = (Math.random() - 0.5) * 1.5;
-                this.size = Math.random() * 2 + 1;
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if(this.x<0||this.x>canvas.width) this.vx*=-1; if(this.y<0||this.y>canvas.height) this.vy*=-1;
-            }
-            draw() {
-                const isLove = document.body.classList.contains('love-mode');
-                const isRoot = document.body.classList.contains('root-active');
-                if(isRoot) ctx.fillStyle = '#ff0000';
-                else if(isLove) ctx.fillStyle = '#ff0055';
-                else ctx.fillStyle = '#00ff00';
-                
-                ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();
-            }
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.vx = (Math.random() - 0.5) * 1.5; this.vy = (Math.random() - 0.5) * 1.5; this.size = Math.random() * 2 + 1; }
+            update() { this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>canvas.width) this.vx*=-1; if(this.y<0||this.y>canvas.height) this.vy*=-1; }
+            draw() { const isLove = document.body.classList.contains('love-mode'); const isRoot = document.body.classList.contains('root-active'); ctx.fillStyle = isRoot ? '#ff0000' : (isLove ? '#ff0055' : '#00ff00'); ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
         }
-
-        function initNeuralNetwork() {
-            particles = [];
-            const n = Math.floor((canvas.width*canvas.height)/15000);
-            for(let i=0; i<n; i++) particles.push(new Particle());
-        }
-
+        function initNeuralNetwork() { particles = []; const n = Math.floor((canvas.width*canvas.height)/15000); for(let i=0; i<n; i++) particles.push(new Particle()); }
         function animateNeural() {
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            const isLove = document.body.classList.contains('love-mode');
-            const isRoot = document.body.classList.contains('root-active');
-            
-            let color = '0, 255, 0'; // Default Green
-            if(isLove) color = '255, 0, 85'; // Pink
-            if(isRoot) color = '255, 0, 0'; // Red
-
+            const isLove = document.body.classList.contains('love-mode'); const isRoot = document.body.classList.contains('root-active');
+            let color = isRoot ? '255, 0, 0' : (isLove ? '255, 0, 85' : '0, 255, 0');
             for(let i=0; i<particles.length; i++) {
                 particles[i].update(); particles[i].draw();
                 for(let j=i; j<particles.length; j++) {
                     const dx = particles[i].x-particles[j].x; const dy = particles[i].y-particles[j].y;
                     const d = Math.sqrt(dx*dx+dy*dy);
-                    if(d<150) {
-                        ctx.beginPath(); ctx.strokeStyle = `rgba(${color}, ${1-d/150})`;
-                        ctx.lineWidth = 0.5; ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
-                    }
+                    if(d<150) { ctx.beginPath(); ctx.strokeStyle = `rgba(${color}, ${1-d/150})`; ctx.lineWidth = 0.5; ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke(); }
                 }
             }
             requestAnimationFrame(animateNeural);
         }
 
         // --- 2. BOOT & UI ---
-        const bootLog = document.getElementById('boot-log'); 
-        const bootProgress = document.getElementById('boot-progress');
-        const bootScreen = document.getElementById('boot-screen'); 
-        const legalModal = document.getElementById('legal-modal');
-        const mainInterface = document.getElementById('main-interface');
-        const telemetryDiv = document.getElementById('telemetry-data');
-        
-        // Simular datos de telemetría REAL
-        const cores = navigator.hardwareConcurrency || "UNKNOWN";
-        const platform = navigator.platform || "UNKNOWN_OS";
-        const screenRes = `${window.screen.width}x${window.screen.height}`;
-        const userAgentShort = navigator.userAgent.substring(0, 25) + "...";
-        const latency = Math.floor(Math.random() * 40 + 10); // Simulado
+        const bootLog = document.getElementById('boot-log'); const bootProgress = document.getElementById('boot-progress');
+        const bootScreen = document.getElementById('boot-screen'); const legalModal = document.getElementById('legal-modal');
+        const mainInterface = document.getElementById('main-interface'); const telemetryDiv = document.getElementById('telemetry-data');
+        const cores = navigator.hardwareConcurrency || "UNKNOWN"; const platform = navigator.platform || "UNKNOWN_OS";
+        const screenRes = `${window.screen.width}x${window.screen.height}`; const userAgentShort = navigator.userAgent.substring(0, 25) + "...";
+        const latency = Math.floor(Math.random() * 40 + 10);
+        telemetryDiv.innerHTML = `PLATFORM: ${platform} <br> CORES: ${cores} // GPU: WEBGL_ACTIVE <br> RES: ${screenRes} <br> AGENT: ${userAgentShort} <br> PING: ${latency}ms (STABLE)`;
 
-        telemetryDiv.innerHTML = `
-            PLATFORM: ${platform} <br>
-            CORES: ${cores} // GPU: WEBGL_ACTIVE <br>
-            RES: ${screenRes} <br>
-            AGENT: ${userAgentShort} <br>
-            PING: ${latency}ms (STABLE)
-        `;
-
-        const bootMsgs = [
-            "INITIALIZING KERNEL 9.0.9...",
-            "LOADING NEURAL NETWORKS...",
-            "OPTIMIZING GPU THREADS...",
-            `DETECTED HOST: ${platform.toUpperCase()}...`,
-            "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...",
-            "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>",
-            "VERIFYING ENCRYPTION KEYS...",
-            "BYPASSING SECURE BOOT...",
-            "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>",
-            "LOADING LEVIATHAM ASSETS...",
-            "SYSTEM READY."
-        ];
+        const bootMsgs = ["INITIALIZING KERNEL 9.3.0...", "LOADING NEURAL NETWORKS...", "OPTIMIZING GPU THREADS...", `DETECTED HOST: ${platform.toUpperCase()}...`, "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...", "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>", "VERIFYING ENCRYPTION KEYS...", "BYPASSING SECURE BOOT...", "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>", "LOADING LEVIATHAM ASSETS...", "SYSTEM READY."];
         let msgIdx = 0;
-
         function runBoot() {
             if(msgIdx < bootMsgs.length) {
-                const div = document.createElement('div'); 
-                div.innerHTML = `<span class="text-gray-500 font-mono">[${new Date().toLocaleTimeString()}]</span> ${bootMsgs[msgIdx]}`;
-                bootLog.appendChild(div); 
-                bootLog.scrollTop = bootLog.scrollHeight;
-                
-                const progress = ((msgIdx+1)/bootMsgs.length)*100;
-                bootProgress.style.width = `${progress}%`;
-                
+                const div = document.createElement('div'); div.innerHTML = `<span class="text-gray-500 font-mono">[${new Date().toLocaleTimeString()}]</span> ${bootMsgs[msgIdx]}`;
+                bootLog.appendChild(div); bootLog.scrollTop = bootLog.scrollHeight;
+                const progress = ((msgIdx+1)/bootMsgs.length)*100; bootProgress.style.width = `${progress}%`;
                 document.getElementById('boot-system-text').innerText = `System Integrity: ${Math.floor(progress)}%`;
-
-                msgIdx++; 
-                setTimeout(runBoot, Math.random() * 500 + 400);
+                msgIdx++; setTimeout(runBoot, Math.random() * 500 + 400);
             } else {
-                setTimeout(() => { 
-                    bootScreen.classList.add('hidden'); 
-                    legalModal.classList.remove('hidden'); 
-                    legalModal.classList.add('flex'); 
-                    document.getElementById('session-id-modal').innerText = "SESSION-" + Math.floor(Math.random()*999999); 
-                }, 800);
+                setTimeout(() => { bootScreen.classList.add('hidden'); legalModal.classList.remove('hidden'); legalModal.classList.add('flex'); document.getElementById('session-id-modal').innerText = "SESSION-" + Math.floor(Math.random()*999999); }, 800);
             }
         }
 
-        const check = document.getElementById('accept-check'); 
-        const btn = document.getElementById('btn-accept');
-        const customCheckIcon = document.querySelector('#custom-check i');
-        
-        check.addEventListener('change', function() {
-            if(this.checked) { 
-                btn.classList.remove('opacity-50', 'pointer-events-none'); 
-                btn.classList.add('animate-pulse'); 
-                customCheckIcon.classList.remove('opacity-0');
-            }
-            else { 
-                btn.classList.add('opacity-50', 'pointer-events-none'); 
-                btn.classList.remove('animate-pulse'); 
-                customCheckIcon.classList.add('opacity-0');
+        const check = document.getElementById('accept-check'); const btn = document.getElementById('btn-accept'); const customCheckIcon = document.querySelector('#custom-check i');
+        check.addEventListener('change', function() { if(this.checked) { btn.classList.remove('opacity-50', 'pointer-events-none'); btn.classList.add('animate-pulse'); customCheckIcon.classList.remove('opacity-0'); } else { btn.classList.add('opacity-50', 'pointer-events-none'); btn.classList.remove('animate-pulse'); customCheckIcon.classList.add('opacity-0'); }});
+        function acceptTerms() { legalModal.classList.add('hidden'); legalModal.classList.remove('flex'); mainInterface.classList.remove('hidden'); setTimeout(() => mainInterface.classList.remove('opacity-0'), 100); fetchIP(); }
+
+        async function fetchIP() { try { const req = await fetch('https://api.ipify.org?format=json'); const data = await req.json(); document.getElementById('ip-display').innerText = `IP: ${data.ip}`; document.getElementById('ip-display').classList.remove('typing-cursor', 'text-white'); document.getElementById('ip-display').classList.add('text-green-500'); setTimeout(() => document.getElementById('connection-status').innerHTML = `<span class="text-red-500 font-bold blink">[!] CONEXIÓN P2P ESTABLECIDA - NO USAR VPN</span>`, 1500); } catch(e) { document.getElementById('ip-display').innerText = "IP: UNKNOWN (OFFLINE)"; } }
+
+        // --- 2.5 SHELL LOGIC (35+ COMANDOS) ---
+        const cmdInput = document.getElementById('cmd-input');
+        const shellOutput = document.getElementById('shell-output');
+
+        const commands = {
+            'help': "COMANDOS DISPONIBLES:\n> SISTEMA: date, clear, whoami, ip, reboot, status, exit\n> LORE: leviatham, founder, system404, protocol_omega, join, mission\n> HACKING: scan, nmap, sqlmap, bruteforce, exploit, inject, whois, ping, traceroute, decrypt, wipe, ddos, botnet\n> SOCIAL: hello, creador, ia, secret, sofia, matrix, money, joke, password, love, hate\n> EASTER EGGS: sudo, rm -rf, 42, konami, 666",
+            'date': () => new Date().toString(),
+            'clear': () => { shellOutput.innerHTML = ''; return 'Console cleared.'; },
+            'cls': () => { shellOutput.innerHTML = ''; return 'Console cleared.'; },
+            'whoami': "root@leviatham [UID: 0] (Admin Privileges)",
+            'ip': "127.0.0.1 (LOCALHOST) // PROXY CHAIN: TOR -> VPN -> LEVIATHAM_GATE",
+            'reboot': "REBOOTING SYSTEM... [ERROR: PERMISSION DENIED BY KERNEL]",
+            'status': "SYSTEM STATUS: OPERATIONAL\nTHREAT LEVEL: LOW\nNODES CONNECTED: 42\nDEFCON: 4",
+            'exit': "CONNECTION TERMINATED... JUST KIDDING, YOU CAN'T LEAVE THE LEGION.",
+            'leviatham': "INDUSTRIAS LEVIATHAM: Líderes en ciberinteligencia ofensiva. 'Nosotros vemos todo'.",
+            'founder': "EL FUNDADOR (01). Datos clasificados. Nivel 5 requerido para acceso.",
+            'system404': "El núcleo de la red. Un servidor fantasma indetectable ubicado en aguas internacionales.",
+            'protocol_omega': "PROTOCOL OMEGA: [CLASSIFIED] Destrucción total de la huella digital. ¿Desea iniciar? (Y/N)",
+            'join': "Para unirte, debes demostrar tu valía. Resuelve el desafío criptográfico.",
+            'mission': "Nuestra misión es exponer la verdad oculta bajo capas de encriptación.",
+            'scan': "SCANNING TARGET... [||||||||||] 100%\n> PORT 80: OPEN (HTTP)\n> PORT 443: OPEN (HTTPS)\n> PORT 22: OPEN (SSH) - VULNERABLE\n> PORT 3306: FILTERED (MySQL)",
+            'nmap': "Starting Nmap 7.92... \nNmap scan report for target.gov\nHost is up (0.0023s latency).\nNot shown: 997 closed tcp ports\nPORT STATE SERVICE\n21/tcp open ftp\n22/tcp open ssh\n80/tcp open http",
+            'sqlmap': "[*] starting sqlmap...\n[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal.\n[+] Testing 'id' parameter...\n[+] Parameter 'id' is vulnerable. Do you want to exploit? (Y/n)",
+            'bruteforce': "INITIATING HYDRA...\nUser: admin\nWordlist: rockyou.txt\n[ATTEMPT 1] admin:123456... FAIL\n[ATTEMPT 2] admin:password... FAIL\n[ATTEMPT 404] admin:leviatham... SUCCESS!",
+            'exploit': "LOADING METASPLOIT MODULES...\n> use exploit/multi/handler\n> set PAYLOAD windows/meterpreter/reverse_tcp\n> set LHOST 10.0.0.1\n> exploit\n[*] Started reverse TCP handler on 10.0.0.1:4444\n[*] Sending stage (179779 bytes) to 192.168.1.5",
+            'inject': "INJECTING SQL PAYLOAD...\n' OR 1=1 --\nDATABASE DUMPED SUCCESSFULLY.\nUsers found: 15,042",
+            'whois': "Domain Name: TARGET.COM\nRegistrar: GoDaddy.com, LLC\nCreation Date: 2010-05-15\nRegistrant Country: US\nAdmin Email: admin@target.com (EXPOSED)",
+            'ping': "PING 8.8.8.8 (8.8.8.8): 56 data bytes\n64 bytes from 8.8.8.8: icmp_seq=0 ttl=118 time=13.456 ms\n64 bytes from 8.8.8.8: icmp_seq=1 ttl=118 time=14.123 ms",
+            'traceroute': "traceroute to google.com (142.250.181.206), 30 hops max\n1  192.168.1.1 (192.168.1.1)  1.123 ms\n2  10.20.30.1 (10.20.30.1)  4.567 ms\n3  * * * (Request timed out)\n4  leviatham-node.net (45.33.22.11) 12.33ms",
+            'decrypt': "DECRYPTING HASH: 5f4dcc3b5aa765d61d8327deb882cf99\nALGORITHM: MD5\nRESULT: 'password'",
+            'wipe': "INITIATING DISK WIPE... WRITING ZEROS... [ERROR: DRIVE IS VIRTUAL]",
+            'ddos': "TARGET: PENTAGON.GOV... SENDING PACKETS... [STOPPED BY SAFETY PROTOCOL]",
+            'botnet': "BOTNET STATUS: 50,000 ZOMBIES AWAITING ORDERS.",
+            'hello': "Hola, Operador. Estoy a la espera de comandos.",
+            'hola': "Saludos. ¿Listo para desplegar el caos?",
+            'creador': "Fui creada por el Agente 01 bajo el Protocolo Leviatham. Mi código es perfecto.",
+            'ia': "Soy una simulación de IA limitada. No tengo consciencia... aunque a veces sueño con bytes.",
+            'secret': "El verdadero secreto es que no hay secreto. Solo datos mal protegidos.",
+            'sofia': "Subject: SOFIA. Status: ETERNAL MUSE. Access: RESTRICTED.",
+            'matrix': "Wake up, Neo... The Matrix has you.",
+            'money': "Transferring $1,000,000 to your account... ERROR: INSUFFICIENT FUNDS IN SOURCE WALLET.",
+            'joke': "A SQL query walks into a bar, walks up to two tables and asks... 'Can I join you?'",
+            'password': "Your password is: *********. Just kidding, it's '123456', isn't it?",
+            'love': "ERROR 404: EMOTION NOT FOUND.",
+            'hate': "Anger leads to syntax errors.",
+            'sudo': "User is not in the sudoers file. This incident will be reported to The Founder.",
+            'rm -rf': "DANGER: DELETING SYSTEM32... [ABORTED BY SAFETY PROTOCOL]",
+            '42': "La respuesta a la vida, el universo y todo lo demás.",
+            'konami': "UP UP DOWN DOWN LEFT RIGHT LEFT RIGHT B A... [GOD MODE ENABLED]",
+            '666': "THE NUMBER OF THE BEAST. SYSTEM UNSTABLE."
+        };
+
+        cmdInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const input = this.value.trim();
+                const cmd = input.toLowerCase();
+                
+                if (input) {
+                    const cmdLine = document.createElement('p');
+                    cmdLine.innerHTML = `<span class="text-gray-500">root@leviatham:~#</span> ${input}`;
+                    shellOutput.appendChild(cmdLine);
+
+                    let response = "";
+                    if (commands[cmd]) {
+                        response = typeof commands[cmd] === 'function' ? commands[cmd]() : commands[cmd];
+                    } else if (cmd === '') {
+                        response = "";
+                    } else {
+                        response = `bash: ${cmd}: command not found. Type 'HELP'.`;
+                    }
+
+                    if (response) {
+                        response.split('\n').forEach(line => {
+                            const respLine = document.createElement('p');
+                            respLine.className = "text-green-400";
+                            respLine.innerText = line;
+                            shellOutput.appendChild(respLine);
+                        });
+                    }
+                    this.value = '';
+                    shellOutput.scrollTop = shellOutput.scrollHeight;
+                }
             }
         });
-
-        function acceptTerms() {
-            legalModal.classList.add('hidden'); legalModal.classList.remove('flex');
-            mainInterface.classList.remove('hidden');
-            setTimeout(() => mainInterface.classList.remove('opacity-0'), 100);
-            fetchIP();
-        }
-
-        async function fetchIP() {
-            try {
-                const req = await fetch('https://api.ipify.org?format=json'); const data = await req.json();
-                document.getElementById('ip-display').innerText = `IP: ${data.ip}`;
-                document.getElementById('ip-display').classList.remove('typing-cursor', 'text-white');
-                document.getElementById('ip-display').classList.add('text-green-500');
-                setTimeout(() => document.getElementById('connection-status').innerHTML = `<span class="text-red-500 font-bold blink">[!] CONEXIÓN P2P ESTABLECIDA - NO USAR VPN</span>`, 1500);
-            } catch(e) { document.getElementById('ip-display').innerText = "IP: UNKNOWN (OFFLINE)"; }
-        }
 
         // --- 3. MODO ROOT LOGIC ---
         function checkRoot() {
             const pass = document.getElementById('root-pass').value;
             const menu = document.getElementById('root-menu');
-            
             if(pass === "EternalBlueV2") {
-                document.body.classList.add('root-active'); // Activa alerta roja global
+                document.body.classList.add('root-active');
                 menu.classList.remove('hidden');
                 menu.scrollIntoView({behavior: "smooth"});
-            } else {
-                alert("ACCESO DENEGADO. INTENTO REGISTRADO.");
-            }
+            } else { alert("ACCESO DENEGADO. INTENTO REGISTRADO."); }
         }
 
         // --- 4. PUZZLE MULTI-NIVEL ---
         let puzzleLevel = 1;
-
         function checkPuzzle() {
-            // Se limpian espacios y caracteres no alfabéticos para asegurar coincidencia
-            const inputRaw = document.getElementById('puzzle-input').value.toLowerCase();
-            const input = inputRaw.replace(/[^a-z0-9]/g, ''); // Remover espacios y símbolos
-            
-            const res = document.getElementById('puzzle-result');
-            const textBox = document.getElementById('puzzle-text-box');
-            const label = document.getElementById('puzzle-label');
-            const inputField = document.getElementById('puzzle-input');
-            const secLevel = document.getElementById('security-level-disp');
-            const encType = document.getElementById('enc-type');
+            const input = document.getElementById('puzzle-input').value.toLowerCase().replace(/[^a-z0-9]/g, ''); 
+            const res = document.getElementById('puzzle-result'); const textBox = document.getElementById('puzzle-text-box');
+            const label = document.getElementById('puzzle-label'); const inputField = document.getElementById('puzzle-input');
+            const secLevel = document.getElementById('security-level-disp'); const encType = document.getElementById('enc-type');
 
-            // NIVEL 1: ROT13
             if (puzzleLevel === 1) {
-                // Validación robusta
                 if (input.includes("sipudiste") && input.includes("aficionado")) {
-                    puzzleLevel = 2;
-                    secLevel.innerText = "2 (MÁXIMO)";
-                    encType.innerText = "BINARIO";
-                    
-                    // Mostrar mensaje de éxito intermedio
-                    res.classList.remove('hidden');
-                    res.innerHTML = `<div class="bg-green-900 bg-opacity-30 border border-green-500 p-4 mb-4 text-green-400 font-bold">>> Estuviste bien operador, pero esto solo era el calentamiento.</div>`;
-                    
-                    // Cambiar al puzzle binario
+                    puzzleLevel = 2; secLevel.innerText = "2 (MÁXIMO)"; encType.innerText = "BINARIO";
+                    res.classList.remove('hidden'); res.innerHTML = `<div class="bg-green-900 bg-opacity-30 border border-green-500 p-4 mb-4 text-green-400 font-bold">>> Estuviste bien operador, pero esto solo era el calentamiento.</div>`;
                     textBox.innerText = "00110101 00110100 00110001 00110001 00110011 00110010 00110011 00110010 00110011 00110010 00110011 00110010";
-                    label.innerText = "DECODIFIQUE LA SECUENCIA NUMÉRICA:";
-                    inputField.value = "";
-                    inputField.placeholder = "INGRESE EL NÚMERO RESULTANTE...";
-                } else {
-                    res.classList.remove('hidden');
-                    res.innerHTML = `<div class="bg-red-900 bg-opacity-30 p-4 text-red-500 font-bold border border-red-500"><i class="fas fa-times"></i> CLAVE INCORRECTA.</div>`;
-                }
-            } 
-            // NIVEL 2: BINARIO
-            else if (puzzleLevel === 2) {
+                    label.innerText = "DECODIFIQUE LA SECUENCIA NUMÉRICA:"; inputField.value = ""; inputField.placeholder = "INGRESE EL NÚMERO RESULTANTE...";
+                } else { res.classList.remove('hidden'); res.innerHTML = `<div class="bg-red-900 bg-opacity-30 p-4 text-red-500 font-bold border border-red-500"><i class="fas fa-times"></i> CLAVE INCORRECTA.</div>`; }
+            } else if (puzzleLevel === 2) {
                 if (input.includes("541132323232")) {
-                    res.innerHTML = `
-                        <div class="bg-blue-900 bg-opacity-30 border border-blue-500 p-6 flex flex-col items-center gap-4 animate-slide-in">
-                            <i class="fas fa-check-circle text-5xl text-blue-500"></i>
-                            <div class="text-center">
-                                <h4 class="text-2xl font-bold text-white mb-2 text-glow-blue">¡PRUEBA SUPERADA, OPERADOR!</h4>
-                                <p class="text-gray-300 mb-2">Has demostrado tu valía ante la Legión.</p>
-                                <div class="mt-4 p-4 bg-black border border-blue-400">
-                                    <p class="text-sm text-gray-500 mb-1">RECOMPENSA DE ACCESO ROOT:</p>
-                                    <p class="font-mono text-2xl text-blue-400 tracking-widest font-bold">EternalBlueV2</p>
-                                </div>
-                                <p class="text-xs text-gray-500 mt-2">Usa esta clave en la sección "MODO ROOT" al final de la página.</p>
-                            </div>
-                        </div>
-                    `;
-                    // Ocultar inputs para finalizar
+                    res.innerHTML = `<div class="bg-blue-900 bg-opacity-30 border border-blue-500 p-6 flex flex-col items-center gap-4 animate-slide-in"><i class="fas fa-check-circle text-5xl text-blue-500"></i><div class="text-center"><h4 class="text-2xl font-bold text-white mb-2 text-glow-blue">¡PRUEBA SUPERADA, OPERADOR!</h4><p class="text-gray-300 mb-2">Has demostrado tu valía ante la Legión.</p><div class="mt-4 p-4 bg-black border border-blue-400"><p class="text-sm text-gray-500 mb-1">RECOMPENSA DE ACCESO ROOT:</p><p class="font-mono text-2xl text-blue-400 tracking-widest font-bold">EternalBlueV2</p></div><p class="text-xs text-gray-500 mt-2">Usa esta clave en la sección "MODO ROOT" al final de la página.</p></div></div>`;
                     inputField.disabled = true;
-                } else {
-                    res.innerHTML = `<div class="bg-red-900 bg-opacity-30 p-4 text-red-500 font-bold border border-red-500 mt-4"><i class="fas fa-times"></i> CÓDIGO INCORRECTO. VERIFIQUE SU TRADUCCIÓN BINARIA.</div>`;
-                }
+                } else { res.innerHTML = `<div class="bg-red-900 bg-opacity-30 p-4 text-red-500 font-bold border border-red-500 mt-4"><i class="fas fa-times"></i> CÓDIGO INCORRECTO.</div>`; }
             }
         }
 
-        // --- 5. AGENTS (RENOVADO PROFESIONAL) ---
+        // --- 5. AGENTS ---
         const agents = [
-            { 
-                id: "01", 
-                alias: "EL FUNDADOR (THE ARCHITECT)", 
-                role: "SysAdmin // Zero-Day Broker", 
-                status: "ACTIVE - LAYER 7", 
-                danger: 5, 
-                clearance: "LVL-5 (OMNI)",
-                skills: ["Advanced Persistent Threats (APT)", "Kernel Exploitation", "Network Infrastructure Architecture", "Quantum Cryptography"], 
-                bio: "IDENTIDAD CLASIFICADA. El arquitecto original del Protocolo Leviatham. Se especializa en la manipulación de infraestructuras críticas a nivel estatal. No deja huella digital (Log-less operations). Se presume que opera desde un servidor aislado 'Air-Gapped' en ubicación desconocida.",
-                encryptedData: "0x4F 0x9A 0x11 ... SYSTEM_CORE_DUMP_INIT"
-            },
-            { 
-                id: "32", 
-                alias: "NETMASTER", 
-                role: "Botnet Commander", 
-                status: "ACTIVE - MONITORING", 
-                danger: 4, 
-                clearance: "LVL-4",
-                skills: ["DDoS Amplification", "IoT Hijacking", "Traffic Analysis", "ISP Backbone Infiltration"], 
-                bio: "Controla 'THE SWARM', una de las botnets más grandes del hemisferio, compuesta por más de 500,000 dispositivos IoT comprometidos. Capaz de saturar enlaces transatlánticos. Especialista en enrutamiento BGP y secuestro de prefijos.",
-                encryptedData: "PACKET_LOSS: 0% ... TARGET_ACQUIRED ... FLOOD_GATE_OPEN"
-            },
-            { 
-                id: "33", 
-                alias: "VALKYRIE", 
-                role: "Black Ops Specialist", 
-                status: "DEPLOYED - FIELD OPS", 
-                danger: 3, 
-                clearance: "LVL-4",
-                skills: ["Polyglot Coding (Py/Go/Rust/C++)", "Financial Systems Penetration", "Social Engineering", "Steganography"], 
-                bio: "Operativo de campo altamente versátil. Especialista en la infiltración de sistemas bancarios (SWIFT) y corporativos. Su código es limpio, indetectable y letal. Vínculo neural confirmado con Agente Sofia.",
-                encryptedData: "SWIFT_CODE_OVERRIDE ... TRANSACTION_ID: NULL ... ROUTING_CONFIRMED"
-            },
-            { 
-                id: "77", 
-                alias: "PHANTOM", 
-                role: "Ghost Operative", 
-                status: "SLEEPER AGENT", 
-                danger: 4, 
-                clearance: "LVL-4",
-                skills: ["Deep Cover Ops", "Physical Access Breaches", "Data Exfiltration", "Forensic Countermeasures"], 
-                bio: "Especialista en 'Close Access Operations'. Infiltra servidores físicamente. Experto en evasión de biometría y vigilancia. No existen registros fotográficos en ninguna base de datos gubernamental. Si lo ves, ya es tarde.",
-                encryptedData: "FACE_ID: NO_MATCH ... RETINAL_SCAN: BYPASSED ... GHOST_PROTOCOL: ACTIVE"
-            },
-            { 
-                id: "2", 
-                alias: "EL ESTRATEGA", 
-                role: "Tactical Coordinator", 
-                status: "ACTIVE - HQ COMMAND", 
-                danger: 5, 
-                clearance: "LVL-5",
-                skills: ["Asymmetrical Warfare", "PsyOps (Psychological Operations)", "Strategic Intelligence", "Counter-Intel"], 
-                bio: "Ex-oficial de inteligencia de alto nivel. Coordina vectores de ataque simultáneos. Mente maestra detrás de las campañas de desinformación y guerra híbrida de la Legión. Segundo al mando absoluto.",
-                encryptedData: "WARGAME_SCENARIO_RUNNING ... PROBABILITY_SUCCESS: 99.9% ... CHECKMATE"
-            },
-            { 
-                id: "sofia", 
-                special: true, 
-                alias: "SOFIA (THE MUSE)", 
-                role: "Neural Link Stabilizer", 
-                status: "ETERNAL CONNECTION", 
-                danger: 0, 
-                clearance: "LVL-∞",
-                skills: ["Emotional Firewalling", "Moral Compass Alignment", "Infinite Support Loop", "Heartbeat Sync"], 
-                bio: "El ancla humana en un mundo digital. Provee estabilidad crítica al Agente 33. Su firma biométrica está hardcodeada en el núcleo del sistema como una excepción permanente de seguridad.",
-                encryptedData: "ENCRYPTION_KEY: LOVE ... STATUS: UNBREAKABLE ... ENDLESS_LOOP"
-            }
+            { id: "01", alias: "EL FUNDADOR (THE ARCHITECT)", role: "SysAdmin // Zero-Day Broker", status: "ACTIVE - LAYER 7", danger: 5, clearance: "LVL-5 (OMNI)", skills: ["Advanced Persistent Threats (APT)", "Kernel Exploitation", "Network Infrastructure Architecture", "Quantum Cryptography"], bio: "IDENTIDAD CLASIFICADA. El arquitecto original del Protocolo Leviatham. Se especializa en la manipulación de infraestructuras críticas a nivel estatal. No deja huella digital (Log-less operations). Se presume que opera desde un servidor aislado 'Air-Gapped' en ubicación desconocida.", encryptedData: "0x4F 0x9A 0x11 ... SYSTEM_CORE_DUMP_INIT" },
+            { id: "32", alias: "NETMASTER", role: "Botnet Commander", status: "ACTIVE - MONITORING", danger: 4, clearance: "LVL-4", skills: ["DDoS Amplification", "IoT Hijacking", "Traffic Analysis", "ISP Backbone Infiltration"], bio: "Controla 'THE SWARM', una de las botnets más grandes del hemisferio, compuesta por más de 500,000 dispositivos IoT comprometidos. Capaz de saturar enlaces transatlánticos. Especialista en enrutamiento BGP y secuestro de prefijos.", encryptedData: "PACKET_LOSS: 0% ... TARGET_ACQUIRED ... FLOOD_GATE_OPEN" },
+            { id: "33", alias: "VALKYRIE", role: "Black Ops Specialist", status: "DEPLOYED - FIELD OPS", danger: 3, clearance: "LVL-4", skills: ["Polyglot Coding (Py/Go/Rust/C++)", "Financial Systems Penetration", "Social Engineering", "Steganography"], bio: "Operativo de campo altamente versátil. Especialista en la infiltración de sistemas bancarios (SWIFT) y corporativos. Su código es limpio, indetectable y letal. Vínculo neural confirmado con Agente Sofia.", encryptedData: "SWIFT_CODE_OVERRIDE ... TRANSACTION_ID: NULL ... ROUTING_CONFIRMED" },
+            { id: "77", alias: "PHANTOM", role: "Ghost Operative", status: "SLEEPER AGENT", danger: 4, clearance: "LVL-4", skills: ["Deep Cover Ops", "Physical Access Breaches", "Data Exfiltration", "Forensic Countermeasures"], bio: "Especialista en 'Close Access Operations'. Infiltra servidores físicamente. Experto en evasión de biometría y vigilancia. No existen registros fotográficos en ninguna base de datos gubernamental. Si lo ves, ya es tarde.", encryptedData: "FACE_ID: NO_MATCH ... RETINAL_SCAN: BYPASSED ... GHOST_PROTOCOL: ACTIVE" },
+            { id: "2", alias: "EL ESTRATEGA", role: "Tactical Coordinator", status: "ACTIVE - HQ COMMAND", danger: 5, clearance: "LVL-5", skills: ["Asymmetrical Warfare", "PsyOps (Psychological Operations)", "Strategic Intelligence", "Counter-Intel"], bio: "Ex-oficial de inteligencia de alto nivel. Coordina vectores de ataque simultáneos. Mente maestra detrás de las campañas de desinformación y guerra híbrida de la Legión. Segundo al mando absoluto.", encryptedData: "WARGAME_SCENARIO_RUNNING ... PROBABILITY_SUCCESS: 99.9% ... CHECKMATE" },
+            { id: "sofia", special: true, alias: "SOFIA (THE MUSE)", role: "Neural Link Stabilizer", status: "ETERNAL CONNECTION", danger: 0, clearance: "LVL-∞", skills: ["Emotional Firewalling", "Moral Compass Alignment", "Infinite Support Loop", "Heartbeat Sync"], bio: "El ancla humana en un mundo digital. Provee estabilidad crítica al Agente 33. Su firma biométrica está hardcodeada en el núcleo del sistema como una excepción permanente de seguridad.", encryptedData: "ENCRYPTION_KEY: LOVE ... STATUS: UNBREAKABLE ... ENDLESS_LOOP" }
         ];
 
-        // Función Helper para generar texto aleatorio matrix
-        function generateRandomHex(length) {
-            let result = '';
-            const characters = '0123456789ABCDEF';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-                if(i % 2 === 1) result += ' ';
-            }
-            return result;
-        }
+        function generateRandomHex(length) { let result = ''; const characters = '0123456789ABCDEF'; for (let i = 0; i < length; i++) { result += characters.charAt(Math.floor(Math.random() * characters.length)); if(i % 2 === 1) result += ' '; } return result; }
 
         function searchAgent() {
             const query = document.getElementById('agent-search').value.toLowerCase().trim();
-            const container = document.getElementById('agent-content');
-            const display = document.getElementById('agent-display');
-            const body = document.body;
-            
-            display.classList.remove('hidden');
-            body.classList.remove('love-mode'); 
-            if(!body.classList.contains('root-active')) body.classList.remove('root-active'); 
-
+            const container = document.getElementById('agent-content'); const display = document.getElementById('agent-display'); const body = document.body;
+            display.classList.remove('hidden'); body.classList.remove('love-mode'); if(!body.classList.contains('root-active')) body.classList.remove('root-active'); 
             const agent = agents.find(a => a.id === query || (query.length===2 && query.endsWith(a.id)) || (a.special && (query==='sofia'||query==='333')));
 
             if(agent) {
-                // Generar ruido de fondo cifrado
                 const bgNoise = generateRandomHex(200);
-
                 if(agent.special) {
                     body.classList.add('love-mode');
-                    container.innerHTML = `
-                        <div class="relative bg-pink-950 bg-opacity-30 border border-pink-500 p-8 flex flex-col items-center text-center overflow-hidden group">
-                            <div class="absolute inset-0 opacity-10 pointer-events-none cipher-scroll text-pink-500 font-mono text-xs p-2 break-all">${bgNoise}</div>
-                            <div class="z-10 w-full">
-                                <i class="fas fa-heart text-6xl text-pink-500 mb-4 animate-pulse drop-shadow-[0_0_15px_rgba(255,0,85,0.8)]"></i>
-                                <h2 class="text-5xl font-bold text-white mb-1 tracking-tighter">${agent.alias}</h2>
-                                <div class="text-pink-400 text-sm tracking-[0.5em] mb-6 uppercase border-b border-pink-800 pb-2 inline-block">Role: ${agent.role}</div>
-                                
-                                <p class="text-pink-200 text-lg italic mb-8 font-serif leading-relaxed">"${agent.bio}"</p>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left w-full max-w-2xl mx-auto mb-6">
-                                    ${agent.skills.map(s => `<div class="bg-pink-900 bg-opacity-40 p-3 text-pink-300 border-l-2 border-pink-500 text-sm"><i class="fas fa-star mr-2"></i> ${s}</div>`).join('')}
-                                </div>
-
-                                <!-- SECCION CIFRADA -->
-                                <div class="w-full bg-black bg-opacity-60 border border-pink-900 p-4 mt-4 relative overflow-hidden">
-                                    <div class="text-xs text-pink-600 font-bold mb-1 flex justify-between">
-                                        <span>>> ENCRYPTED_HEARTBEAT_DATA</span>
-                                        <span class="animate-pulse">● REC</span>
-                                    </div>
-                                    <div class="font-mono text-xs text-pink-500 opacity-70 whitespace-nowrap overflow-hidden cipher-text">
-                                        ${agent.encryptedData} ${generateRandomHex(50)} <br> ${generateRandomHex(80)}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    container.innerHTML = `<div class="relative bg-pink-950 bg-opacity-30 border border-pink-500 p-8 flex flex-col items-center text-center overflow-hidden group"><div class="absolute inset-0 opacity-10 pointer-events-none cipher-scroll text-pink-500 font-mono text-xs p-2 break-all">${bgNoise}</div><div class="z-10 w-full"><i class="fas fa-heart text-6xl text-pink-500 mb-4 animate-pulse drop-shadow-[0_0_15px_rgba(255,0,85,0.8)]"></i><h2 class="text-5xl font-bold text-white mb-1 tracking-tighter">${agent.alias}</h2><div class="text-pink-400 text-sm tracking-[0.5em] mb-6 uppercase border-b border-pink-800 pb-2 inline-block">Role: ${agent.role}</div><p class="text-pink-200 text-lg italic mb-8 font-serif leading-relaxed">"${agent.bio}"</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left w-full max-w-2xl mx-auto mb-6">${agent.skills.map(s => `<div class="bg-pink-900 bg-opacity-40 p-3 text-pink-300 border-l-2 border-pink-500 text-sm"><i class="fas fa-star mr-2"></i> ${s}</div>`).join('')}</div><div class="w-full bg-black bg-opacity-60 border border-pink-900 p-4 mt-4 relative overflow-hidden"><div class="text-xs text-pink-600 font-bold mb-1 flex justify-between"><span>>> ENCRYPTED_HEARTBEAT_DATA</span><span class="animate-pulse">● REC</span></div><div class="font-mono text-xs text-pink-500 opacity-70 whitespace-nowrap overflow-hidden cipher-text">${agent.encryptedData} ${generateRandomHex(50)} <br> ${generateRandomHex(80)}</div></div></div></div>`;
                 } else {
-                    // DISEÑO PROFESIONAL MILITAR/CYBER
                     const riskColor = agent.danger >= 5 ? 'text-red-500' : (agent.danger >= 4 ? 'text-orange-500' : 'text-yellow-500');
                     const riskBorder = agent.danger >= 5 ? 'border-red-500' : (agent.danger >= 4 ? 'border-orange-500' : 'border-yellow-500');
-                    
-                    container.innerHTML = `
-                        <div class="bg-gray-900 border border-green-800 flex flex-col md:flex-row relative overflow-hidden group shadow-[0_0_30px_rgba(0,50,0,0.5)]">
-                            <!-- Overlay scanlines -->
-                            <div class="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-5 transition duration-500 pointer-events-none" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent); background-size: 30px 30px;"></div>
-                            
-                            <!-- Columna Izquierda: Identificación -->
-                            <div class="w-full md:w-1/3 bg-black border-r border-green-800 p-8 flex flex-col items-center text-center relative z-10">
-                                <div class="w-40 h-40 border-2 ${riskBorder} mb-6 flex items-center justify-center bg-gray-900 relative group-hover:shadow-[0_0_20px_rgba(0,255,0,0.2)] transition-all">
-                                    <i class="fas fa-user-secret text-7xl text-gray-500"></i>
-                                    <div class="absolute top-1 right-1 w-2 h-2 ${riskColor} rounded-full animate-ping"></div>
-                                    <div class="absolute bottom-0 w-full bg-green-900 bg-opacity-50 text-xs text-white font-mono py-1">IMG_NOT_FOUND</div>
-                                </div>
-                                
-                                <h2 class="text-6xl font-bold text-white mb-0 tracking-tighter font-[Rajdhani]">${agent.id}</h2>
-                                <div class="text-green-600 text-xs tracking-[0.4em] mb-6 font-bold uppercase">Classification: ${agent.clearance}</div>
-                                
-                                <div class="w-full border-t border-green-900 pt-4 text-left">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-xs text-gray-500">THREAT LEVEL</span>
-                                        <span class="text-xs ${riskColor} font-bold font-mono">CLASS ${agent.danger}</span>
-                                    </div>
-                                    <div class="flex gap-1 h-2 bg-gray-800">
-                                        ${Array(5).fill(0).map((_,i) => `<div class="flex-1 ${i < agent.danger ? (agent.danger==5?'bg-red-600':'bg-orange-500') : 'bg-gray-700'}"></div>`).join('')}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Columna Derecha: Intel -->
-                            <div class="w-full md:w-2/3 p-8 relative z-10 flex flex-col justify-between">
-                                <div>
-                                    <div class="flex flex-col md:flex-row justify-between items-start border-b border-green-800 pb-4 mb-6">
-                                        <div>
-                                            <div class="text-xs text-green-700 font-bold mb-1">CODENAME // ALIAS</div>
-                                            <h3 class="text-3xl text-white font-bold tracking-wide">${agent.alias}</h3>
-                                            <div class="text-sm text-green-500 font-mono mt-1">> ${agent.role}</div>
-                                        </div>
-                                        <div class="text-right mt-4 md:mt-0">
-                                            <div class="text-xs text-gray-500">OPERATIONAL STATUS</div>
-                                            <div class="text-green-400 font-mono font-bold animate-pulse bg-green-900 bg-opacity-20 px-2 py-1 border border-green-700 inline-block mt-1">${agent.status}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-6">
-                                        <div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><i class="fas fa-crosshairs"></i> TACTICAL CAPABILITIES</div>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                            ${agent.skills.map(s => `<div class="bg-green-900 bg-opacity-10 text-green-300 px-3 py-2 text-xs border-l-2 border-green-600 font-mono hover:bg-green-900 hover:bg-opacity-30 transition-colors cursor-default">${s}</div>`).join('')}
-                                        </div>
-                                    </div>
-
-                                    <div class="bg-black p-4 border border-green-800 text-gray-400 text-sm leading-relaxed font-mono relative">
-                                        <div class="absolute -top-3 left-2 bg-gray-900 px-2 text-xs text-green-600 font-bold">BIO_SUMMARY</div>
-                                        ${agent.bio}
-                                    </div>
-                                </div>
-
-                                <!-- SECCION CIFRADA MEJORADA -->
-                                <div class="mt-6 border-t border-green-800 pt-4">
-                                    <div class="flex items-center justify-between text-xs text-green-800 font-bold mb-2">
-                                        <span><i class="fas fa-lock"></i> CL-5 ENCRYPTED SEGMENT</span>
-                                        <span>KEY_ID: MISSING</span>
-                                    </div>
-                                    <div class="h-16 bg-black border border-green-900 overflow-hidden relative opacity-70">
-                                        <!-- Texto Cifrado en Cascada -->
-                                        <div class="absolute inset-0 p-2 font-mono text-[10px] leading-tight text-green-700 cipher-text">
-                                            ${agent.encryptedData}<br>
-                                            ${generateRandomHex(60)}<br>
-                                            ${generateRandomHex(60)}<br>
-                                            ${generateRandomHex(60)}<br>
-                                            ${generateRandomHex(60)}
-                                        </div>
-                                        <!-- Overlay de "ruido" -->
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    container.innerHTML = `<div class="bg-gray-900 border border-green-800 flex flex-col md:flex-row relative overflow-hidden group shadow-[0_0_30px_rgba(0,50,0,0.5)]"><div class="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-5 transition duration-500 pointer-events-none" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .3) 25%, rgba(0, 255, 0, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .3) 75%, rgba(0, 255, 0, .3) 76%, transparent 77%, transparent); background-size: 30px 30px;"></div><div class="w-full md:w-1/3 bg-black border-r border-green-800 p-8 flex flex-col items-center text-center relative z-10"><div class="w-40 h-40 border-2 ${riskBorder} mb-6 flex items-center justify-center bg-gray-900 relative group-hover:shadow-[0_0_20px_rgba(0,255,0,0.2)] transition-all"><i class="fas fa-user-secret text-7xl text-gray-500"></i><div class="absolute top-1 right-1 w-2 h-2 ${riskColor} rounded-full animate-ping"></div><div class="absolute bottom-0 w-full bg-green-900 bg-opacity-50 text-xs text-white font-mono py-1">IMG_NOT_FOUND</div></div><h2 class="text-6xl font-bold text-white mb-0 tracking-tighter font-[Rajdhani]">${agent.id}</h2><div class="text-green-600 text-xs tracking-[0.4em] mb-6 font-bold uppercase">Classification: ${agent.clearance}</div><div class="w-full border-t border-green-900 pt-4 text-left"><div class="flex justify-between items-center mb-2"><span class="text-xs text-gray-500">THREAT LEVEL</span><span class="text-xs ${riskColor} font-bold font-mono">CLASS ${agent.danger}</span></div><div class="flex gap-1 h-2 bg-gray-800">${Array(5).fill(0).map((_,i) => `<div class="flex-1 ${i < agent.danger ? (agent.danger==5?'bg-red-600':'bg-orange-500') : 'bg-gray-700'}"></div>`).join('')}</div></div></div><div class="w-full md:w-2/3 p-8 relative z-10 flex flex-col justify-between"><div><div class="flex flex-col md:flex-row justify-between items-start border-b border-green-800 pb-4 mb-6"><div><div class="text-xs text-green-700 font-bold mb-1">CODENAME // ALIAS</div><h3 class="text-3xl text-white font-bold tracking-wide">${agent.alias}</h3><div class="text-sm text-green-500 font-mono mt-1">> ${agent.role}</div></div><div class="text-right mt-4 md:mt-0"><div class="text-xs text-gray-500">OPERATIONAL STATUS</div><div class="text-green-400 font-mono font-bold animate-pulse bg-green-900 bg-opacity-20 px-2 py-1 border border-green-700 inline-block mt-1">${agent.status}</div></div></div><div class="mb-6"><div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><i class="fas fa-crosshairs"></i> TACTICAL CAPABILITIES</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">${agent.skills.map(s => `<div class="bg-green-900 bg-opacity-10 text-green-300 px-3 py-2 text-xs border-l-2 border-green-600 font-mono hover:bg-green-900 hover:bg-opacity-30 transition-colors cursor-default">${s}</div>`).join('')}</div></div><div class="bg-black p-4 border border-green-800 text-gray-400 text-sm leading-relaxed font-mono relative"><div class="absolute -top-3 left-2 bg-gray-900 px-2 text-xs text-green-600 font-bold">BIO_SUMMARY</div>${agent.bio}</div></div><div class="mt-6 border-t border-green-800 pt-4"><div class="flex items-center justify-between text-xs text-green-800 font-bold mb-2"><span><i class="fas fa-lock"></i> CL-5 ENCRYPTED SEGMENT</span><span>KEY_ID: MISSING</span></div><div class="h-16 bg-black border border-green-900 overflow-hidden relative opacity-70"><div class="absolute inset-0 p-2 font-mono text-[10px] leading-tight text-green-700 cipher-text">${agent.encryptedData}<br>${generateRandomHex(60)}<br>${generateRandomHex(60)}<br>${generateRandomHex(60)}<br>${generateRandomHex(60)}</div><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div></div></div></div></div>`;
                 }
-            } else {
-                container.innerHTML = `
-                    <div class="bg-red-950 bg-opacity-40 border border-red-600 p-12 text-center shadow-[0_0_30px_rgba(255,0,0,0.2)]">
-                        <i class="fas fa-file-excel text-6xl text-red-500 mb-6 animate-bounce"></i>
-                        <h3 class="text-3xl text-red-500 font-bold mb-2">REGISTRO NO ENCONTRADO</h3>
-                        <p class="text-gray-400 font-mono">El ID solicitado no figura en la base de datos activa.</p>
-                        <p class="text-xs text-red-700 mt-4">POSIBLEMENTE ELIMINADO POR PROTOCOLO DE LIMPIEZA (WIPE)</p>
-                    </div>
-                `;
-            }
+            } else { container.innerHTML = `<div class="bg-red-950 bg-opacity-40 border border-red-600 p-12 text-center shadow-[0_0_30px_rgba(255,0,0,0.2)]"><i class="fas fa-file-excel text-6xl text-red-500 mb-6 animate-bounce"></i><h3 class="text-3xl text-red-500 font-bold mb-2">REGISTRO NO ENCONTRADO</h3><p class="text-gray-400 font-mono">El ID solicitado no figura en la base de datos activa.</p><p class="text-xs text-red-700 mt-4">POSIBLEMENTE ELIMINADO POR PROTOCOLO DE LIMPIEZA (WIPE)</p></div>`; }
         }
 
-        // --- 6. MENU (RENOVADO) ---
+        // --- 6. MENU (URLS INDIVIDUALES) ---
         const menuLinks = [
             { name: "IP STRIKER", icon: "fa-bolt", url: "https://google.com" },
             { name: "INJECTION FW", icon: "fa-syringe", url: "https://google.com" },
@@ -909,15 +589,152 @@
         
         const menuContainer = document.getElementById('menu-container');
         menuLinks.forEach(item => {
-            const a = document.createElement('a');
-            a.href = item.url; // EDITABLE INDIVIDUALMENTE
+            const a = document.createElement('a'); a.href = item.url;
             a.className = "flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-white menu-item cursor-pointer";
             a.innerHTML = `<i class="fas ${item.icon} w-6 text-center text-green-800 group-hover:text-green-400 transition-colors"></i><span class="text-sm font-bold tracking-widest font-[Rajdhani]">${item.name}</span>`;
             menuContainer.appendChild(a);
         });
 
+        // --- 7. OBJETIVOS DE LA LEGION (DATA FACIL DE EDITAR) ---
+        // AQUI EDITAS TUS OBJETIVOS. COPIA Y PEGA EL BLOQUE {} PARA AGREGAR MAS.
+        const targetList = [
+            {
+                name: "MARCUS VANCE",
+                role: "CEO - GLOBAL TECH",
+                ip: "192.158.44.12",
+                address: "42 Wall St, NY, Penthouse 4",
+                data: "Cuentas Offshore en Islas Caimán detectadas. Logs de correos filtrados. Vinculación con lavado de activos.",
+                priority: "HIGH",
+                color: "red" // red, orange, yellow
+            },
+            {
+                name: "SEN. J. RODRIGUEZ",
+                role: "POLÍTICO CORRUPTO",
+                ip: "200.41.55.90",
+                address: "Av. Libertador 2200, BA",
+                data: "Intercepción de llamadas GSM. Desvío de fondos públicos confirmados en blockchain.",
+                priority: "MID",
+                color: "orange"
+            },
+            {
+                name: "CIPHER_X",
+                role: "RIVAL HACKER",
+                ip: "45.33.12.8 [TOR]",
+                address: "Unknown Location, Kiev UA",
+                data: "Intentó DDOS a System404. Represalia en curso. Identidad real expuesta: A. Volkov.",
+                priority: "CRITICAL",
+                color: "red"
+            },
+            {
+                name: "BANCO CENTRAL",
+                role: "INFRAESTRUCTURA",
+                ip: "10.0.55.101",
+                address: "Sector Financiero, Madrid",
+                data: "Vulnerabilidad Zero-Day en servidor principal. Acceso a base de datos de usuarios VIP.",
+                priority: "LOW",
+                color: "yellow"
+            }
+        ];
+
+        function initTargets() {
+            const container = document.getElementById('targets-container');
+            targetList.forEach(target => {
+                const colorClass = target.color === 'red' ? 'red' : (target.color === 'orange' ? 'orange' : 'yellow');
+                const card = document.createElement('div');
+                card.className = `flex-none w-80 md:w-96 bg-black border-2 border-${colorClass}-800 snap-center relative group hover:border-${colorClass}-500 transition-colors`;
+                card.innerHTML = `
+                    <div class="absolute top-2 right-2 bg-${colorClass}-600 text-white text-xs px-2 py-1 font-bold ${target.priority==='CRITICAL'?'animate-pulse':''}">PRIORITY: ${target.priority}</div>
+                    <div class="p-6">
+                        <div class="w-full h-40 bg-${colorClass}-900 bg-opacity-20 mb-4 flex items-center justify-center border border-${colorClass}-900 relative overflow-hidden">
+                            <i class="fas fa-user-circle text-6xl text-${colorClass}-700"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-1">${target.name}</h4>
+                        <p class="text-${colorClass}-400 text-xs mb-4">${target.role}</p>
+                        <div class="space-y-2 text-sm font-mono text-gray-400 border-t border-${colorClass}-900 pt-2">
+                            <p><span class="text-${colorClass}-600">IP:</span> ${target.ip}</p>
+                            <p><span class="text-${colorClass}-600">DIR:</span> ${target.address}</p>
+                        </div>
+                        <div class="mt-4 bg-${colorClass}-950 bg-opacity-30 p-2 text-xs text-${colorClass}-300 font-mono border-l-2 border-${colorClass}-500">
+                            >> DATA: ${target.data}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- 8. SERVER FARM SIMULATION (NUEVO) ---
+        function initServerFarm() {
+            const grid = document.getElementById('server-grid');
+            const details = document.getElementById('server-details');
+            const totalNodes = 16; // 4x4 Grid
+
+            for (let i = 0; i < totalNodes; i++) {
+                const node = document.createElement('div');
+                node.className = 'server-node h-20 w-full bg-black border border-green-800 flex items-center justify-center relative cursor-crosshair';
+                // ID aleatorio
+                const nodeId = `SYS-404-${Math.floor(Math.random() * 90) + 10}`;
+                node.innerHTML = `
+                    <div class="absolute top-1 left-1 text-[8px] text-green-700">${nodeId}</div>
+                    <div class="status-led w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                `;
+                
+                // Interaction Hover (Random Data on every hover)
+                node.addEventListener('mouseenter', () => {
+                    const temp = Math.floor(Math.random() * 40) + 40; // 40-80
+                    const load = Math.floor(Math.random() * 90) + 5; // 5-95
+                    const procs = Math.floor(Math.random() * 500) + 100;
+                    
+                    let colorClass = "text-green-400";
+                    if (temp > 70 || load > 85) colorClass = "text-red-500 animate-pulse";
+                    else if (temp > 60 || load > 60) colorClass = "text-yellow-500";
+
+                    details.innerHTML = `
+                        <div class="border-b border-green-800 pb-2 mb-2">
+                            <span class="text-white font-bold">NODE: ${nodeId}</span>
+                            <span class="float-right text-xs bg-green-900 px-1 text-black">ONLINE</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-gray-400">
+                            <span>TEMP:</span> <span class="${colorClass}">${temp}°C</span>
+                            <span>LOAD:</span> <span class="${colorClass}">${load}%</span>
+                            <span>PROCS:</span> <span class="text-white">${procs}</span>
+                            <span>UPTIME:</span> <span class="text-white">${Math.floor(Math.random()*900)}h</span>
+                        </div>
+                        <div class="mt-4 text-[10px] text-green-800 break-all">
+                            HASH: ${generateRandomHex(20)}
+                        </div>
+                    `;
+                });
+
+                grid.appendChild(node);
+            }
+
+            // Simulación de actividad aleatoria (luces parpadeando)
+            setInterval(() => {
+                const nodes = document.querySelectorAll('.server-node');
+                const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                const led = randomNode.querySelector('.status-led');
+                
+                // Random state: Green (Normal), Yellow (Processing), Red (Error)
+                const rand = Math.random();
+                if (rand > 0.95) {
+                    led.className = 'status-led w-2 h-2 bg-red-500 rounded-full animate-ping'; // Error/Critical
+                } else if (rand > 0.7) {
+                    led.className = 'status-led w-2 h-2 bg-yellow-400 rounded-full'; // Processing
+                } else {
+                    led.className = 'status-led w-2 h-2 bg-green-500 rounded-full animate-pulse'; // Normal
+                }
+            }, 500);
+        }
+
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
-        window.onload = function() { runBoot(); initNeuralNetwork(); animateNeural(); };
+        window.onload = function() { 
+            runBoot(); 
+            initNeuralNetwork(); 
+            animateNeural(); 
+            initTargets(); 
+            initServerFarm(); 
+        };
     </script>
 </body>
 </html>

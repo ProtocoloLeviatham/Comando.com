@@ -249,7 +249,7 @@
         <div class="z-10 w-full max-w-2xl mx-auto mt-auto">
             <div id="boot-log" class="mb-4 text-xs md:text-sm font-bold tracking-wider opacity-90 h-40 overflow-hidden flex flex-col justify-end text-shadow bg-black bg-opacity-70 p-4 border-l-4 border-green-800 backdrop-blur-sm"></div>
             <div class="w-full bg-gray-900 h-2 mt-4 border border-green-900 relative overflow-hidden"><div id="boot-progress" class="bg-green-500 h-full w-0 shadow-[0_0_15px_#00ff00] transition-all duration-300"></div></div>
-            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold"><span id="boot-system-text">System Integrity: CHECKING...</span><span>Leviatham OS v10.0.0</span></div>
+            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold"><span id="boot-system-text">System Integrity: CHECKING...</span><span>Leviatham OS v10.2.0</span></div>
         </div>
     </div>
 
@@ -319,7 +319,7 @@
 
             <!-- Header -->
             <header class="h-20 border-b border-green-900 flex items-center justify-between px-6 bg-black bg-opacity-60 backdrop-blur-sm z-20">
-                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V10.0.0</div>
+                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V10.2.0</div>
                 <div class="flex items-center gap-6 ml-auto">
                     <div class="text-right"><div id="ip-display" class="text-sm md:text-lg font-bold text-white typing-cursor">ESTABLECIENDO ENLACE...</div><div id="connection-status" class="text-xs font-mono text-green-600">CIFRANDO PAQUETES...</div></div>
                     <div class="w-10 h-10 border border-green-500 flex items-center justify-center bg-green-900 bg-opacity-20 shadow-[0_0_10px_rgba(0,255,0,0.2)]"><i class="fas fa-shield-alt text-xl"></i></div>
@@ -394,10 +394,10 @@
                     </div>
                 </section>
 
-                <!-- 5. SERVIDORES SYSTEM404G -->
+                <!-- 5. SERVIDORES SYSTEM404G (BOTNET) -->
                 <section class="max-w-6xl mx-auto mb-32 px-2 md:px-0">
                     <h3 class="text-2xl md:text-3xl font-bold mb-6 text-green-500 flex items-center gap-2 font-[Rajdhani] border-b border-green-900 pb-2">
-                        <i class="fas fa-server"></i> SERVIDORES SYSTEM404G
+                        <i class="fas fa-mobile-alt"></i> BOTNET MOBILE NODES (S4G)
                     </h3>
                     
                     <div class="flex flex-col md:flex-row gap-6 h-auto md:h-[500px]">
@@ -471,7 +471,7 @@
         const bootLog = document.getElementById('boot-log'); const bootProgress = document.getElementById('boot-progress'); const bootScreen = document.getElementById('boot-screen'); const legalModal = document.getElementById('legal-modal'); const mainInterface = document.getElementById('main-interface'); const telemetryDiv = document.getElementById('telemetry-data');
         const cores = navigator.hardwareConcurrency || "UNKNOWN"; const platform = navigator.platform || "UNKNOWN_OS"; const screenRes = `${window.screen.width}x${window.screen.height}`; const userAgentShort = navigator.userAgent.substring(0, 25) + "..."; const latency = Math.floor(Math.random() * 40 + 10);
         telemetryDiv.innerHTML = `PLATFORM: ${platform} <br> CORES: ${cores} // GPU: WEBGL_ACTIVE <br> RES: ${screenRes} <br> AGENT: ${userAgentShort} <br> PING: ${latency}ms (STABLE)`;
-        const bootMsgs = ["INITIALIZING KERNEL 10.0.0...", "LOADING NEURAL NETWORKS...", "OPTIMIZING GPU THREADS...", `DETECTED HOST: ${platform.toUpperCase()}...`, "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...", "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>", "VERIFYING ENCRYPTION KEYS...", "BYPASSING SECURE BOOT...", "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>", "LOADING LEVIATHAM ASSETS...", "SYSTEM READY."];
+        const bootMsgs = ["INITIALIZING KERNEL 10.2.0...", "LOADING NEURAL NETWORKS...", "OPTIMIZING GPU THREADS...", `DETECTED HOST: ${platform.toUpperCase()}...`, "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...", "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>", "VERIFYING ENCRYPTION KEYS...", "BYPASSING SECURE BOOT...", "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>", "LOADING LEVIATHAM ASSETS...", "SYSTEM READY."];
         let msgIdx = 0; function runBoot() { if(msgIdx < bootMsgs.length) { const div = document.createElement('div'); div.innerHTML = `<span class="text-gray-500 font-mono">[${new Date().toLocaleTimeString()}]</span> ${bootMsgs[msgIdx]}`; bootLog.appendChild(div); bootLog.scrollTop = bootLog.scrollHeight; const progress = ((msgIdx+1)/bootMsgs.length)*100; bootProgress.style.width = `${progress}%`; document.getElementById('boot-system-text').innerText = `System Integrity: ${Math.floor(progress)}%`; msgIdx++; setTimeout(runBoot, Math.random() * 500 + 400); } else { setTimeout(() => { bootScreen.classList.add('hidden'); legalModal.classList.remove('hidden'); legalModal.classList.add('flex'); document.getElementById('session-id-modal').innerText = "SESSION-" + Math.floor(Math.random()*999999); }, 800); } }
         const check = document.getElementById('accept-check'); const btn = document.getElementById('btn-accept'); const customCheckIcon = document.querySelector('#custom-check i'); check.addEventListener('change', function() { if(this.checked) { btn.classList.remove('opacity-50', 'pointer-events-none'); btn.classList.add('animate-pulse'); customCheckIcon.classList.remove('opacity-0'); } else { btn.classList.add('opacity-50', 'pointer-events-none'); btn.classList.remove('animate-pulse'); customCheckIcon.classList.add('opacity-0'); }}); function acceptTerms() { legalModal.classList.add('hidden'); legalModal.classList.remove('flex'); mainInterface.classList.remove('hidden'); setTimeout(() => mainInterface.classList.remove('opacity-0'), 100); fetchIP(); }
         async function fetchIP() { try { const req = await fetch('https://api.ipify.org?format=json'); const data = await req.json(); document.getElementById('ip-display').innerText = `IP: ${data.ip}`; document.getElementById('ip-display').classList.remove('typing-cursor', 'text-white'); document.getElementById('ip-display').classList.add('text-green-500'); setTimeout(() => document.getElementById('connection-status').innerHTML = `<span class="text-red-500 font-bold blink">[!] CONEXIÓN P2P ESTABLECIDA - NO USAR VPN</span>`, 1500); } catch(e) { document.getElementById('ip-display').innerText = "IP: UNKNOWN (OFFLINE)"; } }
@@ -771,70 +771,94 @@
             return stream;
         }
 
-        function generateAsciiGraph() {
-            let graph = "";
-            const bars = [" ", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
-            for(let i=0; i<20; i++) {
-                graph += bars[Math.floor(Math.random() * bars.length)];
-            }
-            return graph;
-        }
+        let activeUpdateInterval = null; 
 
         function initServerFarm() {
             const grid = document.getElementById('server-grid');
             const details = document.getElementById('server-details');
             const totalNodes = 16; 
 
+            // Lista de dispositivos reales solicitada (10 Samsung, 10 Motorola, 6 iPhone)
+            const devices = [
+                // Samsung (10)
+                { model: "Samsung Galaxy S24 Ultra", ram: "12GB", storage: "1TB" },
+                { model: "Samsung Galaxy S23", ram: "8GB", storage: "256GB" },
+                { model: "Samsung Galaxy Z Fold5", ram: "12GB", storage: "512GB" },
+                { model: "Samsung Galaxy A54", ram: "8GB", storage: "128GB" },
+                { model: "Samsung Galaxy S22 Ultra", ram: "12GB", storage: "512GB" },
+                { model: "Samsung Galaxy Note 20", ram: "8GB", storage: "256GB" },
+                { model: "Samsung Galaxy A34", ram: "6GB", storage: "128GB" },
+                { model: "Samsung Galaxy S21 FE", ram: "6GB", storage: "128GB" },
+                { model: "Samsung Galaxy M54", ram: "8GB", storage: "256GB" },
+                { model: "Samsung Galaxy Z Flip5", ram: "8GB", storage: "512GB" },
+                // Motorola (10)
+                { model: "Motorola Edge 40 Pro", ram: "12GB", storage: "256GB" },
+                { model: "Motorola Razr 40 Ultra", ram: "8GB", storage: "256GB" },
+                { model: "Motorola Moto G84", ram: "12GB", storage: "256GB" },
+                { model: "Motorola Edge 30 Fusion", ram: "12GB", storage: "256GB" },
+                { model: "Motorola Moto G54", ram: "8GB", storage: "128GB" },
+                { model: "Motorola Edge 20", ram: "8GB", storage: "128GB" },
+                { model: "Motorola Moto G200", ram: "8GB", storage: "128GB" },
+                { model: "Motorola Defy 2", ram: "6GB", storage: "128GB" },
+                { model: "Motorola Moto E13", ram: "2GB", storage: "64GB" },
+                { model: "Motorola Edge+ 2023", ram: "8GB", storage: "512GB" },
+                // iPhone (6)
+                { model: "iPhone 15 Pro Max", ram: "8GB", storage: "1TB" },
+                { model: "iPhone 14 Pro", ram: "6GB", storage: "512GB" },
+                { model: "iPhone 13 Mini", ram: "4GB", storage: "128GB" },
+                { model: "iPhone 12", ram: "4GB", storage: "64GB" },
+                { model: "iPhone 11", ram: "4GB", storage: "64GB" },
+                { model: "iPhone SE (2022)", ram: "4GB", storage: "64GB" }
+            ];
+
             for (let i = 0; i < totalNodes; i++) {
                 const node = document.createElement('div');
                 node.className = 'server-node h-24 w-full bg-black border border-green-800 flex flex-col items-center justify-center relative';
-                // Cambiado ID aleatorio a secuencial S4G-1, S4G-2, etc.
                 const nodeId = `S4G-${i + 1}`;
+                
                 node.innerHTML = `
                     <div class="absolute top-1 left-2 text-[10px] text-green-600 font-bold">${nodeId}</div>
-                    <i class="fas fa-server text-2xl text-green-900 mb-1"></i>
+                    <i class="fas fa-mobile-alt text-2xl text-green-900 mb-1"></i> <!-- Icono cambiado a mobile para realismo botnet -->
                     <div class="status-led w-2 h-2 bg-green-500 rounded-full"></div>
                 `;
                 
                 node.addEventListener('click', () => {
+                    if (activeUpdateInterval) clearInterval(activeUpdateInterval);
+
                     document.querySelectorAll('.server-node').forEach(n => n.classList.remove('active-server'));
                     node.classList.add('active-server');
 
-                    const temp = Math.floor(Math.random() * 40) + 35;
-                    const load = Math.floor(Math.random() * 90) + 5;
-                    const uptime = Math.floor(Math.random() * 999);
-                    const procs = Math.floor(Math.random() * 500) + 50;
-                    const streamContent = generateServerStream(nodeId);
-                    const asciiLoad = generateAsciiGraph();
+                    // Seleccionar dispositivo aleatorio de la lista
+                    const device = devices[Math.floor(Math.random() * devices.length)];
                     
-                    let colorClass = "text-green-400";
-                    if (temp > 70 || load > 85) colorClass = "text-red-500 animate-pulse";
-                    else if (temp > 60 || load > 60) colorClass = "text-yellow-500";
+                    const streamContent = generateServerStream(nodeId);
 
                     details.innerHTML = `
                         <div class="w-full text-left border-b border-green-800 pb-2 mb-2 animate-slide-in">
                             <span class="text-white font-bold text-lg">${nodeId}</span>
-                            <span class="float-right text-xs bg-green-900 px-2 py-0.5 text-white rounded">CONNECTED</span>
+                            <span class="float-right text-xs bg-green-900 px-2 py-0.5 text-white rounded">BOTNET NODE</span>
                         </div>
                         
-                        <div class="w-full text-[10px] font-mono text-green-600 mb-2">CPU HISTORY: [${asciiLoad}]</div>
-
                         <div class="grid grid-cols-2 gap-4 w-full text-xs font-mono mb-4 animate-slide-in">
+                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800 col-span-2">
+                                <span class="block text-gray-500">DEVICE MODEL</span>
+                                <span class="text-white font-bold text-sm">${device.model}</span>
+                            </div>
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
-                                <span class="block text-gray-500">TEMP</span>
-                                <span class="${colorClass} text-lg">${temp}°C</span>
+                                <span class="block text-gray-500">RAM</span>
+                                <span class="text-green-400">${device.ram}</span>
+                            </div>
+                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
+                                <span class="block text-gray-500">STORAGE</span>
+                                <span class="text-green-400">${device.storage}</span>
                             </div>
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
                                 <span class="block text-gray-500">CPU LOAD</span>
-                                <span class="${colorClass} text-lg">${load}%</span>
+                                <span class="text-red-500 font-bold blink">DATOS NO DISPONIBLES</span>
                             </div>
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
-                                <span class="block text-gray-500">UPTIME</span>
-                                <span class="text-white text-lg">${uptime}d</span>
-                            </div>
-                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
-                                <span class="block text-gray-500">PROCESSES</span>
-                                <span class="text-white text-lg">${procs}</span>
+                                <span class="block text-gray-500">TEMP</span>
+                                <span class="text-red-500 font-bold blink">DATOS NO DISPONIBLES</span>
                             </div>
                         </div>
 
@@ -851,10 +875,13 @@
                             </div>
                         </div>
                     `;
+                    
+                    // No interval needed for static "N/A" text
                 });
                 grid.appendChild(node);
             }
 
+            // Background Simulation (keep lights blinking)
             setInterval(() => {
                 const nodes = document.querySelectorAll('.server-node');
                 const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
@@ -863,11 +890,12 @@
                 if (rand > 0.90) { led.className = 'status-led w-2 h-2 bg-red-500 rounded-full animate-ping'; } 
                 else if (rand > 0.6) { led.className = 'status-led w-2 h-2 bg-yellow-400 rounded-full'; } 
                 else { led.className = 'status-led w-2 h-2 bg-green-500 rounded-full'; }
-            }, 300); // Faster update rate for blinky lights
+            }, 300); 
         }
 
         // CLOSE SERVER PANEL FUNCTION
         function closeServerPanel() {
+            if (activeUpdateInterval) clearInterval(activeUpdateInterval);
             const details = document.getElementById('server-details');
             document.querySelectorAll('.server-node').forEach(n => n.classList.remove('active-server'));
             details.innerHTML = `<i class="fas fa-mouse-pointer text-4xl text-green-700 mb-2 animate-bounce"></i><p class="text-gray-400 text-sm">SELECCIONE UN NODO DEL GRID<br>PARA INICIAR EXTRACCIÓN DE DATOS</p>`;

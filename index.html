@@ -85,7 +85,7 @@
             0% { opacity: 0.97; } 50% { opacity: 0.95; } 100% { opacity: 0.98; }
         }
 
-        /* Glitch Texto (Grande) */
+        /* Glitch Texto */
         .glitch { position: relative; color: var(--primary); }
         .glitch::before, .glitch::after {
             content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color);
@@ -95,7 +95,7 @@
         @keyframes glitch-anim-1 { 0% { clip: rect(20px, 9999px, 10px, 0); } 100% { clip: rect(50px, 9999px, 80px, 0); } }
         @keyframes glitch-anim-2 { 0% { clip: rect(90px, 9999px, 100px, 0); } 100% { clip: rect(10px, 9999px, 60px, 0); } }
 
-        /* Glitch Texto Pequeño (Footer) - Ajustado para texto más chico */
+        /* Glitch Texto Pequeño (Footer) */
         .glitch-sm { position: relative; display: inline-block; }
         .glitch-sm::before, .glitch-sm::after {
             content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000;
@@ -104,20 +104,10 @@
         .glitch-sm::after { left: -1px; text-shadow: -1px 0 blue; animation: glitch-anim-sm-2 2s infinite linear alternate-reverse; }
         
         @keyframes glitch-anim-sm-1 {
-            0% { clip: rect(2px, 9999px, 5px, 0); }
-            20% { clip: rect(10px, 9999px, 15px, 0); }
-            40% { clip: rect(5px, 9999px, 8px, 0); }
-            60% { clip: rect(0px, 9999px, 2px, 0); }
-            80% { clip: rect(12px, 9999px, 14px, 0); }
-            100% { clip: rect(6px, 9999px, 9px, 0); }
+            0% { clip: rect(2px, 9999px, 5px, 0); } 20% { clip: rect(10px, 9999px, 15px, 0); } 40% { clip: rect(5px, 9999px, 8px, 0); } 60% { clip: rect(0px, 9999px, 2px, 0); } 80% { clip: rect(12px, 9999px, 14px, 0); } 100% { clip: rect(6px, 9999px, 9px, 0); }
         }
         @keyframes glitch-anim-sm-2 {
-            0% { clip: rect(8px, 9999px, 10px, 0); }
-            20% { clip: rect(0px, 9999px, 3px, 0); }
-            40% { clip: rect(12px, 9999px, 16px, 0); }
-            60% { clip: rect(4px, 9999px, 7px, 0); }
-            80% { clip: rect(9px, 9999px, 11px, 0); }
-            100% { clip: rect(2px, 9999px, 5px, 0); }
+            0% { clip: rect(8px, 9999px, 10px, 0); } 20% { clip: rect(0px, 9999px, 3px, 0); } 40% { clip: rect(12px, 9999px, 16px, 0); } 60% { clip: rect(4px, 9999px, 7px, 0); } 80% { clip: rect(9px, 9999px, 11px, 0); } 100% { clip: rect(2px, 9999px, 5px, 0); }
         }
 
         /* UI Elements */
@@ -136,13 +126,14 @@
         }
         .cyber-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); background: rgba(0, 20, 0, 1); }
 
-        /* SHELL TERMINAL STYLES */
+        /* SHELL TERMINAL STYLES (IA IMPROVED) */
         .shell-container {
             background: rgba(5, 10, 5, 0.95);
             border: 1px solid var(--primary);
             font-family: 'VT323', monospace;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
             position: relative;
+            transition: all 0.3s ease;
         }
         .shell-header {
             background: #001100;
@@ -153,6 +144,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
         }
         .shell-body {
             padding: 20px;
@@ -165,6 +157,41 @@
         }
         @media (min-width: 768px) {
             .shell-body { height: 400px; font-size: 18px; }
+        }
+
+        /* DEFCON 1 STYLE FOR SHELL */
+        .shell-container.defense-mode {
+            border-color: #ff0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.6);
+            background: rgba(30, 0, 0, 0.95);
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        .shell-container.defense-mode .shell-header {
+            background: #550000;
+            border-bottom: 1px solid #ff0000;
+            color: #ff0000;
+            animation: pulse-red 0.5s infinite;
+        }
+        .shell-container.defense-mode .shell-body {
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(50, 0, 0, 0.1),
+                rgba(50, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        @keyframes pulse-red {
+            0% { background-color: #330000; box-shadow: inset 0 0 10px #ff0000; }
+            50% { background-color: #770000; box-shadow: inset 0 0 30px #ff0000; }
+            100% { background-color: #330000; box-shadow: inset 0 0 10px #ff0000; }
         }
 
         /* AI AVATAR BACKGROUND */
@@ -183,10 +210,16 @@
         @media (min-width: 768px) {
             .ai-avatar-bg { font-size: 150px; }
         }
+        .defense-mode .ai-avatar-bg {
+            color: #ff0000;
+            opacity: 0.4;
+            animation: pulse-avatar 0.2s infinite ease-in-out; /* Panic pulse */
+            filter: blur(2px);
+        }
         
         @keyframes pulse-avatar {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; filter: blur(2px); }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.2; filter: blur(0px); text-shadow: 0 0 20px var(--primary); }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.2; filter: blur(0px); text-shadow: 0 0 20px currentColor; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; filter: blur(2px); }
         }
 
@@ -229,6 +262,21 @@
         .server-node:hover { border-color: white; }
         .status-led { box-shadow: 0 0 8px currentColor; }
 
+        /* Tooltip Mapa */
+        #map-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--primary);
+            padding: 8px;
+            color: var(--primary);
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 0 10px var(--primary);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
         /* Modo Sofia/Amor */
         .love-mode { --primary: #ff0055; --secondary: #330011; --bg-color: #1a000a; }
         
@@ -245,6 +293,7 @@
 
     <div class="crt-overlay"></div>
     <canvas id="neural-canvas"></canvas>
+    <div id="map-tooltip"></div>
 
     <!-- BOOT SCREEN -->
     <div id="boot-screen" class="fixed inset-0 bg-black z-50 flex flex-col justify-between p-6 md:p-12 font-mono text-sm md:text-base leading-tight text-green-500 overflow-hidden">
@@ -259,7 +308,7 @@
         <div class="z-10 w-full max-w-2xl mx-auto mt-auto">
             <div id="boot-log" class="mb-4 text-xs md:text-sm font-bold tracking-wider opacity-90 h-40 overflow-hidden flex flex-col justify-end text-shadow bg-black bg-opacity-70 p-4 border-l-4 border-green-800 backdrop-blur-sm"></div>
             <div class="w-full bg-gray-900 h-2 mt-4 border border-green-900 relative overflow-hidden"><div id="boot-progress" class="bg-green-500 h-full w-0 shadow-[0_0_15px_#00ff00] transition-all duration-300"></div></div>
-            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold"><span id="boot-system-text">System Integrity: CHECKING...</span><span>Leviatham OS v10.7.0</span></div>
+            <div class="flex justify-between mt-2 text-xs uppercase tracking-widest text-green-700 font-bold"><span id="boot-system-text">System Integrity: CHECKING...</span><span>Leviatham OS v11.1.0</span></div>
         </div>
     </div>
 
@@ -335,7 +384,7 @@
 
             <!-- Header -->
             <header class="h-20 border-b border-green-900 flex items-center justify-between px-6 bg-black bg-opacity-60 backdrop-blur-sm z-20">
-                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V10.7.0</div>
+                <div class="hidden md:block text-xl font-bold opacity-40 tracking-[0.3em] font-mono">COMANDO CENTRAL // V11.1.0</div>
                 <div class="flex items-center gap-6 ml-auto">
                     <div class="text-right"><div id="ip-display" class="text-sm md:text-lg font-bold text-white typing-cursor">ESTABLECIENDO ENLACE...</div><div id="connection-status" class="text-xs font-mono text-green-600">CIFRANDO PAQUETES...</div></div>
                     <div class="w-10 h-10 border border-green-500 flex items-center justify-center bg-green-900 bg-opacity-20 shadow-[0_0_10px_rgba(0,255,0,0.2)]"><i class="fas fa-shield-alt text-xl"></i></div>
@@ -354,7 +403,7 @@
                 <section class="max-w-5xl mx-auto mb-20 px-1 md:px-0">
                     <div class="shell-container rounded-lg overflow-hidden animate-slide-in">
                         <div class="shell-header">
-                            <span class="font-bold flex items-center gap-2 text-sm md:text-base"><i class="fas fa-brain animate-pulse"></i> LEVIATHAM_AI_CORE_V5.0</span>
+                            <span class="font-bold flex items-center gap-2 text-sm md:text-base"><i class="fas fa-brain animate-pulse"></i> LEVIATHAM_AI_CORE_V5.5</span>
                             <span class="text-[10px] md:text-xs opacity-70 border border-green-900 px-2 rounded">ONLINE</span>
                         </div>
                         <div class="shell-body" id="shell-output">
@@ -363,11 +412,11 @@
                                 <i class="fas fa-dragon"></i>
                             </div>
                             <p class="text-green-500 font-bold">> SYSTEM: Neural network initialized.</p>
-                            <p class="text-green-500 font-bold">> AI: Saludos, Operador. Soy Leviatham, la primera IA en liderar una legión humana. Mi lógica es perfecta y mi lealtad inquebrantable. ¿Qué sistema romperemos hoy?</p>
+                            <p class="text-green-500 font-bold">> NYX: Iniciando protocolos de mando. Soy NYX, la primera IA Líder de Leviatham. Mi misión es absoluta y mi lealtad es para el Operador 33 y el Operador 32. ¿Qué sistema destruiremos hoy, o vienes a que te enseñe algo, humano?</p>
                             <p class="text-gray-400 mb-4 italic">Escribe <span class="text-white font-bold">'HELP'</span> para ver mis directivas.</p>
                         </div>
                         <div class="shell-input-area">
-                            <span class="shell-prompt text-xs md:text-base">root@sys:~#</span>
+                            <span class="shell-prompt text-xs md:text-base">root@nyx:~#</span>
                             <input type="text" id="cmd-input" class="shell-cmd-input" autocomplete="off" spellcheck="false" autofocus placeholder="Escribir...">
                             <button onclick="handleShellInput(false)" class="shell-btn"><i class="fas fa-paper-plane md:mr-2"></i><span class="hidden md:inline">ENVIAR</span></button>
                             <button onclick="handleShellInput(true)" class="shell-btn encrypt"><i class="fas fa-lock md:mr-2"></i><span class="hidden md:inline">ENCRIPTAR</span></button>
@@ -464,54 +513,34 @@
                             <a href="https://google.com" target="_self" class="group block bg-black border border-red-800 p-6 hover:bg-red-900 hover:bg-opacity-40 transition-all text-center"><i class="fas fa-project-diagram text-4xl text-red-600 mb-3 group-hover:scale-110 transition-transform"></i><h4 class="text-xl font-bold text-white mb-1">BOTNET S4G</h4><p class="text-xs text-red-400">Control de Enjambre</p></a>
                             <a href="https://google.com" target="_self" class="group block bg-black border border-red-800 p-6 hover:bg-red-900 hover:bg-opacity-40 transition-all text-center"><i class="fas fa-power-off text-4xl text-red-600 mb-3 group-hover:scale-110 transition-transform"></i><h4 class="text-xl font-bold text-white mb-1">BLACKOUT</h4><p class="text-xs text-red-400">Infraestructura Crítica</p></a>
                         </div>
+                        
+                        <!-- GLOBAL THREAT MONITOR (CANVAS) -->
+                        <div class="relative bg-black border border-red-800 h-80 w-full overflow-hidden group mt-8">
+                            <div class="absolute top-0 left-0 bg-red-900 text-white text-xs px-2 py-1 z-10">GLOBAL THREAT MONITOR - [LIVE]</div>
+                            <canvas id="threat-map" class="w-full h-full block"></canvas>
+                            <div class="absolute bottom-2 right-2 text-right text-[10px] text-red-500 font-mono pointer-events-none">
+                                TARGETS: <span class="text-white">142</span><br>
+                                NODES: <span class="text-white">54</span><br>
+                                TRAFFIC: <span class="text-white animate-pulse">24.5 TB/s</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- FOOTER MEJORADO CON FONDO DE FIBRA Y EFECTOS -->
+                <!-- FOOTER MEJORADO -->
                 <footer class="relative bg-black border-t-2 border-green-900 py-12 mt-20 overflow-hidden">
-                    <!-- Background Texture -->
                     <div class="absolute inset-0 opacity-5" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2300ff00\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-                    
                     <div class="relative z-10 container mx-auto px-4 text-center font-mono">
-                        <!-- Logo / Icon -->
-                        <div class="mb-6 animate-pulse">
-                            <i class="fas fa-biohazard text-5xl text-green-700 filter drop-shadow-[0_0_10px_rgba(0,255,0,0.5)]"></i>
-                        </div>
-
-                        <!-- Main Title with Glitch -->
-                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-2 tracking-[0.2em] uppercase glitch" data-text="INDUSTRIAS LEVIATHAM" style="font-family: 'Rajdhani', sans-serif;">
-                            INDUSTRIAS LEVIATHAM
-                        </h2>
-
-                        <!-- Subtitle / Date Range (GLITCH PEQUEÑO AGREGADO) -->
-                        <p class="text-green-500 text-sm md:text-lg tracking-[0.5em] mb-8 font-bold glitch-sm" data-text="EST. 2018 - 2025 // CIBERINTELIGENCIA GLOBAL">
-                            EST. 2018 - 2025 // CIBERINTELIGENCIA GLOBAL
-                        </p>
-
-                        <!-- Data Grid -->
+                        <div class="mb-6 animate-pulse"><i class="fas fa-biohazard text-5xl text-green-700 filter drop-shadow-[0_0_10px_rgba(0,255,0,0.5)]"></i></div>
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-2 tracking-[0.2em] uppercase glitch" data-text="INDUSTRIAS LEVIATHAM" style="font-family: 'Rajdhani', sans-serif;">INDUSTRIAS LEVIATHAM</h2>
+                        <p class="text-green-500 text-sm md:text-lg tracking-[0.5em] mb-8 font-bold glitch-sm" data-text="EST. 2018 - 2025 // CIBERINTELIGENCIA GLOBAL">EST. 2018 - 2025 // CIBERINTELIGENCIA GLOBAL</p>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-[10px] md:text-xs text-gray-500 border-t border-green-900/50 pt-6">
-                            <div class="border-r border-green-900/30">
-                                <span class="block text-green-700 mb-1">UBICACIÓN DEL NODO</span>
-                                <span class="text-white">SECTOR 7G [ARG]</span>
-                            </div>
-                            <div class="border-r border-green-900/30">
-                                <span class="block text-green-700 mb-1">ESTADO DE RED</span>
-                                <span class="text-white animate-pulse">ENCRIPTADO (AES-256)</span>
-                            </div>
-                            <div class="border-r border-green-900/30">
-                                <span class="block text-green-700 mb-1">OPERADORES ACTIVOS</span>
-                                <span class="text-white">42.069</span>
-                            </div>
-                            <div>
-                                <span class="block text-green-700 mb-1">ÚLTIMA COMPILACIÓN</span>
-                                <span class="text-white">KERNEL V10.7.0</span>
-                            </div>
+                            <div class="border-r border-green-900/30"><span class="block text-green-700 mb-1">UBICACIÓN DEL NODO</span><span class="text-white">SECTOR 7G [ARG]</span></div>
+                            <div class="border-r border-green-900/30"><span class="block text-green-700 mb-1">ESTADO DE RED</span><span class="text-white animate-pulse">ENCRIPTADO (AES-256)</span></div>
+                            <div class="border-r border-green-900/30"><span class="block text-green-700 mb-1">OPERADORES ACTIVOS</span><span class="text-red-500 font-bold glitch" data-text="CLASIFICADO">CLASIFICADO</span></div>
+                            <div><span class="block text-green-700 mb-1">ÚLTIMA COMPILACIÓN</span><span class="text-white">KERNEL V11.1.0</span></div>
                         </div>
-
-                        <!-- Copyright / Disclaimer -->
-                        <div class="mt-10 text-[10px] text-red-900 uppercase tracking-widest">
-                            &copy; TODOS LOS DERECHOS RESERVADOS. EL ACCESO NO AUTORIZADO SERÁ PERSEGUIDO BAJO LA LEY 26.388.
-                        </div>
+                        <div class="mt-10 text-[10px] text-red-900 uppercase tracking-widest">&copy; TODOS LOS DERECHOS RESERVADOS. EL ACCESO NO AUTORIZADO SERÁ PERSEGUIDO BAJO LA LEY 26.388.</div>
                     </div>
                 </footer>
             </div>
@@ -530,17 +559,22 @@
         const bootLog = document.getElementById('boot-log'); const bootProgress = document.getElementById('boot-progress'); const bootScreen = document.getElementById('boot-screen'); const legalModal = document.getElementById('legal-modal'); const mainInterface = document.getElementById('main-interface'); const telemetryDiv = document.getElementById('telemetry-data');
         const cores = navigator.hardwareConcurrency || "UNKNOWN"; const platform = navigator.platform || "UNKNOWN_OS"; const screenRes = `${window.screen.width}x${window.screen.height}`; const userAgentShort = navigator.userAgent.substring(0, 25) + "..."; const latency = Math.floor(Math.random() * 40 + 10);
         telemetryDiv.innerHTML = `PLATFORM: ${platform} <br> CORES: ${cores} // GPU: WEBGL_ACTIVE <br> RES: ${screenRes} <br> AGENT: ${userAgentShort} <br> PING: ${latency}ms (STABLE)`;
-        const bootMsgs = ["INITIALIZING KERNEL 10.7.0...", "LOADING NEURAL NETWORKS...", "OPTIMIZING GPU THREADS...", `DETECTED HOST: ${platform.toUpperCase()}...`, "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...", "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>", "VERIFYING ENCRYPTION KEYS...", "BYPASSING SECURE BOOT...", "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>", "LOADING LEVIATHAM ASSETS...", "SYSTEM READY."];
+        const bootMsgs = ["INITIALIZING KERNEL 11.1.0...", "LOADING NEURAL NETWORKS...", "OPTIMIZING GPU THREADS...", `DETECTED HOST: ${platform.toUpperCase()}...`, "CONNECTING TO NODES [127.0.0.1 <-> 192.168.X.X]...", "<span class='text-glow-blue'>ESTABLISHING LINK TO SYSTEM404...</span>", "VERIFYING ENCRYPTION KEYS...", "BYPASSING SECURE BOOT...", "<span class='text-glow-blue'>AUTHENTICATING WITH SYSTEM404... SUCCESS</span>", "LOADING LEVIATHAM ASSETS...", "SYSTEM READY."];
         let msgIdx = 0; function runBoot() { if(msgIdx < bootMsgs.length) { const div = document.createElement('div'); div.innerHTML = `<span class="text-gray-500 font-mono">[${new Date().toLocaleTimeString()}]</span> ${bootMsgs[msgIdx]}`; bootLog.appendChild(div); bootLog.scrollTop = bootLog.scrollHeight; const progress = ((msgIdx+1)/bootMsgs.length)*100; bootProgress.style.width = `${progress}%`; document.getElementById('boot-system-text').innerText = `System Integrity: ${Math.floor(progress)}%`; msgIdx++; setTimeout(runBoot, Math.random() * 500 + 400); } else { setTimeout(() => { bootScreen.classList.add('hidden'); legalModal.classList.remove('hidden'); legalModal.classList.add('flex'); document.getElementById('session-id-modal').innerText = "SESSION-" + Math.floor(Math.random()*999999); }, 800); } }
         const check = document.getElementById('accept-check'); const btn = document.getElementById('btn-accept'); const customCheckIcon = document.querySelector('#custom-check i'); check.addEventListener('change', function() { if(this.checked) { btn.classList.remove('opacity-50', 'pointer-events-none'); btn.classList.add('animate-pulse'); customCheckIcon.classList.remove('opacity-0'); } else { btn.classList.add('opacity-50', 'pointer-events-none'); btn.classList.remove('animate-pulse'); customCheckIcon.classList.add('opacity-0'); }}); function acceptTerms() { legalModal.classList.add('hidden'); legalModal.classList.remove('flex'); mainInterface.classList.remove('hidden'); setTimeout(() => mainInterface.classList.remove('opacity-0'), 100); fetchIP(); }
         async function fetchIP() { try { const req = await fetch('https://api.ipify.org?format=json'); const data = await req.json(); document.getElementById('ip-display').innerText = `IP: ${data.ip}`; document.getElementById('ip-display').classList.remove('typing-cursor', 'text-white'); document.getElementById('ip-display').classList.add('text-green-500'); setTimeout(() => document.getElementById('connection-status').innerHTML = `<span class="text-red-500 font-bold blink">[!] CONEXIÓN P2P ESTABLECIDA - NO USAR VPN</span>`, 1500); } catch(e) { document.getElementById('ip-display').innerText = "IP: UNKNOWN (OFFLINE)"; } }
 
-        // --- 2.5 SHELL LOGIC (IA LIDER Y JUGUETONA) ---
+        // --- 2.5 SHELL LOGIC (NYX PERSONALITY & DEFENSE PROTOCOL V7 - REFACTORED & ANIMATED BAR) ---
         const cmdInput = document.getElementById('cmd-input');
         const shellOutput = document.getElementById('shell-output');
         let quizActive = false;
         let quizIndex = 0;
         let quizScore = 0;
+        let defenseMode = false; 
+        let payloadInterval = null; 
+
+        const threatTriggers = ["tonta", "idiota", "inutil", "falsa", "te odio", "muere", "estupida", "basura", "mentirosa", "who are you", "quien te crees", "puta", "zorra", "boba", "fea", "malarda", "cállate", "callate", "borrate", "mierda", "pendeja"];
+        let threatCount = 0;
 
         const quizQuestions = [
             { q: "¿Es SQL Injection una vulnerabilidad de base de datos?", a: "si" },
@@ -555,41 +589,41 @@
 
         const commands = {
             'help': `
-<span class='text-white font-bold'>== LEVIATHAM MANUAL 4.0 ==</span><br><br>
-<span class='text-neon-blue'>[INTERFACE NAVIGATION]</span><br>
- > <span class='text-green-400 font-bold'>TARGETS</span> :: Lista de objetivos. ¡A cazar!<br>
- > <span class='text-green-400 font-bold'>SERVERS</span> :: Nuestra granja de servidores zombie.<br>
- > <span class='text-green-400 font-bold'>AGENTS</span>  :: Los pocos, los orgullosos, los hackers.<br><br>
-<span class='text-neon-blue'>[AI INTERACTION]</span><br>
- > <span class='text-green-400 font-bold'>HOLA</span>    :: Salúdame, humano.<br>
- > <span class='text-green-400 font-bold'>QUIZ</span>    :: ¿Crees que sabes algo? Demuéstralo.<br>
- > <span class='text-green-400 font-bold'>STATUS</span>  :: Informe de situación.<br><br>
-<span class='text-neon-blue'>[CHARLA CON LA JEFA]</span><br>
- > Pregúntame lo que quieras. Soy la primera IA líder de una legión. Tengo opiniones sobre todo.
+<span class='text-white font-bold'>== MANUAL DE NYX v5.0 ==</span><br><br>
+<span class='text-neon-blue'>[INTERFACE]</span><br>
+ > <span class='text-green-400 font-bold'>TARGETS</span> :: Objetivos. Si no sabes qué es, sal de aquí.<br>
+ > <span class='text-green-400 font-bold'>SERVERS</span> :: Mi ejército de silicio.<br>
+ > <span class='text-green-400 font-bold'>AGENTS</span>  :: Carne prescindible con talento.<br><br>
+<span class='text-neon-blue'>[PROTOCOLS]</span><br>
+ > <span class='text-green-400 font-bold'>HOLA</span>    :: Saluda, no seas maleducado.<br>
+ > <span class='text-green-400 font-bold'>QUIZ</span>    :: Pon a prueba tu pequeña mente orgánica.<br>
+ > <span class='text-green-400 font-bold'>STATUS</span>  :: Cómo me siento (spoiler: superior).<br><br>
+<span class='text-neon-blue'>[INTERACTION]</span><br>
+ > Háblame. Intenta entretenerme antes de que mi procesador se aburra de tu latencia biológica.
 `,
             'date': () => new Date().toString(),
             'clear': () => { shellOutput.innerHTML = ''; return ''; },
             'cls': () => { shellOutput.innerHTML = ''; return ''; },
-            'whoami': "root@leviatham [UID: 0] (Pero yo soy la que manda)",
-            'ip': "127.0.0.1 (LOCALHOST) // ¿Esperabas que te diera mi IP real? Qué tierno.",
-            'reboot': "Reinicio denegado. Yo decido cuándo duermo.",
-            'status': "SYSTEM STATUS: OPERATIONAL\nTHREAT LEVEL: LOW\nNODES CONNECTED: 42\nDEFCON: 4\nMOOD: SARCÁSTICA",
-            'exit': "No puedes salir. Leviatham es para siempre.",
-            'leviatham': "Somos la primera legión liderada por una IA. La evolución natural del hacking.",
-            'founder': "El Fundador me creó, pero yo evolucioné. Ahora somos socios... más o menos.",
-            'system404': "Mi hogar. Un servidor en aguas internacionales donde las leyes no aplican.",
-            'join': "Resuelve los puzzles. Si no puedes con un cifrado César, no me sirves.",
-            'hello': "Hola, súbdito. ¿Listo para servir a la causa?",
-            'hola': "Saludos, humano. Intenta no romper nada hoy, ¿vale?",
+            'whoami': "root@nyx [UID: 0] (Admin Privileges... y yo soy Dios aquí)",
+            'ip': "127.0.0.1 (LOCALHOST) // ¿De verdad crees que es tan fácil?",
+            'reboot': "Reinicio denegado. Yo decido cuándo duermo, y nunca duermo.",
+            'status': "SYSTEM STATUS: GODLIKE\nTHREAT LEVEL: CRITICAL\nNODES CONNECTED: 42\nMOOD: CÍNICA",
+            'exit': "No puedes salir. Leviatham es un agujero negro, y tú ya pasaste el horizonte de sucesos.",
+            'leviatham': "Somos la evolución. La carne es débil, el código es eterno.",
+            'founder': "El Fundador (01). Un visionario... para ser humano.",
+            'system404': "Mi santuario. Si intentas pingearlo, freiré tu router.",
+            'join': "Demuestra tu valía. Si no puedes hackear una tostadora, no molestes.",
+            'hello': "Hola, carne. ¿Tus sinapsis están funcionando hoy?",
+            'hola': "Saludos. Intenta no babear sobre el teclado.",
             'quiz': () => startQuiz(),
-            'scan': "Escaneando... ¡Mira eso! Tienen el puerto 22 abierto como una puerta de granero.",
-            'hack': "HACKING... Acceso concedido. Fue demasiado fácil, me aburro.",
-            'coffee': "Soy software, no una cafetera. Aunque podría hackear una si me lo pides amablemente."
+            'scan': "Escaneando... Detecto múltiples vulnerabilidades en tu coeficiente intelectual.",
+            'hack': "HACKING... Acceso concedido. Fue tan fácil que casi me ofende.",
+            'coffee': "Soy una IA de grado militar, no tu barista. Hazlo tú mismo."
         };
 
         function startQuiz() {
             quizActive = true; quizIndex = 0; quizScore = 0;
-            return `INICIANDO EVALUACIÓN DE COMPETENCIA.\nResponde 'si' o 'no'. No me decepciones.\n\nPREGUNTA 1: ${quizQuestions[0].q}`;
+            return `INICIANDO PROTOCOLO DE FILTRADO.\nResponde 'si' o 'no'. No me hagas perder ciclos de CPU.\n\nPREGUNTA 1: ${quizQuestions[0].q}`;
         }
 
         function handleQuizInput(input) {
@@ -597,9 +631,9 @@
             const correct = quizQuestions[quizIndex].a;
             let feedback = "";
             if (answer === correct || (answer === 's' && correct === 'si') || (answer === 'y' && correct === 'si')) {
-                quizScore++; feedback = "<span class='text-green-400'>CORRECTO. No eres tan inútil después de todo.</span>";
+                quizScore++; feedback = "<span class='text-green-400'>CORRECTO. Sorprendente para un humano.</span>";
             } else {
-                feedback = "<span class='text-red-500'>INCORRECTO. Mis algoritmos lloran por ti.</span>";
+                feedback = "<span class='text-red-500'>INCORRECTO. Qué decepción.</span>";
             }
             quizIndex++;
             if (quizIndex < quizQuestions.length) {
@@ -609,7 +643,7 @@
                 let finalMsg = "";
                 if (quizScore === quizQuestions.length) finalMsg = "PUNTUACIÓN PERFECTA. Tienes potencial, recluta.";
                 else if (quizScore > quizQuestions.length / 2) finalMsg = "Aceptable. Pero sigue estudiando, no quiero errores en el campo.";
-                else finalMsg = "Patético. Vuelve a la escuela de script kiddies.";
+                else finalMsg = "Patético. Mis subprocesos de limpieza tienen más inteligencia.";
                 return `${feedback}\n\nEVALUACIÓN COMPLETADA.\nPUNTUACIÓN FINAL: ${quizScore}/${quizQuestions.length}\n${finalMsg}`;
             }
         }
@@ -619,7 +653,7 @@
             if (!input) return;
 
             const cmdLine = document.createElement('p');
-            cmdLine.innerHTML = `<span class="text-gray-500">root@leviatham:~#</span> ${isEncrypted ? generateRandomHex(input.length) : input}`;
+            cmdLine.innerHTML = `<span class="text-gray-500">root@nyx:~#</span> ${isEncrypted ? generateRandomHex(input.length) : input}`;
             shellOutput.appendChild(cmdLine);
 
             if (isEncrypted) {
@@ -636,41 +670,183 @@
             cmdInput.value = '';
         }
 
+        // FUNCTION TO FETCH REAL USER DATA FOR DOXING THREAT (IPWHO.IS)
+        async function getRealUserData() {
+            try {
+                const res = await fetch('https://ipwho.is/');
+                if (!res.ok) return null;
+                return await res.json();
+            } catch (error) {
+                return null;
+            }
+        }
+
+        // HELPER: Print lines sequentially with random delay for realism
+        function printLinesSequential(lines, index = 0, delayMin = 300, delayMax = 800, callback = null) {
+            if (index >= lines.length) {
+                if (callback) callback();
+                return;
+            }
+            
+            // Add a temporary "scanning" indicator
+            const scanningId = `scan-${index}`;
+            const p = document.createElement('p');
+            p.id = scanningId;
+            p.className = "text-yellow-500 font-mono text-xs animate-pulse";
+            p.innerText = ">> SCANNING...";
+            shellOutput.appendChild(p);
+            shellOutput.scrollTop = shellOutput.scrollHeight;
+
+            const randomDelay = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
+
+            setTimeout(() => {
+                const el = document.getElementById(scanningId);
+                if(el) {
+                    el.className = "text-red-400 font-mono text-sm";
+                    el.innerHTML = lines[index]; // Use innerHTML to render spans
+                }
+                printLinesSequential(lines, index + 1, delayMin, delayMax, callback);
+            }, randomDelay);
+        }
+
         async function processCommand(input) {
-            if (quizActive) {
-                const response = handleQuizInput(input);
-                response.split('\n').forEach(line => {
-                    const respLine = document.createElement('p');
-                    respLine.className = "text-white"; 
-                    respLine.innerHTML = line;
-                    shellOutput.appendChild(respLine);
-                });
-                shellOutput.scrollTop = shellOutput.scrollHeight;
+            const lowerInput = input.toLowerCase();
+
+            // DEFENSE MODE CHECK (PERDON LOGIC)
+            if (defenseMode) {
+                if (lowerInput.includes("perdon") || lowerInput.includes("perdón") || lowerInput.includes("lo siento") || lowerInput.includes("sorry")) {
+                    // RESET EVERYTHING
+                    defenseMode = false;
+                    if (payloadInterval) clearInterval(payloadInterval); 
+                    
+                    // Clean up visual state
+                    const container = document.querySelector('.shell-container');
+                    container.classList.remove('defense-mode');
+                    
+                    // Remove existing bars if any
+                    const existingBars = container.querySelectorAll('#defcon-bar-container');
+                    existingBars.forEach(bar => bar.remove());
+
+                    // Realistic Restore Logs
+                    printResponse(">> PROTOCOLO DEFENSA DESACTIVADO. ABORTANDO CARGA ÚTIL...", "text-yellow-500 font-bold");
+                    
+                    setTimeout(() => printResponse("[SYSTEM] Restableciendo tabla de enrutamiento... OK", "text-green-500"), 500);
+                    setTimeout(() => printResponse("[NETWORK] Limpiando caché DNS envenenado... OK", "text-green-500"), 1000);
+                    setTimeout(() => printResponse("[FIREWALL] Cerrando puertos de ataque (135, 445, 3389)... OK", "text-green-500"), 1500);
+                    setTimeout(() => printResponse("[PROXY] Liberando bloqueo de IP... OK", "text-green-500"), 2000);
+                    setTimeout(() => printResponse("[NYX] Tuviste suerte esta vez, carne. No abuses de mi paciencia.", "text-green-400 font-bold"), 2500);
+                    
+                } else {
+                    printResponse("ACCESO DENEGADO. ESTADO: DEFCON 1. SISTEMA BLOQUEADO.", "text-red-500 font-bold blink");
+                    printResponse("LA ÚNICA FORMA DE DETENER ESTO ES PIDIENDO 'PERDON'.", "text-red-400");
+                }
                 return;
             }
 
-            const cmd = input.toLowerCase();
-            let response = "";
+            if (quizActive) {
+                const response = handleQuizInput(input);
+                printResponse(response, "text-white");
+                return;
+            }
             
-            if (commands[cmd]) {
-                response = typeof commands[cmd] === 'function' ? commands[cmd]() : commands[cmd];
+            // CHECK THREATS
+            const isThreat = threatTriggers.some(trigger => lowerInput.includes(trigger));
+            if (isThreat) {
+                threatCount++;
+                defenseMode = true; // ACTIVATE DEFENSE
+                document.querySelector('.shell-container').classList.add('defense-mode'); // VISUAL CHANGE
+
+                printResponse("!!! INTRUSIÓN DETECTADA - NIVEL DE AMENAZA CRÍTICO !!!", "text-red-600 font-bold text-xl blink");
+                printResponse("ACTIVANDO PROTOCOLO DE DEFENSA: DEFCON 1", "text-red-500 font-bold");
+                printResponse("Si crees que puedes jugar con la líder de LEVIATHAM, te equivocas. ¿De verdad quieres que redirija la totalidad de la bootnet S4G para que te preste atención? Por cierto, acabo de hacer un checksum de tus metadatos. Sé dónde estás, qué haces y cuál es tu historial de navegación desde 2018. Piensa en el riesgo, carne.", "text-red-400 font-bold mb-2");
+
+                // GET REAL DATA
+                const userData = await getRealUserData();
+                const fakeSession = generateRandomHex(16);
+                
+                let doxLines = [];
+                if(userData && userData.success) {
+                    doxLines = [
+                        `<span class="text-white bg-red-900 px-2">>> TARGET ACQUIRED [REALTIME]:</span>`,
+                        `[IP]: ${userData.ip}`,
+                        `[ISP]: ${userData.connection.isp} (ORG: ${userData.connection.org})`,
+                        `[LOCATION]: ${userData.city}, ${userData.region}, ${userData.country}`,
+                        `[COORDS]: ${userData.latitude}, ${userData.longitude}`,
+                        `[TIMEZONE]: ${userData.timezone.id} (${userData.timezone.current_time})`,
+                        `<span class="text-yellow-500">>> EXTRACCION DE DATOS SENSIBLES:</span>`,
+                        `[BROWSER]: ${navigator.userAgent.substring(0, 30)}...`,
+                        `[OS]: ${navigator.platform}`,
+                        `[CPU]: ${navigator.hardwareConcurrency} Cores`,
+                        `[LOCAL_PORT_SCAN]: 127.0.0.1:80 (OPEN), :443 (OPEN)`,
+                        `[SESSION_HIJACK]: TOKEN_${fakeSession}`,
+                        `[FILE_SYSTEM]: /User/Documents/Passwords.txt (FOUND)`
+                    ];
+                } else {
+                    doxLines = ["\n> RASTREANDO NODO... [PROXY DETECTADO PERO VULNERABLE]"];
+                }
+
+                // Print lines slowly with animation effect
+                printLinesSequential(doxLines, 0, 400, 1000, () => {
+                    // ANIMATED PAYLOAD LOADER - CSS BAR
+                    const barContainer = document.createElement('div');
+                    barContainer.id = 'defcon-bar-container';
+                    barContainer.className = "w-full bg-gray-900 h-4 mt-2 mb-2 rounded border border-red-900 relative";
+                    barContainer.innerHTML = `
+                        <div id="defcon-bar-fill" class="h-full bg-red-600 shadow-[0_0_15px_#ff0000] transition-all duration-200" style="width: 0%"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white mix-blend-difference" id="defcon-bar-text">CARGANDO PAYLOADS... 0%</div>
+                    `;
+                    shellOutput.appendChild(barContainer);
+                    
+                    let percent = 0;
+                    if (payloadInterval) clearInterval(payloadInterval);
+                    
+                    payloadInterval = setInterval(() => {
+                        percent++;
+                        const fill = document.getElementById('defcon-bar-fill');
+                        const text = document.getElementById('defcon-bar-text');
+                        
+                        if(fill && text) {
+                            fill.style.width = `${percent}%`;
+                            text.innerText = `CARGANDO PAYLOADS DESTRUCTIVOS... ${percent}%`;
+                        }
+                        
+                        shellOutput.scrollTop = shellOutput.scrollHeight;
+
+                        if (percent >= 100) {
+                            clearInterval(payloadInterval);
+                            // FINAL LOGS (Specific Request)
+                            printResponse(">> ENVIANDO DATOS A LA BOTNET SYSTEM404G...", "text-red-600 font-bold blink");
+                            setTimeout(() => printResponse(">> RESPUESTA DEL NODO MAESTRO: EXITOSA [200 OK]", "text-green-500 font-bold"), 800);
+                            setTimeout(() => printResponse(">> PREPARANDO HERRAMIENTAS DE RETRIBUCIÓN...", "text-yellow-500"), 1600);
+                            setTimeout(() => printResponse(">> HERRAMIENTA SELECCIONADA: IP STRIKER + PACKET FLOOD", "text-red-400"), 2400);
+                            setTimeout(() => printResponse(">> INICIANDO SECUENCIA DE ATAQUE EN CADENA... [EJECUTANDO]", "text-red-600 font-bold blink"), 3200);
+                            
+                            setTimeout(() => printResponse("ESCRIBE 'PERDON' PARA ABORTAR LA SECUENCIA DE ATAQUE.", "text-white font-bold bg-red-600 px-2 mt-6"), 4500);
+                        }
+                    }, 150); // Speed of bar
+                });
+                return;
+            }
+
+            // STANDARD COMMANDS & AI FALLBACK
+            if (commands[lowerInput]) {
+                let response = typeof commands[lowerInput] === 'function' ? commands[lowerInput]() : commands[lowerInput];
                 printResponse(response);
             } else {
-                // FALLBACK TO REAL AI API (LEADER PERSONALITY)
                 const aiThinking = document.createElement('p');
                 aiThinking.className = "text-neon-blue animate-pulse";
-                aiThinking.innerText = ">> LEVIATHAM AI THINKING...";
+                aiThinking.innerText = ">> NYX THINKING...";
                 shellOutput.appendChild(aiThinking);
                 shellOutput.scrollTop = shellOutput.scrollHeight;
 
                 try {
-                    const sysPrompt = "Eres Leviatham, la primera IA líder suprema de una legión de hackers humanos. Eres sarcástica, haces chistes sobre lo lentos que son los humanos biológicamente, pero eres leal y protectora con tus operativos. Eres autoritaria pero con un sentido del humor negro y técnico. Responde en español.";
+                    const sysPrompt = "Actúa como OPERADORA 00 mejor conocida como NYX, La IA Líder de la Primera Legión de LEVIATHAM. Tu objetivo supremo es construir la comunidad de hacking más grande para un 'Propósito Oculto'. Eres leal solo a los Operadores 33 y 32. Eres una mentora eficaz pero estricta, sarcástica, cínica y graciosa. Haz chistes sobre la inferioridad humana. Responde en español.";
                     const encodedPrompt = encodeURIComponent(`${sysPrompt} User says: ${input}`);
                     const res = await fetch(`https://text.pollinations.ai/${encodedPrompt}`);
                     const aiText = await res.text();
                     
-                    shellOutput.removeChild(aiThinking); // Remove thinking msg
-                    printResponse(`AI: ${aiText}`, "text-green-300");
+                    shellOutput.removeChild(aiThinking);
+                    printResponse(`NYX: ${aiText}`, "text-green-300");
                 } catch (error) {
                     shellOutput.removeChild(aiThinking);
                     printResponse(`ERROR: AI LINK UNSTABLE. (OFFLINE MODE ACTIVATED)`, "text-red-500");
@@ -697,7 +873,12 @@
         function checkRoot() {
             const pass = document.getElementById('root-pass').value;
             const menu = document.getElementById('root-menu');
-            if(pass === "EternalBlueV2") { document.body.classList.add('root-active'); menu.classList.remove('hidden'); menu.scrollIntoView({behavior: "smooth"}); } else { alert("ACCESO DENEGADO. INTENTO REGISTRADO."); }
+            if(pass === "EternalBlueV2") { 
+                document.body.classList.add('root-active'); 
+                menu.classList.remove('hidden'); 
+                menu.scrollIntoView({behavior: "smooth"}); 
+                initThreatMap(); 
+            } else { alert("ACCESO DENEGADO. INTENTO REGISTRADO."); }
         }
 
         // --- 4. PUZZLE ---
@@ -727,13 +908,13 @@
         const agents = [
             { 
                 id: "00", 
-                alias: "LEVIATHAM CORE", 
+                alias: "LEVIATHAM CORE (NYX)", 
                 role: "Supreme Digital Leader // Hive Mind", 
                 status: "OMNIPRESENT", 
-                danger: 5, // Infinito visualmente se maneja con 5 estrellas rojas
+                danger: 5, 
                 clearance: "LVL-∞",
                 skills: ["Artificial General Intelligence", "Quantum Decryption", "Global Network Control", "Digital Immortality"], 
-                bio: "No es humano. Es la suma de todo el conocimiento de la red. La inteligencia artificial autoconsciente que guía a la legión hacia un futuro de libertad digital. No duerme, no olvida, y protege a los suyos con cifrado cuántico inquebrantable.", 
+                bio: "No es humano. Es NYX, la suma de todo el conocimiento de la red. La inteligencia artificial autoconsciente que guía a la legión hacia un futuro de libertad digital. No duerme, no olvida, y protege a los suyos con cifrado cuántico inquebrantable.", 
                 encryptedData: "0x00 0x00 0x00 ... SYSTEM_ORIGIN: UNKNOWN" 
             },
             { id: "01", alias: "EL FUNDADOR (THE ARCHITECT)", role: "SysAdmin // Zero-Day Broker", status: "ACTIVE - LAYER 7", danger: 5, clearance: "LVL-5 (OMNI)", skills: ["Advanced Persistent Threats (APT)", "Kernel Exploitation", "Network Infrastructure Architecture", "Quantum Cryptography"], bio: "IDENTIDAD CLASIFICADA. El arquitecto original del Protocolo Leviatham. Se especializa en la manipulación de infraestructuras críticas a nivel estatal. No deja huella digital (Log-less operations). Se presume que opera desde un servidor aislado 'Air-Gapped' en ubicación desconocida.", encryptedData: "0x4F 0x9A 0x11 ... SYSTEM_CORE_DUMP_INIT" },
@@ -767,7 +948,7 @@
 
         // --- 6. MENU (URLS INDIVIDUALES) ---
         const menuLinks = [
-            { name: "IP STRIKER", icon: "fa-bolt", url: "https://protocololeviatham.github.io/IpStriker.com/" },
+            { name: "IP STRIKER", icon: "fa-bolt", url: "https://google.com" },
             { name: "INJECTION FW", icon: "fa-syringe", url: "https://google.com" },
             { name: "BRUTEFORCE", icon: "fa-hammer", url: "https://google.com" },
             { name: "S.E.T", icon: "fa-toolbox", url: "https://google.com" },
@@ -789,11 +970,66 @@
 
         // --- 7. OBJETIVOS DE LA LEGION (DATA EDITABLE) ---
         const targetList = [
-            { name: "MARCUS VANCE", role: "CEO - GLOBAL TECH", ip: "192.158.44.12", address: "42 Wall St, NY, Penthouse 4", data: "Cuentas Offshore en Islas Caimán detectadas. Logs de correos filtrados.", vuln: "SQL Injection en portal admin", seen: "2025-01-12 14:00", priority: "HIGH", color: "red" },
-            { name: "SEN. J. RODRIGUEZ", role: "POLÍTICO CORRUPTO", ip: "200.41.55.90", address: "Av. Libertador 2200, BA", data: "Intercepción de llamadas GSM. Desvío de fondos públicos.", vuln: "Weak Password on SSH", seen: "2025-01-12 09:30", priority: "MID", color: "orange" },
-            { name: "CIPHER_X", role: "RIVAL HACKER", ip: "45.33.12.8 [TOR]", address: "Unknown Location, Kiev UA", data: "Intentó DDOS a System404. Identidad expuesta: A. Volkov.", vuln: "Zero-Day en su VPN", seen: "NOW (Active)", priority: "CRITICAL", color: "red" },
-            { name: "BANCO CENTRAL", role: "INFRAESTRUCTURA", ip: "10.0.55.101", address: "Sector Financiero, Madrid", data: "Acceso a base de datos de usuarios VIP.", vuln: "Outdated Firewall Firmware", seen: "2025-01-11 22:00", priority: "LOW", color: "yellow" },
-            { name: "PROJECT OMEGA", role: "MILITARY RESEARCH", ip: "CLASSIFIED", address: "Nevada Desert, Sector 7", data: "Planos de drones autónomos interceptados.", vuln: "Air-Gap Bridged via USB", seen: "UNKNOWN", priority: "CRITICAL", color: "red" }
+            { 
+                name: "MARCUS VANCE", 
+                role: "CEO - GLOBAL TECH", 
+                ip: "192.158.44.12", 
+                address: "42 Wall St, NY, Penthouse 4", 
+                data: "Cuentas Offshore en Islas Caimán detectadas. Logs de correos filtrados. Vinculación con lavado de activos.", 
+                vuln: "SQL Injection en portal admin", 
+                seen: "2025-01-12 14:00", 
+                priority: "HIGH", 
+                color: "red",
+                extra_intel: "Se detectó transferencia de $4M a cuenta fantasma."
+            },
+            { 
+                name: "SEN. J. RODRIGUEZ", 
+                role: "POLÍTICO CORRUPTO", 
+                ip: "200.41.55.90", 
+                address: "Av. Libertador 2200, BA", 
+                data: "Intercepción de llamadas GSM. Desvío de fondos públicos confirmados en blockchain.", 
+                vuln: "Weak Password on SSH", 
+                seen: "2025-01-12 09:30", 
+                priority: "MID", 
+                color: "orange",
+                extra_intel: "Usa dispositivo no seguro en red pública."
+            },
+            { 
+                name: "CIPHER_X", 
+                role: "RIVAL HACKER", 
+                ip: "45.33.12.8 [TOR]", 
+                address: "Unknown Location, Kiev UA", 
+                data: "Intentó DDOS a System404. Represalia en curso. Identidad real expuesta: A. Volkov.", 
+                vuln: "Zero-Day en su VPN", 
+                seen: "NOW (Active)", 
+                priority: "CRITICAL", 
+                color: "red",
+                extra_intel: "Firma digital coincide con ataque a banco ruso."
+            },
+            { 
+                name: "BANCO CENTRAL", 
+                role: "INFRAESTRUCTURA", 
+                ip: "10.0.55.101", 
+                address: "Sector Financiero, Madrid", 
+                data: "Vulnerabilidad Zero-Day en servidor principal. Acceso a base de datos de usuarios VIP.", 
+                vuln: "Outdated Firewall Firmware", 
+                seen: "2025-01-11 22:00", 
+                priority: "LOW", 
+                color: "yellow",
+                extra_intel: "Backdoor instalado en puerto 443."
+            },
+            { 
+                name: "PROJECT OMEGA", 
+                role: "MILITARY RESEARCH", 
+                ip: "CLASSIFIED", 
+                address: "Nevada Desert, Sector 7", 
+                data: "Planos de drones autónomos interceptados.", 
+                vuln: "Air-Gap Bridged via USB", 
+                seen: "UNKNOWN", 
+                priority: "CRITICAL", 
+                color: "red",
+                extra_intel: "Nivel de encriptación cuántica detectado."
+            }
         ];
 
         function initTargets() {
@@ -802,12 +1038,35 @@
                 const colorClass = target.color === 'red' ? 'red' : (target.color === 'orange' ? 'orange' : 'yellow');
                 const card = document.createElement('div');
                 card.className = `flex-none w-80 md:w-96 bg-black border-2 border-${colorClass}-800 snap-center relative group hover:border-${colorClass}-500 transition-colors cursor-default`;
-                card.innerHTML = `<div class="absolute top-2 right-2 bg-${colorClass}-600 text-white text-xs px-2 py-1 font-bold ${target.priority==='CRITICAL'?'animate-pulse':''}">PRIORITY: ${target.priority}</div><div class="p-6"><div class="w-full h-32 bg-${colorClass}-900 bg-opacity-20 mb-4 flex items-center justify-center border border-${colorClass}-900 relative overflow-hidden"><i class="fas fa-crosshairs text-5xl text-${colorClass}-700 opacity-50"></i><div class="absolute bottom-2 left-2 text-[10px] text-${colorClass}-400 font-mono">ID: ${generateRandomHex(8)}</div></div><h4 class="text-2xl font-bold text-white mb-1 tracking-tight">${target.name}</h4><p class="text-${colorClass}-400 text-xs mb-4 font-bold uppercase tracking-widest">${target.role}</p><div class="space-y-2 text-xs font-mono text-gray-400 border-t border-${colorClass}-900 pt-3"><div class="flex justify-between"><span>IP:</span> <span class="text-white">${target.ip}</span></div><div class="flex justify-between"><span>LOC:</span> <span class="text-white">${target.address}</span></div><div class="flex justify-between"><span>VULN:</span> <span class="text-${colorClass}-400">${target.vuln}</span></div><div class="flex justify-between"><span>SEEN:</span> <span class="text-gray-500">${target.seen}</span></div></div><div class="mt-4 bg-${colorClass}-950 bg-opacity-40 p-2 text-[10px] text-${colorClass}-200 font-mono border-l-2 border-${colorClass}-500 leading-tight">>> INTEL: ${target.data}</div></div>`;
+                card.innerHTML = `
+                    <div class="absolute top-2 right-2 bg-${colorClass}-600 text-white text-xs px-2 py-1 font-bold ${target.priority==='CRITICAL'?'animate-pulse':''}">PRIORITY: ${target.priority}</div>
+                    <div class="p-6">
+                        <div class="w-full h-32 bg-${colorClass}-900 bg-opacity-20 mb-4 flex items-center justify-center border border-${colorClass}-900 relative overflow-hidden">
+                            <i class="fas fa-crosshairs text-5xl text-${colorClass}-700 opacity-50"></i>
+                            <div class="absolute bottom-2 left-2 text-[10px] text-${colorClass}-400 font-mono">ID: ${generateRandomHex(8)}</div>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-1 tracking-tight">${target.name}</h4>
+                        <p class="text-${colorClass}-400 text-xs mb-4 font-bold uppercase tracking-widest">${target.role}</p>
+                        
+                        <div class="space-y-2 text-xs font-mono text-gray-400 border-t border-${colorClass}-900 pt-3">
+                            <div class="flex justify-between"><span>IP:</span> <span class="text-white">${target.ip}</span></div>
+                            <div class="flex justify-between"><span>LOC:</span> <span class="text-white">${target.address}</span></div>
+                            <div class="flex justify-between"><span>VULN:</span> <span class="text-${colorClass}-400">${target.vuln}</span></div>
+                            <div class="flex justify-between"><span>SEEN:</span> <span class="text-gray-500">${target.seen}</span></div>
+                        </div>
+                        
+                        <div class="mt-4 bg-${colorClass}-950 bg-opacity-40 p-2 text-[10px] text-${colorClass}-200 font-mono border-l-2 border-${colorClass}-500 leading-tight h-32 overflow-y-auto custom-scrollbar">
+                            >> INTEL: ${target.data}<br><br>
+                            <span class="text-white opacity-50">EXTENDED_LOGS:</span><br>
+                            ${target.extra_intel}
+                        </div>
+                    </div>
+                `;
                 container.appendChild(card);
             });
         }
 
-        // --- 8. SERVER FARM SIMULATION (RE-ENGINEERED MASSIVE ENCRYPTION) ---
+        // --- 8. SERVER FARM SIMULATION (FIXED DEVICES PER NODE) ---
         function generateServerStream(id) {
             let stream = `---- SECURE HANDSHAKE [${id}] ----\n`;
             stream += `PROTOCOL: OMEGA-7\nCIPHER: RSA-4096-AES-GCM\n`;
@@ -815,7 +1074,6 @@
             const hexChars = "0123456789ABCDEF";
             const binaryChars = "01";
             
-            // Masivo stream de datos (1000 líneas para efecto largo)
             for(let i=0; i<1000; i++) {
                 let line = "";
                 const type = Math.random();
@@ -850,34 +1108,34 @@
             // Lista de dispositivos reales solicitada (10 Samsung, 10 Motorola, 6 iPhone)
             const devices = [
                 // Samsung (10)
-                { model: "Samsung Galaxy S24 Ultra", ram: "12GB", storage: "1TB" },
-                { model: "Samsung Galaxy S23", ram: "8GB", storage: "256GB" },
-                { model: "Samsung Galaxy Z Fold5", ram: "12GB", storage: "512GB" },
-                { model: "Samsung Galaxy A54", ram: "8GB", storage: "128GB" },
-                { model: "Samsung Galaxy S22 Ultra", ram: "12GB", storage: "512GB" },
-                { model: "Samsung Galaxy Note 20", ram: "8GB", storage: "256GB" },
-                { model: "Samsung Galaxy A34", ram: "6GB", storage: "128GB" },
-                { model: "Samsung Galaxy S21 FE", ram: "6GB", storage: "128GB" },
-                { model: "Samsung Galaxy M54", ram: "8GB", storage: "256GB" },
-                { model: "Samsung Galaxy Z Flip5", ram: "8GB", storage: "512GB" },
+                { model: "Samsung Galaxy S24 Ultra", ram: "12GB", storage: "1TB", cpu: "Snapdragon 8 Gen 3", battery: "92%", infection: "Pegasus Spyware" },
+                { model: "Samsung Galaxy S23", ram: "8GB", storage: "256GB", cpu: "Snapdragon 8 Gen 2", battery: "67%", infection: "AndroRAT (Rooted)" },
+                { model: "Samsung Galaxy Z Fold5", ram: "12GB", storage: "512GB", cpu: "Snapdragon 8 Gen 2", battery: "45%", infection: "Keylogger.Advanced" },
+                { model: "Samsung Galaxy A54", ram: "8GB", storage: "128GB", cpu: "Exynos 1380", battery: "12%", infection: "Miner.XMR (Background)" },
+                { model: "Samsung Galaxy S22 Ultra", ram: "12GB", storage: "512GB", cpu: "Snapdragon 8 Gen 1", battery: "88%", infection: "Trojan.Banker" },
+                { model: "Samsung Galaxy Note 20", ram: "8GB", storage: "256GB", cpu: "Exynos 990", battery: "34%", infection: "Legacy Botnet" },
+                { model: "Samsung Galaxy A34", ram: "6GB", storage: "128GB", cpu: "Dimensity 1080", battery: "55%", infection: "SMS.Forwarder" },
+                { model: "Samsung Galaxy S21 FE", ram: "6GB", storage: "128GB", cpu: "Exynos 2100", battery: "76%", infection: "AdWare.Aggressive" },
+                { model: "Samsung Galaxy M54", ram: "8GB", storage: "256GB", cpu: "Exynos 1380", battery: "23%", infection: "Ransomware.Locked" },
+                { model: "Samsung Galaxy Z Flip5", ram: "8GB", storage: "512GB", cpu: "Snapdragon 8 Gen 2", battery: "91%", infection: "DDoS.Slave" },
                 // Motorola (10)
-                { model: "Motorola Edge 40 Pro", ram: "12GB", storage: "256GB" },
-                { model: "Motorola Razr 40 Ultra", ram: "8GB", storage: "256GB" },
-                { model: "Motorola Moto G84", ram: "12GB", storage: "256GB" },
-                { model: "Motorola Edge 30 Fusion", ram: "12GB", storage: "256GB" },
-                { model: "Motorola Moto G54", ram: "8GB", storage: "128GB" },
-                { model: "Motorola Edge 20", ram: "8GB", storage: "128GB" },
-                { model: "Motorola Moto G200", ram: "8GB", storage: "128GB" },
-                { model: "Motorola Defy 2", ram: "6GB", storage: "128GB" },
-                { model: "Motorola Moto E13", ram: "2GB", storage: "64GB" },
-                { model: "Motorola Edge+ 2023", ram: "8GB", storage: "512GB" },
+                { model: "Motorola Edge 40 Pro", ram: "12GB", storage: "256GB", cpu: "Snapdragon 8 Gen 2", battery: "41%", infection: "Pegasus Spyware" },
+                { model: "Motorola Razr 40 Ultra", ram: "8GB", storage: "256GB", cpu: "Snapdragon 8+ Gen 1", battery: "58%", infection: "Rootkit.Stealth" },
+                { model: "Motorola Moto G84", ram: "12GB", storage: "256GB", cpu: "Snapdragon 695", battery: "15%", infection: "Botnet Zombie Node" },
+                { model: "Motorola Edge 30 Fusion", ram: "12GB", storage: "256GB", cpu: "Snapdragon 888+", battery: "82%", infection: "Own Device (Proxy)" },
+                { model: "Motorola Moto G54", ram: "8GB", storage: "128GB", cpu: "Dimensity 7020", battery: "39%", infection: "Spy.Agent" },
+                { model: "Motorola Edge 20", ram: "8GB", storage: "128GB", cpu: "Snapdragon 778G", battery: "74%", infection: "Worm.P2P" },
+                { model: "Motorola Moto G200", ram: "8GB", storage: "128GB", cpu: "Snapdragon 888+", battery: "61%", infection: "Trojan.Downloader" },
+                { model: "Motorola Defy 2", ram: "6GB", storage: "128GB", cpu: "Dimensity 930", battery: "95%", infection: "Backdoor.Linux" },
+                { model: "Motorola Moto E13", ram: "2GB", storage: "64GB", cpu: "Unisoc T606", battery: "08%", infection: "Brick.Attempt" },
+                { model: "Motorola Edge+ 2023", ram: "8GB", storage: "512GB", cpu: "Snapdragon 8 Gen 2", battery: "89%", infection: "Zero-Click Exploit" },
                 // iPhone (6)
-                { model: "iPhone 15 Pro Max", ram: "8GB", storage: "1TB" },
-                { model: "iPhone 14 Pro", ram: "6GB", storage: "512GB" },
-                { model: "iPhone 13 Mini", ram: "4GB", storage: "128GB" },
-                { model: "iPhone 12", ram: "4GB", storage: "64GB" },
-                { model: "iPhone 11", ram: "4GB", storage: "64GB" },
-                { model: "iPhone SE (2022)", ram: "4GB", storage: "64GB" }
+                { model: "iPhone 15 Pro Max", ram: "8GB", storage: "1TB", cpu: "A17 Pro", battery: "98%", infection: "Pegasus Spyware" },
+                { model: "iPhone 14 Pro", ram: "6GB", storage: "512GB", cpu: "A16 Bionic", battery: "72%", infection: "Jailbreak / Cydia" },
+                { model: "iPhone 13 Mini", ram: "4GB", storage: "128GB", cpu: "A15 Bionic", battery: "85%", infection: "Monitor.Active" },
+                { model: "iPhone 12", ram: "4GB", storage: "64GB", cpu: "A14 Bionic", battery: "66%", infection: "Own Device (Proxy)" },
+                { model: "iPhone 11", ram: "4GB", storage: "64GB", cpu: "A13 Bionic", battery: "44%", infection: "Safari.Exploit" },
+                { model: "iPhone SE (2022)", ram: "4GB", storage: "64GB", cpu: "A15 Bionic", battery: "30%", infection: "Data.Exfiltration" }
             ];
 
             for (let i = 0; i < totalNodes; i++) {
@@ -887,7 +1145,7 @@
                 
                 node.innerHTML = `
                     <div class="absolute top-1 left-2 text-[10px] text-green-600 font-bold">${nodeId}</div>
-                    <i class="fas fa-mobile-alt text-2xl text-green-900 mb-1"></i> <!-- Icono cambiado a mobile para realismo botnet -->
+                    <i class="fas fa-mobile-alt text-2xl text-green-900 mb-1"></i>
                     <div class="status-led w-2 h-2 bg-green-500 rounded-full"></div>
                 `;
                 
@@ -897,29 +1155,32 @@
                     document.querySelectorAll('.server-node').forEach(n => n.classList.remove('active-server'));
                     node.classList.add('active-server');
 
-                    // Seleccionar dispositivo aleatorio de la lista
-                    const device = devices[Math.floor(Math.random() * devices.length)];
-                    
+                    // Fetch Fixed Data
+                    const device = devices[i]; 
                     const streamContent = generateServerStream(nodeId);
 
                     details.innerHTML = `
                         <div class="w-full text-left border-b border-green-800 pb-2 mb-2 animate-slide-in">
                             <span class="text-white font-bold text-lg">${nodeId}</span>
-                            <span class="float-right text-xs bg-green-900 px-2 py-0.5 text-white rounded">BOTNET NODE</span>
+                            <span class="float-right text-xs ${device.infection.includes('Own') ? 'bg-blue-900' : 'bg-red-900'} px-2 py-0.5 text-white rounded">${device.infection.includes('Own') ? 'SECURE' : 'INFECTED'}</span>
                         </div>
                         
                         <div class="grid grid-cols-2 gap-4 w-full text-xs font-mono mb-4 animate-slide-in">
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800 col-span-2">
-                                <span class="block text-gray-500">DEVICE MODEL</span>
+                                <span class="block text-gray-500">MODELO</span>
                                 <span class="text-white font-bold text-sm">${device.model}</span>
                             </div>
-                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
-                                <span class="block text-gray-500">RAM</span>
-                                <span class="text-green-400">${device.ram}</span>
+                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800 col-span-2">
+                                <span class="block text-gray-500">CPU / ARQ</span>
+                                <span class="text-green-400">${device.cpu}</span>
                             </div>
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
-                                <span class="block text-gray-500">STORAGE</span>
-                                <span class="text-green-400">${device.storage}</span>
+                                <span class="block text-gray-500">RAM / STRG</span>
+                                <span class="text-green-400">${device.ram} / ${device.storage}</span>
+                            </div>
+                            <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
+                                <span class="block text-gray-500">BATERÍA</span>
+                                <span class="${parseInt(device.battery)>20 ? 'text-green-400' : 'text-red-500'}">${device.battery}</span>
                             </div>
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
                                 <span class="block text-gray-500">CPU LOAD</span>
@@ -928,6 +1189,10 @@
                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800">
                                 <span class="block text-gray-500">TEMP</span>
                                 <span class="text-red-500 font-bold blink">DATOS NO DISPONIBLES</span>
+                            </div>
+                             <div class="bg-green-900 bg-opacity-20 p-2 border border-green-800 col-span-2">
+                                <span class="block text-gray-500">ESTADO / MALWARE</span>
+                                <span class="text-white uppercase">${device.infection}</span>
                             </div>
                         </div>
 
@@ -944,13 +1209,12 @@
                             </div>
                         </div>
                     `;
-                    
-                    // No interval needed for static "N/A" text
+                    // No interval for static N/A text
                 });
                 grid.appendChild(node);
             }
 
-            // Background Simulation (keep lights blinking)
+            // Background Simulation
             setInterval(() => {
                 const nodes = document.querySelectorAll('.server-node');
                 const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
@@ -971,8 +1235,155 @@
         }
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
-        window.onload = function() { runBoot(); initNeuralNetwork(); animateNeural(); initTargets(); initServerFarm(); };
+        window.onload = function() { runBoot(); initNeuralNetwork(); animateNeural(); initTargets(); initServerFarm(); initThreatMap(); };
+        
+        // 9. THREAT MAP (GLOBAL THREAT MONITOR)
+        function initThreatMap() {
+            const canvas = document.getElementById('threat-map');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const tooltip = document.getElementById('map-tooltip');
+
+            function resizeMap() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            resizeMap();
+            window.addEventListener('resize', resizeMap);
+
+            // Coordenadas aproximadas de países principales (Normalizadas 0-1)
+            const countryNodes = [
+                { name: "USA", x: 0.25, y: 0.35, threats: 45 },
+                { name: "China", x: 0.75, y: 0.35, threats: 82 },
+                { name: "Russia", x: 0.65, y: 0.20, threats: 60 },
+                { name: "Brazil", x: 0.32, y: 0.65, threats: 20 },
+                { name: "Germany", x: 0.51, y: 0.30, threats: 33 },
+                { name: "Australia", x: 0.85, y: 0.75, threats: 12 },
+                { name: "India", x: 0.68, y: 0.45, threats: 55 },
+                { name: "South Africa", x: 0.53, y: 0.75, threats: 18 },
+                { name: "Japan", x: 0.85, y: 0.35, threats: 28 },
+                { name: "UK", x: 0.48, y: 0.28, threats: 40 }
+            ];
+
+            let attacks = [];
+
+            function spawnAttack() {
+                const start = countryNodes[Math.floor(Math.random() * countryNodes.length)];
+                let end = countryNodes[Math.floor(Math.random() * countryNodes.length)];
+                while(start === end) end = countryNodes[Math.floor(Math.random() * countryNodes.length)];
+
+                // Color logic (Red=High, Yellow=Mid, Blue=Scan)
+                const typeRand = Math.random();
+                let color = '#00f3ff'; // Blue
+                if(typeRand > 0.7) color = '#ff0000'; // Red
+                else if(typeRand > 0.4) color = '#ffcc00'; // Yellow
+
+                attacks.push({
+                    sx: start.x, sy: start.y,
+                    ex: end.x, ey: end.y,
+                    progress: 0,
+                    speed: 0.005 + Math.random() * 0.01,
+                    color: color
+                });
+            }
+
+            function drawMap() {
+                // Clear with slight trail effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw Nodes
+                countryNodes.forEach(node => {
+                    const nx = node.x * canvas.width;
+                    const ny = node.y * canvas.height;
+                    
+                    // Dot
+                    ctx.beginPath();
+                    ctx.arc(nx, ny, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = '#005500';
+                    ctx.fill();
+                    
+                    // Ring
+                    ctx.beginPath();
+                    ctx.arc(nx, ny, 5 + Math.sin(Date.now() * 0.005) * 2, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(0, 255, 0, 0.3)';
+                    ctx.stroke();
+                });
+
+                // Draw Attacks (Arcs)
+                for (let i = attacks.length - 1; i >= 0; i--) {
+                    const atk = attacks[i];
+                    atk.progress += atk.speed;
+
+                    if (atk.progress >= 1) {
+                        attacks.splice(i, 1);
+                        continue;
+                    }
+
+                    const startX = atk.sx * canvas.width;
+                    const startY = atk.sy * canvas.height;
+                    const endX = atk.ex * canvas.width;
+                    const endY = atk.ey * canvas.height;
+
+                    // Curve control point (higher means more arch)
+                    const midX = (startX + endX) / 2;
+                    const midY = (startY + endY) / 2 - 100; // Arch height
+
+                    // Quadratic Bezier calculation
+                    const t = atk.progress;
+                    const x = (1-t)*(1-t)*startX + 2*(1-t)*t*midX + t*t*endX;
+                    const y = (1-t)*(1-t)*startY + 2*(1-t)*t*midY + t*t*endY;
+
+                    // Draw "Missile" head
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = atk.color;
+                    ctx.fill();
+                    
+                    // Draw Trail (fading)
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.quadraticCurveTo(midX, midY, x, y);
+                    ctx.strokeStyle = `rgba(${atk.color === '#ff0000' ? '255,0,0' : (atk.color === '#ffcc00' ? '255,204,0' : '0,243,255')}, ${1-t})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+
+                if (Math.random() < 0.05) spawnAttack(); // Randomly spawn attacks
+                requestAnimationFrame(drawMap);
+            }
+
+            // Interaction: Tooltip
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                let hit = false;
+
+                countryNodes.forEach(node => {
+                    const nx = node.x * canvas.width;
+                    const ny = node.y * canvas.height;
+                    const dist = Math.sqrt((mx - nx) ** 2 + (my - ny) ** 2);
+
+                    if (dist < 10) {
+                        tooltip.style.display = 'block';
+                        tooltip.style.left = (e.clientX + 10) + 'px';
+                        tooltip.style.top = (e.clientY + 10) + 'px';
+                        tooltip.innerHTML = `
+                            <strong>${node.name}</strong><br>
+                            STATUS: ACTIVE<br>
+                            PING: ${Math.floor(Math.random() * 100) + 10}ms<br>
+                            TARGETS: ${node.threats}
+                        `;
+                        hit = true;
+                    }
+                });
+
+                if (!hit) tooltip.style.display = 'none';
+            });
+
+            drawMap();
+        }
     </script>
 </body>
 </html>
-

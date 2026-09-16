@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cayeron "33" y "Dry" - Diario Noticias</title>
+    <style>
+        /* =========================================
+           VARIABLES Y RESET
+        ========================================= */
+        :root {
+            --primary-color: #004d99;
+            --secondary-color: #ffd700;
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --bg-light: #ffffff;
+            --border-color: #e4e4e4;
+            --nav-height: 60px;
+            
+            --font-ui: Arial, Helvetica, sans-serif;
+            --font-news: Georgia, "Times New Roman", serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: var(--font-news);
+            padding-bottom: calc(var(--nav-height) + 20px);
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* =========================================
+           ENCABEZADO (HEADER)
+        ========================================= */
+        header {
+            background-color: var(--text-light); display: flex; align-items: center;
+            justify-content: space-between; padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
+        }
+        .logo-link { display: flex; align-items: center; max-width: 150px; }
+        .header-logo { width: 100%; height: auto; object-fit: contain; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .notification-icon svg { width: 22px; height: 22px; fill: var(--text-dark); }
+        .btn-subscribe {
+            background-color: var(--secondary-color); color: #000; font-weight: bold;
+            font-family: var(--font-ui); padding: 8px 12px; border-radius: 4px;
+            font-size: 13px; text-align: center; white-space: nowrap;
+        }
+
+        /* =========================================
+           TICKER DE COTIZACIONES
+        ========================================= */
+        .ticker-bar {
+            background-color: var(--bg-light); color: var(--text-dark); padding: 12px 20px;
+            font-size: 13px; font-family: var(--font-ui); display: flex; overflow-x: auto;
+            white-space: nowrap; border-bottom: 1px solid var(--border-color); -webkit-overflow-scrolling: touch;
+        }
+        .ticker-bar::-webkit-scrollbar { display: none; }
+        .ticker-item { margin-right: 24px; display: flex; gap: 6px; }
+        .ticker-item strong { font-weight: bold; color: var(--primary-color); }
+
+        /* =========================================
+           CONTENIDO PRINCIPAL (MAIN Y NOTICIA)
+        ========================================= */
+        main {
+            padding: 20px; background-color: var(--bg-light);
+            min-height: 60vh; max-width: 800px; margin: 0 auto;
+        }
+
+        .article-volanta {
+            font-family: var(--font-ui); font-size: 13px; font-weight: bold;
+            color: var(--primary-color); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;
+        }
+
+        .article-title {
+            font-family: var(--font-news); font-size: 32px; line-height: 1.15;
+            color: #111; margin-bottom: 18px; letter-spacing: -0.5px;
+        }
+
+        .article-bajada {
+            font-family: var(--font-news); font-size: 19px; line-height: 1.45;
+            color: #444; margin-bottom: 25px;
+        }
+
+        /* Información del autor profesional */
+        .article-meta {
+            font-family: var(--font-ui); font-size: 13px; color: #666;
+            border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+            padding: 15px 0; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between;
+        }
+        
+        .author-box { display: flex; align-items: center; gap: 12px; }
+        .author-pic { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background-color: #eee; }
+        .author-details { display: flex; flex-direction: column; gap: 3px; }
+        .author-name { color: #111; font-weight: bold; font-size: 14px; }
+
+        /* Estilos de texto y resaltados */
+        .article-body p {
+            font-family: var(--font-news); font-size: 18px; line-height: 1.65;
+            color: #222; margin-bottom: 22px;
+        }
+        
+        .highlight-text {
+            border-bottom: 3px solid var(--secondary-color); /* Subrayado amarillo periodístico */
+            font-weight: bold;
+            color: #111;
+        }
+
+        .article-subtitle {
+            font-family: var(--font-ui); font-size: 19px; font-weight: bold; color: #111;
+            margin-top: 40px; margin-bottom: 15px; display: inline-block;
+            border-bottom: 3px solid var(--primary-color); padding-bottom: 5px;
+        }
+
+        /* Sistema de imágenes autoajustables y perfectas */
+        figure { margin: 35px 0; width: 100%; }
+        
+        .img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+        .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+        
+        /* Obliga a las fotos a tener la misma proporción sin deformarse */
+        .img-grid-2 img, .img-grid-3 img, .single-img img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 4px;
+        }
+        .img-grid-2 img { aspect-ratio: 4/5; } /* Fotos verticales tipo retrato */
+        .img-grid-3 img { aspect-ratio: 1/1; } /* Fotos cuadradas para grilla de 3 */
+        .single-img img { height: auto; max-height: 500px; }
+
+        figcaption {
+            font-family: var(--font-ui); font-size: 14px; line-height: 1.4; color: #555;
+            margin-top: 10px; border-left: 3px solid var(--primary-color); padding-left: 12px;
+        }
+
+        .article-list {
+            margin-bottom: 25px; padding-left: 20px; font-family: var(--font-news);
+            font-size: 18px; line-height: 1.6; color: #222;
+        }
+        .article-list li { margin-bottom: 12px; }
+        .article-list strong { color: #000; }
+
+        /* Widget de Clima y Noticias Relacionadas */
+        .footer-widgets {
+            margin-top: 50px; border-top: 2px solid #000; padding-top: 25px;
+        }
+        .weather-box {
+            background: #f9f9f9; border: 1px solid var(--border-color); border-radius: 6px;
+            padding: 15px; font-family: var(--font-ui); font-size: 14px; color: #444;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 30px;
+        }
+        .related-news h4 {
+            font-family: var(--font-ui); font-size: 16px; text-transform: uppercase;
+            color: var(--primary-color); margin-bottom: 15px;
+        }
+        .related-news ul { list-style: none; padding: 0; font-family: var(--font-news); }
+        .related-news li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .related-news a { font-size: 18px; color: #111; font-weight: bold; transition: color 0.2s; }
+        .related-news a:hover { color: var(--primary-color); }
+
+        /* =========================================
+           PIE DE PÁGINA Y NAV MÓVIL
+        ========================================= */
+        footer { background-color: #222; color: #aaa; padding: 35px 20px; text-align: center; font-size: 12px; font-family: var(--font-ui); line-height: 1.6; }
+        footer .footer-logo { max-width: 140px; height: auto; margin: 0 auto 15px auto; display: block; }
+        footer p { margin-bottom: 10px; }
+        
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: var(--text-light); border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center; z-index: 1000; font-family: var(--font-ui);
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #666; font-size: 9px; font-weight: bold; gap: 4px; width: 20%; }
+        .nav-item.active { color: var(--primary-color); }
+        .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+
+        @media (min-width: 768px) {
+            .bottom-nav { display: none; }
+            body { padding-bottom: 0; }
+            .article-title { font-size: 42px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <a href="#inicio" class="logo-link">
+            <img src="logodiarionoticias.png" alt="Diario Noticias" class="header-logo">
+        </a>
+        <div class="header-actions">
+            <a href="#notificaciones" class="notification-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            </a>
+            <a href="#suscribirse" class="btn-subscribe">Suscríbete $1.500</a>
+        </div>
+    </header>
+
+    <!-- TICKER COTIZACIONES -->
+    <div class="ticker-bar">
+        <div class="ticker-item"><span>Dólar Oficial:</span><strong>$1.480,00</strong></div>
+        <div class="ticker-item"><span>Dólar Blue:</span><strong>$1.520,00</strong></div>
+        <div class="ticker-item"><span>Dólar Tarjeta:</span><strong>$1.580,00</strong></div>
+        <div class="ticker-item"><span>Dólar MEP:</span><strong>$1.500,00</strong></div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+        <article class="article-container">
+            <!-- Cabecera de la noticia -->
+            <div class="article-volanta">Ciberdelito, Narcotráfico y Extorsión</div>
+            <h1 class="article-title">Cayeron "33" y "Dry": desbaratan a una peligrosa banda con un arsenal de guerra tras allanamientos en Pilar e Ituzaingó</h1>
+            <h2 class="article-bajada">Dos jóvenes que ostentaban una vida de lujo extremo fueron detenidos esta mañana acusados de liderar una sofisticada red criminal. Se dedicaban a realizar estafas mediante hacking y phishing, comercializar bases de datos del Renaper por Telegram, proveer drogas de diseño y perpetrar secuestros extorsivos. En los operativos se secuestró armamento de grueso calibre y una fortuna en efectivo.</h2>
+            
+            <!-- Metadata con perfil de periodista -->
+            <div class="article-meta">
+                <div class="author-box">
+                    <img src="autor_perfil.png" alt="Autor" class="author-pic">
+                    <div class="author-details">
+                        <span class="author-name">Por Redacción Policiales</span>
+                        <span>17 de septiembre de 2026 • 09:15 hs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuerpo de la noticia -->
+            <div class="article-body">
+                <p>En un <strong>megaoperativo conjunto</strong> realizado en las primeras horas de la mañana, efectivos de la Policía Federal Argentina (PFA) y la Dirección Departamental de Investigaciones (DDI) lograron desbaratar una peligrosa organización criminal que operaba con una <span class="highlight-text">alarmante diversificación de delitos</span>, un alto poder de fuego y que financiaba una vida de excentricidades y lujos desmedidos en la zona oeste y norte de la Provincia de Buenos Aires.</p>
+                
+                <p>Los detenidos, dos amigos con un amplio prontuario delictivo que operaban en las sombras del entorno digital, fueron identificados como Lautaro Ivan, de 21 años y conocido en el mundo del hampa bajo el alias de <strong>"33DiscosDuros"</strong>, y Javier Leandro, de 26 años, apodado <strong>"DoctorDry"</strong>.</p>
+
+                <!-- Fotos de los detenidos (Grilla de 2 automática) -->
+                <figure>
+                    <div class="img-grid-2">
+                        <img src="detenido1.png" alt="Detenido alias 33DiscosDuros">
+                        <img src="detenido2.png" alt="Detenido alias DoctorDry">
+                    </div>
+                    <figcaption>Los detenidos, identificados como Lautaro Ivan ("33") y Javier Leandro ("Dry"), capturados durante los operativos simultáneos ejecutados por el grupo táctico Halcón.</figcaption>
+                </figure>
+
+                <p>Las capturas se dieron de forma coordinada este 17 de septiembre en distintos puntos del conurbano bonaerense. El primer golpe tuvo lugar a las 7:30 de la mañana en la exclusiva localidad de Villa Rosa, partido de Pilar (Zona Norte), donde tras reventar una puerta de seguridad, fue interceptado y detenido Javier ("Dry"). Apenas media hora más tarde, a las 8:00 am, las fuerzas de seguridad allanaron un domicilio fuertemente custodiado en el partido de Ituzaingó (Zona Oeste), donde lograron dar con Lautaro ("33"). Ambos quedaron a total disposición de la <strong>Fiscalía Federal de Campana</strong>, que lleva adelante la voluminosa causa.</p>
+
+                <h3 class="article-subtitle">Hackers y estafadores: El cerebro informático de la banda</h3>
+                <p>El modus operandi de la dupla en el ámbito digital era altamente sofisticado, impulsado principalmente por los conocimientos técnicos de Lautaro. Según fuentes exclusivas de la investigación, "33" es un hábil programador y experto en <em>hacking</em> que se encargaba de diseñar la estructura virtual y el blindaje cibernético de la organización. A través de campañas publicitarias engañosas (ADS) en internet y redes sociales, atraían a sus víctimas ofreciendo falsos descuentos comerciales. Una vez que los usuarios hacían clic en los enlaces apócrifos, utilizaban <span class="highlight-text">técnicas avanzadas de phishing</span> desarrolladas por el propio Lautaro para robar sus credenciales bancarias y personales en cuestión de segundos.</p>
+                
+                <p>El negocio virtual iba mucho más allá de las estafas menores. Los investigadores especializados en cibercrimen descubrieron que los detenidos habían logrado vulnerar y acceder ilegítimamente a bases de datos oficiales del <strong>Registro Nacional de las Personas (RENAPER)</strong> y a registros masivos de números de tarjetas de crédito. Esta información sumamente sensible era comercializada en el mercado negro a través de la aplicación de mensajería Telegram. Aprovechando sus conocimientos en programación, "33" había desarrollado un bot informático completamente automatizado, capaz de brindar información personal y crediticia de ciudadanos de toda la Argentina de forma instantánea a cambio de pagos en criptomonedas, dificultando el rastreo del dinero.</p>
+
+                <h3 class="article-subtitle">Drogas de diseño y secuestros</h3>
+                <p>El ciberdelito era solo la punta del iceberg y uno de los frentes financieros de la organización. La otra gran pata de la estructura criminal residía en el narcotráfico a gran escala. Según detallaron fuentes del caso a <em>Diario Noticias</em>, la banda comercializaba una amplia variedad de sustancias ilícitas, con fuerte foco en el circuito de las fiestas electrónicas VIP: <strong>tussi (conocida como la cocaína rosa), cocaína tradicional de máxima pureza, marihuana, éxtasis y ketamina</strong>.</p>
+                
+                <p>Dentro del esquema narco, "Dry" (Javier) cumplía un rol jerárquico estratégico: <span class="highlight-text">no vendía al menudeo ni trataba directamente con los consumidores finales</span>, sino que operaba como el gran proveedor mayorista encargado de abastecer a los "dealers" y distribuidores de la zona oeste.</p>
+                
+                <p>En paralelo, la Fiscalía de Campana investiga profundamente la participación activa de ambos en <strong>secuestros extorsivos</strong>, donde retenían a personas bajo amenazas de muerte para exigir millonarias sumas de dinero en efectivo a cambio de su liberación. Al momento de la irrupción táctica policial en las viviendas, las autoridades confirmaron que, afortunadamente, no se hallaron víctimas en cautiverio temporal.</p>
+
+                <h3 class="article-subtitle">Vida de magnates, un arsenal táctico y el origen de la caída</h3>
+                <p>El producto de esta prolífica y diversificada actividad criminal les permitía a los jóvenes llevar una vida de lujos exorbitantes. Viajes internacionales de imprevisto, vehículos de alta gama, ropa de diseñador exclusiva y un manejo de inmensas cantidades de dinero en efectivo formaban parte de su rutina diaria. Sin embargo, este mismo <strong>perfil ostentoso y temerario</strong> terminó llamando la atención de los investigadores.</p>
+                
+                <p>La investigación que culminó hoy en la detención de "33" y "Dry" demandó más de cuatro meses de exhaustivas tareas investigativas encubiertas, escuchas telefónicas y seguimiento satelital. La pesquisa se originó a partir de una serie de denuncias anónimas radicadas en una aplicación móvil utilizada habitualmente por la comunidad de las fiestas rave, lo que puso a los detectives tras la pista de los inusuales movimientos de los sospechosos en la escena de la música electrónica <em>underground</em>.</p>
+                
+                <p>Al irrumpir violentamente en los domicilios de Ituzaingó y Pilar, el personal policial constató el poder ofensivo militar que custodiaba a la organización. En el lugar se secuestró un verdadero arsenal listo para abrir fuego en cualquier momento.</p>
+
+                <h3 class="article-subtitle">El material incautado (Detallado)</h3>
+                
+                <!-- Fotos de las pruebas (Grilla de 3 automática) -->
+                <figure>
+                    <div class="img-grid-3">
+                        <img src="prueba1.png" alt="Armamento incautado">
+                        <img src="prueba2.png" alt="Dinero en efectivo secuestrado">
+                        <img src="prueba3.png" alt="Dispositivos electrónicos y drogas">
+                    </div>
+                    <figcaption>Arsenal táctico pesado, sumas millonarias de dinero en efectivo y equipos tecnológicos de última generación confiscados por las fuerzas federales de seguridad durante los allanamientos.</figcaption>
+                </figure>
+
+                <p>Durante la inspección de los búnkers allanados, el personal policial logró confiscar una abrumadora cantidad de elementos probatorios que complican la situación judicial de los detenidos:</p>
+                
+                <ul class="article-list">
+                    <li><strong>Vehículos:</strong> Un automóvil Volkswagen Vento GLI (modelo 2018), modificado y utilizado para los traslados veloces y la logística criminal pesada.</li>
+                    <li><strong>Armamento:</strong> Un arsenal táctico de guerra que incluye una pistola Glock calibre .40, una mortífera pistola FN Five-seveN (capaz de perforar chalecos antibalas), una escopeta táctica de repetición calibre 12/70, un letal fusil AR-15 Sport calibre .22, y una pistola calibre .45 ACP, junto con una alarmante cantidad de municiones y cargadores extendidos.</li>
+                    <li><strong>Dinero:</strong> Millonarias sumas de dinero en efectivo, contabilizando fajos de billetes termosellados de 10.000 y 20.000 pesos argentinos, además de gruesos fajos de dólares estadounidenses.</li>
+                    <li><strong>Tecnología cibernética:</strong> 6 computadoras portátiles (laptops) con encriptación avanzada y 6 teléfonos celulares de última generación empleados para las estafas virtuales.</li>
+                    <li><strong>Drogas:</strong> Diversas dosis de estupefacientes ya fraccionados en bolsas tipo ziploc listos para la reventa inmediata (tussi, cocaína, marihuana, éxtasis y ketamina).</li>
+                    <li><strong>Otros elementos:</strong> Terminales de pago POSNET inalámbricas y carpetas con evidencia de bases de datos impresas ilegalmente del RENAPER.</li>
+                </ul>
+
+                <p>Los dos detenidos permanecen alojados e incomunicados en sede policial de máxima seguridad y serán indagados en las próximas horas bajo las severas acusaciones penales por <strong>estafas reiteradas, falsificación y venta ilegítima de bases de datos, infracción a la Ley de Drogas (23.737), secuestro extorsivo, lavado de activos y tenencia ilegal de armas de guerra</strong>. La fiscalía no descarta que en los próximos días haya nuevos allanamientos para capturar a los eslabones menores de la banda.</p>
+                
+                <p>El producto de esta prolífica actividad criminal, según consta en el expediente, les permitía a los jóvenes llevar una vida de lujos ostentosos y sostener una rápida movilidad para sus operaciones ilícitas. Durante los procedimientos, los efectivos incautaron un automóvil de alta gama Volkswagen Vento GLI modelo 2018, el cual, según los peritos financieros de la policía, era utilizado como logística central de la banda y había sido adquirido directamente con el dinero lavado, proveniente íntegramente del ciberdelito y el narcotráfico.</p>
+                <p>Además de los vehículos, los delincuentes custodiaban sus operaciones clandestinas con el ya mencionado arsenal de guerra preparado para posibles enfrentamientos armados contra bandas rivales o fuerzas de seguridad, el cual afortunadamente fue decomisado en su totalidad antes de ser disparado.</p>
+
+                <!-- Foto final del vehículo (Imagen única, autoajustable a max-500px altura) -->
+                <figure class="single-img">
+                    <img src="coche_vento.png" alt="Volkswagen Vento GLI incautado">
+                    <figcaption>El vehículo de alta gama incautado durante los sorpresivos allanamientos de esta mañana. Se trata de un Volkswagen Vento GLI modelo 2018 que la cúpula de la banda utilizaba para su logística operativa y que, según los peritajes iniciales de los investigadores, fue adquirido con los oscuros fondos ilícitos provenientes de la red de ciberdelitos. El rodado ya se encuentra precintado, fajado y alojado en el playón de la dependencia policial a estricta disposición de la Justicia.</figcaption>
+                </figure>
+            </div>
+            
+            <!-- Seccion Final: Clima y Noticias Relacionadas -->
+            <div class="footer-widgets">
+                <!-- Widget de Clima -->
+                <div class="weather-box" id="weatherWidget">
+                    <span>⏳ Consultando clima actual en Buenos Aires...</span>
+                </div>
+                
+                <!-- Script que consulta la API pública sin llaves (Open-Meteo) -->
+                <script>
+                    fetch('https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&current_weather=true')
+                    .then(response => response.json())
+                    .then(data => {
+                        const temp = data.current_weather.temperature;
+                        document.getElementById('weatherWidget').innerHTML = 
+                        `<strong>🌦️ Datos del tiempo:</strong> Temperatura actual en Buenos Aires: <strong>${temp}°C</strong>`;
+                    })
+                    .catch(error => {
+                        document.getElementById('weatherWidget').innerHTML = `<strong>🌦️ Datos del tiempo:</strong> Servicio no disponible temporalmente.`;
+                    });
+                </script>
+
+                <!-- Noticias Relacionadas -->
+                <div class="related-news">
+                    <h4>📰 Te puede interesar</h4>
+                    <ul>
+                        <li><a href="#noticia1">INSERTAR TITULO</a></li>
+                        <li><a href="#noticia2">INSERTAR TITULO</a></li>
+                        <li><a href="#noticia3">INSERTAR TITULO</a></li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <img src="logodiarionoticias.png" alt="Diario Noticias" class="footer-logo">
+        <p>© Copyright 2026 Empresa Editorial | Todos los derechos reservados.<br>
+        Número de registro DNDA - EXPEDIENTE RL-2023-00000000-APN-DNDA.</p>
+        <p>Queda prohibida la reproducción total o parcial del presente diario.</p>
+        <p>
+            <a href="#condiciones">Condiciones y Privacidad</a> | <a href="#app">App Store</a>
+        </p>
+    </footer>
+
+    <!-- BARRA DE NAVEGACIÓN MÓVIL -->
+    <nav class="bottom-nav">
+        <a href="#inicio" class="nav-item active">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>INICIO</span>
+        </a>
+        <a href="#secciones" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zm0 10h6v6H4zm10-10h6v6h-6zm0 10h6v6h-6z"/></svg><span>SECCIONES</span>
+        </a>
+        <a href="#gastronomia" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>GASTRONOMÍA</span>
+        </a>
+        <a href="#club" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12.5 7v5.29l3.54 3.54-.71.71-3.83-3.83V7h1z"/></svg><span>CLUB DN</span>
+        </a>
+        <a href="#ingresar" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>INGRESAR</span>
+        </a>
+    </nav>
+
+</body>
+</html>

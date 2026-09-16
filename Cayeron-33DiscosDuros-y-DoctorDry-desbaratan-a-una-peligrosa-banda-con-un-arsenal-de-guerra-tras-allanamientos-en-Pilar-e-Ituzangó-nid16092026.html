@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cayeron "33" y "Dry" - Diario Noticias</title>
+
+    <!-- =========================================
+         ETIQUETAS DE PREVISUALIZACIÓN PARA REDES SOCIALES Y WHATSAPP 
+    ========================================= -->
+    <meta name="description" content="Dos jóvenes que ostentaban una vida de lujo extremo fueron detenidos esta mañana acusados de liderar una sofisticada red criminal de ciberdelitos y narcotráfico en Pilar e Ituzaingó." />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Cayeron '33' y 'Dry': desbaratan a una peligrosa banda con un arsenal de guerra" />
+    <meta property="og:description" content="Dos jóvenes que ostentaban una vida de lujo extremo fueron detenidos esta mañana acusados de liderar una sofisticada red criminal de ciberdelitos y narcotráfico en Pilar e Ituzaingó." />
+    
+    <!-- ATENCIÓN: Cambia "tudominio.com" por tu dominio real -->
+    <meta property="og:url" content="https://www.tudominio.com/Cayeron-33DiscosDuros-y-DoctorDry-desbaratan-a-una-peligrosa-banda-con-un-arsenal-de-guerra-tras-allanamientos-en-Pilar-e-Ituzango-nid18062026" />
+    <meta property="og:image" content="https://www.tudominio.com/detenido1.png" />
+    <meta property="og:site_name" content="Diario Noticias" />
+
+    <!-- Etiquetas para que se vea en tamaño grande en Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cayeron '33' y 'Dry': desbaratan peligrosa red criminal" />
+    <meta name="twitter:description" content="Detienen a dos jóvenes acusados de liderar una sofisticada red de hacking y extorsión en Pilar e Ituzaingó." />
+    <meta name="twitter:image" content="https://www.tudominio.com/detenido1.png" />
+
     <style>
         /* =========================================
            VARIABLES Y RESET
@@ -83,7 +104,6 @@
             color: #444; margin-bottom: 25px;
         }
 
-        /* Información del autor profesional */
         .article-meta {
             font-family: var(--font-ui); font-size: 13px; color: #666;
             border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
@@ -95,14 +115,13 @@
         .author-details { display: flex; flex-direction: column; gap: 3px; }
         .author-name { color: #111; font-weight: bold; font-size: 14px; }
 
-        /* Estilos de texto y resaltados */
         .article-body p {
             font-family: var(--font-news); font-size: 18px; line-height: 1.65;
             color: #222; margin-bottom: 22px;
         }
         
         .highlight-text {
-            border-bottom: 3px solid var(--secondary-color); /* Subrayado amarillo periodístico */
+            border-bottom: 3px solid var(--secondary-color);
             font-weight: bold;
             color: #111;
         }
@@ -113,18 +132,16 @@
             border-bottom: 3px solid var(--primary-color); padding-bottom: 5px;
         }
 
-        /* Sistema de imágenes autoajustables y perfectas */
         figure { margin: 35px 0; width: 100%; }
         
         .img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         
-        /* Obliga a las fotos a tener la misma proporción sin deformarse */
         .img-grid-2 img, .img-grid-3 img, .single-img img {
             width: 100%; height: 100%; object-fit: cover; border-radius: 4px;
         }
-        .img-grid-2 img { aspect-ratio: 4/5; } /* Fotos verticales tipo retrato */
-        .img-grid-3 img { aspect-ratio: 1/1; } /* Fotos cuadradas para grilla de 3 */
+        .img-grid-2 img { aspect-ratio: 4/5; }
+        .img-grid-3 img { aspect-ratio: 1/1; }
         .single-img img { height: auto; max-height: 500px; }
 
         figcaption {
@@ -139,23 +156,63 @@
         .article-list li { margin-bottom: 12px; }
         .article-list strong { color: #000; }
 
-        /* Widget de Clima y Noticias Relacionadas */
+        /* =========================================
+           WIDGETS Y NOTICIAS RELACIONADAS (NUEVO DISEÑO)
+        ========================================= */
         .footer-widgets {
-            margin-top: 50px; border-top: 2px solid #000; padding-top: 25px;
+            margin-top: 50px; border-top: 2px solid #000; padding-top: 30px;
         }
-        .weather-box {
-            background: #f9f9f9; border: 1px solid var(--border-color); border-radius: 6px;
-            padding: 15px; font-family: var(--font-ui); font-size: 14px; color: #444;
-            display: flex; align-items: center; gap: 10px; margin-bottom: 30px;
+        
+        /* Widget de clima moderno */
+        .weather-widget {
+            /* Imagen de fondo de Buenos Aires con overlay oscuro */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1612294036109-b78912e9b010?q=80&w=800&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            padding: 25px 20px;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            font-family: var(--font-ui);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
-        .related-news h4 {
-            font-family: var(--font-ui); font-size: 16px; text-transform: uppercase;
-            color: var(--primary-color); margin-bottom: 15px;
+        .weather-info { display: flex; flex-direction: column; gap: 5px; }
+        .weather-info h5 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); }
+        .weather-info h3 { margin: 0; font-size: 20px; font-weight: 400; }
+        .weather-temp { font-size: 42px; font-weight: bold; letter-spacing: -1px; display: flex; align-items: center; gap: 8px; }
+        .weather-temp svg { width: 32px; height: 32px; fill: var(--secondary-color); }
+
+        /* Estructura profesional para "Te puede interesar" */
+        .related-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
         }
-        .related-news ul { list-style: none; padding: 0; font-family: var(--font-news); }
-        .related-news li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
-        .related-news a { font-size: 18px; color: #111; font-weight: bold; transition: color 0.2s; }
-        .related-news a:hover { color: var(--primary-color); }
+        .related-header svg {
+            width: 24px; height: 24px; fill: var(--primary-color);
+        }
+        .related-header h4 {
+            font-family: var(--font-ui); font-size: 18px; text-transform: uppercase;
+            color: var(--primary-color); margin: 0; letter-spacing: 0.5px;
+        }
+        
+        .related-news-list { display: flex; flex-direction: column; gap: 20px; }
+        
+        .related-news-item {
+            display: flex; gap: 15px; align-items: center;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 20px;
+        }
+        .related-news-item:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .related-img {
+            width: 120px; height: 85px; object-fit: cover; border-radius: 6px; flex-shrink: 0;
+            background-color: #eee;
+        }
+        .related-content { display: flex; flex-direction: column; gap: 6px; }
+        .related-tag { font-family: var(--font-ui); font-size: 11px; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px; }
+        .related-content a { font-family: var(--font-news); font-size: 18px; color: #111; font-weight: bold; line-height: 1.35; transition: color 0.2s; }
+        .related-content a:hover { color: var(--primary-color); }
 
         /* =========================================
            PIE DE PÁGINA Y NAV MÓVIL
@@ -184,14 +241,17 @@
 
     <!-- ENCABEZADO -->
     <header>
-        <a href="#inicio" class="logo-link">
+        <!-- Reemplaza el # por tu link real -->
+        <a href="#ingresa_tu_link_aqui_inicio" class="logo-link">
             <img src="logodiarionoticias.png" alt="Diario Noticias" class="header-logo">
         </a>
         <div class="header-actions">
-            <a href="#notificaciones" class="notification-icon">
+            <!-- Reemplaza el # por tu link real -->
+            <a href="#ingresa_tu_link_aqui_notificaciones" class="notification-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
             </a>
-            <a href="#suscribirse" class="btn-subscribe">Suscríbete $1.500</a>
+            <!-- Reemplaza el # por tu link real -->
+            <a href="#ingresa_tu_link_aqui_suscripcion" class="btn-subscribe">Suscríbete $1.500</a>
         </div>
     </header>
 
@@ -206,12 +266,10 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main>
         <article class="article-container">
-            <!-- Cabecera de la noticia -->
             <div class="article-volanta">Ciberdelito, Narcotráfico y Extorsión</div>
             <h1 class="article-title">Cayeron "33" y "Dry": desbaratan a una peligrosa banda con un arsenal de guerra tras allanamientos en Pilar e Ituzaingó</h1>
             <h2 class="article-bajada">Dos jóvenes que ostentaban una vida de lujo extremo fueron detenidos esta mañana acusados de liderar una sofisticada red criminal. Se dedicaban a realizar estafas mediante hacking y phishing, comercializar bases de datos del Renaper por Telegram, proveer drogas de diseño y perpetrar secuestros extorsivos. En los operativos se secuestró armamento de grueso calibre y una fortuna en efectivo.</h2>
             
-            <!-- Metadata con perfil de periodista -->
             <div class="article-meta">
                 <div class="author-box">
                     <img src="autor_perfil.png" alt="Autor" class="author-pic">
@@ -222,13 +280,11 @@
                 </div>
             </div>
 
-            <!-- Cuerpo de la noticia -->
             <div class="article-body">
                 <p>En un <strong>megaoperativo conjunto</strong> realizado en las primeras horas de la mañana, efectivos de la Policía Federal Argentina (PFA) y la Dirección Departamental de Investigaciones (DDI) lograron desbaratar una peligrosa organización criminal que operaba con una <span class="highlight-text">alarmante diversificación de delitos</span>, un alto poder de fuego y que financiaba una vida de excentricidades y lujos desmedidos en la zona oeste y norte de la Provincia de Buenos Aires.</p>
                 
                 <p>Los detenidos, dos amigos con un amplio prontuario delictivo que operaban en las sombras del entorno digital, fueron identificados como Lautaro Ivan, de 21 años y conocido en el mundo del hampa bajo el alias de <strong>"33DiscosDuros"</strong>, y Javier Leandro, de 26 años, apodado <strong>"DoctorDry"</strong>.</p>
 
-                <!-- Fotos de los detenidos (Grilla de 2 automática) -->
                 <figure>
                     <div class="img-grid-2">
                         <img src="detenido1.png" alt="Detenido alias 33DiscosDuros">
@@ -260,7 +316,6 @@
 
                 <h3 class="article-subtitle">El material incautado (Detallado)</h3>
                 
-                <!-- Fotos de las pruebas (Grilla de 3 automática) -->
                 <figure>
                     <div class="img-grid-3">
                         <img src="prueba1.png" alt="Armamento incautado">
@@ -286,42 +341,87 @@
                 <p>El producto de esta prolífica actividad criminal, según consta en el expediente, les permitía a los jóvenes llevar una vida de lujos ostentosos y sostener una rápida movilidad para sus operaciones ilícitas. Durante los procedimientos, los efectivos incautaron un automóvil de alta gama Volkswagen Vento GLI modelo 2018, el cual, según los peritos financieros de la policía, era utilizado como logística central de la banda y había sido adquirido directamente con el dinero lavado, proveniente íntegramente del ciberdelito y el narcotráfico.</p>
                 <p>Además de los vehículos, los delincuentes custodiaban sus operaciones clandestinas con el ya mencionado arsenal de guerra preparado para posibles enfrentamientos armados contra bandas rivales o fuerzas de seguridad, el cual afortunadamente fue decomisado en su totalidad antes de ser disparado.</p>
 
-                <!-- Foto final del vehículo (Imagen única, autoajustable a max-500px altura) -->
                 <figure class="single-img">
                     <img src="coche_vento.png" alt="Volkswagen Vento GLI incautado">
                     <figcaption>El vehículo de alta gama incautado durante los sorpresivos allanamientos de esta mañana. Se trata de un Volkswagen Vento GLI modelo 2018 que la cúpula de la banda utilizaba para su logística operativa y que, según los peritajes iniciales de los investigadores, fue adquirido con los oscuros fondos ilícitos provenientes de la red de ciberdelitos. El rodado ya se encuentra precintado, fajado y alojado en el playón de la dependencia policial a estricta disposición de la Justicia.</figcaption>
                 </figure>
             </div>
             
-            <!-- Seccion Final: Clima y Noticias Relacionadas -->
+            <!-- SECCIÓN FINAL: CLIMA Y NOTICIAS RELACIONADAS MEJORADAS -->
             <div class="footer-widgets">
-                <!-- Widget de Clima -->
-                <div class="weather-box" id="weatherWidget">
-                    <span>⏳ Consultando clima actual en Buenos Aires...</span>
+                
+                <!-- Widget de Clima Profesional -->
+                <div class="weather-widget" id="weatherWidget">
+                    <div class="weather-info">
+                        <h5>Buenos Aires</h5>
+                        <h3 id="weatherStatus">Consultando clima...</h3>
+                    </div>
+                    <div class="weather-temp" id="weatherTemp">
+                        <!-- Ícono de espera/carga -->
+                        <svg viewBox="0 0 24 24"><path d="M12 2v4c5.28 0 9.58 4.05 9.96 9.22l3.96-.51C25.32 7.7 19.42 2 12 2zM2 12c0-5.28 4.05-9.58 9.22-9.96l-.51-3.96C3.7 -1.32-2 4.58-2 12z" opacity=".3"/></svg>
+                        <span>--°C</span>
+                    </div>
                 </div>
                 
-                <!-- Script que consulta la API pública sin llaves (Open-Meteo) -->
                 <script>
                     fetch('https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&current_weather=true')
                     .then(response => response.json())
                     .then(data => {
                         const temp = data.current_weather.temperature;
-                        document.getElementById('weatherWidget').innerHTML = 
-                        `<strong>🌦️ Datos del tiempo:</strong> Temperatura actual en Buenos Aires: <strong>${temp}°C</strong>`;
+                        document.getElementById('weatherStatus').innerText = 'Clima Actual';
+                        document.getElementById('weatherTemp').innerHTML = `
+                            <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v5l4.28 2.54.72-1.21-3-1.78V8z"/></svg>
+                            <span>${temp}°C</span>
+                        `;
                     })
                     .catch(error => {
-                        document.getElementById('weatherWidget').innerHTML = `<strong>🌦️ Datos del tiempo:</strong> Servicio no disponible temporalmente.`;
+                        document.getElementById('weatherStatus').innerText = 'Servicio no disponible';
+                        document.getElementById('weatherTemp').innerHTML = '<span>--°C</span>';
                     });
                 </script>
 
-                <!-- Noticias Relacionadas -->
+                <!-- Sección "Te puede interesar" Profesional -->
                 <div class="related-news">
-                    <h4>📰 Te puede interesar</h4>
-                    <ul>
-                        <li><a href="#noticia1">INSERTAR TITULO</a></li>
-                        <li><a href="#noticia2">INSERTAR TITULO</a></li>
-                        <li><a href="#noticia3">INSERTAR TITULO</a></li>
-                    </ul>
+                    <div class="related-header">
+                        <!-- Ícono SVG profesional de noticias/novedades -->
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <h4>Te puede interesar</h4>
+                    </div>
+                    
+                    <div class="related-news-list">
+                        <!-- Noticia Relacionada 1 -->
+                        <article class="related-news-item">
+                            <!-- Link de foto genérica por URL -->
+                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=200&auto=format&fit=crop" alt="Economía" class="related-img">
+                            <div class="related-content">
+                                <span class="related-tag">Economía</span>
+                                <!-- Reemplaza el # por tu link real -->
+                                <a href="#ingresa_tu_link_aqui_noticia1" title="Leer más">El Banco Central anuncia nuevas medidas para contener la suba del dólar blue</a>
+                            </div>
+                        </article>
+                        
+                        <!-- Noticia Relacionada 2 -->
+                        <article class="related-news-item">
+                            <!-- Link de foto genérica por URL -->
+                            <img src="https://images.unsplash.com/photo-1579273166629-ee10b91e92ec?q=80&w=200&auto=format&fit=crop" alt="Justicia" class="related-img">
+                            <div class="related-content">
+                                <span class="related-tag">Justicia</span>
+                                <!-- Reemplaza el # por tu link real -->
+                                <a href="#ingresa_tu_link_aqui_noticia2" title="Leer más">Avanza en el Congreso la nueva ley de endurecimiento de penas por ciberdelitos</a>
+                            </div>
+                        </article>
+
+                        <!-- Noticia Relacionada 3 -->
+                        <article class="related-news-item">
+                            <!-- Link de foto genérica por URL -->
+                            <img src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?q=80&w=200&auto=format&fit=crop" alt="Sociedad" class="related-img">
+                            <div class="related-content">
+                                <span class="related-tag">Sociedad</span>
+                                <!-- Reemplaza el # por tu link real -->
+                                <a href="#ingresa_tu_link_aqui_noticia3" title="Leer más">Creció un 40% la cantidad de denuncias por estafas virtuales en el último trimestre</a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </article>
@@ -330,29 +430,38 @@
     <!-- PIE DE PÁGINA -->
     <footer>
         <img src="logodiarionoticias.png" alt="Diario Noticias" class="footer-logo">
-        <p>© Copyright 2026 Empresa Editorial | Todos los derechos reservados.<br>
-        Número de registro DNDA - EXPEDIENTE RL-2023-00000000-APN-DNDA.</p>
-        <p>Queda prohibida la reproducción total o parcial del presente diario.</p>
+        
+        <!-- ========================================================================================= -->
+        <!-- ESPACIO PARA INSERTAR TU NUEVO TEXTO DE FOOTER. ELIMINA EL TEXTO DE ABAJO Y PON EL TUYO   -->
+        <!-- ========================================================================================= -->
+        <div id="footer-text-container">
+            <p>© Copyright 2026 Empresa Editorial | Todos los derechos reservados.<br>
+            Número de registro DNDA - EXPEDIENTE RL-2023-00000000-APN-DNDA.</p>
+            <p>Queda prohibida la reproducción total o parcial del presente diario.</p>
+        </div>
+        <!-- ========================================================================================= -->
+
         <p>
-            <a href="#condiciones">Condiciones y Privacidad</a> | <a href="#app">App Store</a>
+            <!-- Reemplaza los # por tus links reales -->
+            <a href="#ingresa_tu_link_aqui_condiciones">Condiciones y Privacidad</a> | <a href="#ingresa_tu_link_aqui_app">App Store</a>
         </p>
     </footer>
 
     <!-- BARRA DE NAVEGACIÓN MÓVIL -->
     <nav class="bottom-nav">
-        <a href="#inicio" class="nav-item active">
+        <a href="#ingresa_tu_link_aqui_nav_inicio" class="nav-item active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>INICIO</span>
         </a>
-        <a href="#secciones" class="nav-item">
+        <a href="#ingresa_tu_link_aqui_nav_secciones" class="nav-item">
             <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zm0 10h6v6H4zm10-10h6v6h-6zm0 10h6v6h-6z"/></svg><span>SECCIONES</span>
         </a>
-        <a href="#gastronomia" class="nav-item">
+        <a href="#ingresa_tu_link_aqui_nav_gastronomia" class="nav-item">
             <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>GASTRONOMÍA</span>
         </a>
-        <a href="#club" class="nav-item">
+        <a href="#ingresa_tu_link_aqui_nav_club" class="nav-item">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12.5 7v5.29l3.54 3.54-.71.71-3.83-3.83V7h1z"/></svg><span>CLUB DN</span>
         </a>
-        <a href="#ingresar" class="nav-item">
+        <a href="#ingresa_tu_link_aqui_nav_ingresar" class="nav-item">
             <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>INGRESAR</span>
         </a>
     </nav>
